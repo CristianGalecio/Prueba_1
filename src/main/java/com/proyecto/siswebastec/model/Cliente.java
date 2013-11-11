@@ -1,193 +1,210 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the cliente database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
+@Table(name = "cliente")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected ClientePK clientePK;
+    @Basic(optional = false)
+    @Column(name = "ID_PERFIL")
+    private int idPerfil;
+    @Column(name = "NOMBRE_USUARIO")
+    private String nombreUsuario;
+    @Column(name = "APPAT_USUARIO")
+    private String appatUsuario;
+    @Column(name = "APMAT_USUARIO")
+    private String apmatUsuario;
+    @Column(name = "DNI_USUARIO")
+    private String dniUsuario;
+    @Column(name = "EMAIL_USUARIO")
+    private String emailUsuario;
+    @Column(name = "CLAVE_USUARIO")
+    private String claveUsuario;
+    @Column(name = "CELULAR_USUARIO")
+    private Integer celularUsuario;
+    @Column(name = "CARGO_CLIENTE")
+    private String cargoCliente;
+    @Column(name = "ANEXO_CLIENTE")
+    private Integer anexoCliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    private List<Solicitud> solicitudList;
+    @JoinColumn(name = "ID_AREA", referencedColumnName = "ID_AREA")
+    @ManyToOne
+    private Area idArea;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Usuario usuario;
 
-	@EmbeddedId
-	private ClientePK id;
+    public Cliente() {
+    }
 
-	@Column(name="ANEXO_CLIENTE")
-	private int anexoCliente;
+    public Cliente(ClientePK clientePK) {
+        this.clientePK = clientePK;
+    }
 
-	@Column(name="APMAT_USUARIO")
-	private String apmatUsuario;
+    public Cliente(ClientePK clientePK, int idPerfil) {
+        this.clientePK = clientePK;
+        this.idPerfil = idPerfil;
+    }
 
-	@Column(name="APPAT_USUARIO")
-	private String appatUsuario;
+    public Cliente(int idUsuario, String idCliente) {
+        this.clientePK = new ClientePK(idUsuario, idCliente);
+    }
 
-	@Column(name="CARGO_CLIENTE")
-	private String cargoCliente;
+    public ClientePK getClientePK() {
+        return clientePK;
+    }
 
-	@Column(name="CELULAR_USUARIO")
-	private int celularUsuario;
+    public void setClientePK(ClientePK clientePK) {
+        this.clientePK = clientePK;
+    }
 
-	@Column(name="CLAVE_USUARIO")
-	private String claveUsuario;
+    public int getIdPerfil() {
+        return idPerfil;
+    }
 
-	@Column(name="DNI_USUARIO")
-	private String dniUsuario;
+    public void setIdPerfil(int idPerfil) {
+        this.idPerfil = idPerfil;
+    }
 
-	@Column(name="EMAIL_USUARIO")
-	private String emailUsuario;
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 
-	@Column(name="ID_PERFIL")
-	private int idPerfil;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
-	@Column(name="NOMBRE_USUARIO")
-	private String nombreUsuario;
+    public String getAppatUsuario() {
+        return appatUsuario;
+    }
 
-	//bi-directional many-to-one association to Area
-	@ManyToOne
-	@JoinColumn(name="ID_AREA")
-	private Area area;
+    public void setAppatUsuario(String appatUsuario) {
+        this.appatUsuario = appatUsuario;
+    }
 
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="ID_USUARIO")
-	private Usuario usuario;
+    public String getApmatUsuario() {
+        return apmatUsuario;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@OneToMany(mappedBy="cliente")
-	private List<Solicitud> solicituds;
+    public void setApmatUsuario(String apmatUsuario) {
+        this.apmatUsuario = apmatUsuario;
+    }
 
-	public Cliente() {
-	}
+    public String getDniUsuario() {
+        return dniUsuario;
+    }
 
-	public ClientePK getId() {
-		return this.id;
-	}
+    public void setDniUsuario(String dniUsuario) {
+        this.dniUsuario = dniUsuario;
+    }
 
-	public void setId(ClientePK id) {
-		this.id = id;
-	}
+    public String getEmailUsuario() {
+        return emailUsuario;
+    }
 
-	public int getAnexoCliente() {
-		return this.anexoCliente;
-	}
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
+    }
 
-	public void setAnexoCliente(int anexoCliente) {
-		this.anexoCliente = anexoCliente;
-	}
+    public String getClaveUsuario() {
+        return claveUsuario;
+    }
 
-	public String getApmatUsuario() {
-		return this.apmatUsuario;
-	}
+    public void setClaveUsuario(String claveUsuario) {
+        this.claveUsuario = claveUsuario;
+    }
 
-	public void setApmatUsuario(String apmatUsuario) {
-		this.apmatUsuario = apmatUsuario;
-	}
+    public Integer getCelularUsuario() {
+        return celularUsuario;
+    }
 
-	public String getAppatUsuario() {
-		return this.appatUsuario;
-	}
+    public void setCelularUsuario(Integer celularUsuario) {
+        this.celularUsuario = celularUsuario;
+    }
 
-	public void setAppatUsuario(String appatUsuario) {
-		this.appatUsuario = appatUsuario;
-	}
+    public String getCargoCliente() {
+        return cargoCliente;
+    }
 
-	public String getCargoCliente() {
-		return this.cargoCliente;
-	}
+    public void setCargoCliente(String cargoCliente) {
+        this.cargoCliente = cargoCliente;
+    }
 
-	public void setCargoCliente(String cargoCliente) {
-		this.cargoCliente = cargoCliente;
-	}
+    public Integer getAnexoCliente() {
+        return anexoCliente;
+    }
 
-	public int getCelularUsuario() {
-		return this.celularUsuario;
-	}
+    public void setAnexoCliente(Integer anexoCliente) {
+        this.anexoCliente = anexoCliente;
+    }
 
-	public void setCelularUsuario(int celularUsuario) {
-		this.celularUsuario = celularUsuario;
-	}
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
 
-	public String getClaveUsuario() {
-		return this.claveUsuario;
-	}
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
 
-	public void setClaveUsuario(String claveUsuario) {
-		this.claveUsuario = claveUsuario;
-	}
+    public Area getIdArea() {
+        return idArea;
+    }
 
-	public String getDniUsuario() {
-		return this.dniUsuario;
-	}
+    public void setIdArea(Area idArea) {
+        this.idArea = idArea;
+    }
 
-	public void setDniUsuario(String dniUsuario) {
-		this.dniUsuario = dniUsuario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public String getEmailUsuario() {
-		return this.emailUsuario;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public void setEmailUsuario(String emailUsuario) {
-		this.emailUsuario = emailUsuario;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (clientePK != null ? clientePK.hashCode() : 0);
+        return hash;
+    }
 
-	public int getIdPerfil() {
-		return this.idPerfil;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Cliente)) {
+            return false;
+        }
+        Cliente other = (Cliente) object;
+        if ((this.clientePK == null && other.clientePK != null) || (this.clientePK != null && !this.clientePK.equals(other.clientePK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setIdPerfil(int idPerfil) {
-		this.idPerfil = idPerfil;
-	}
-
-	public String getNombreUsuario() {
-		return this.nombreUsuario;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public Area getArea() {
-		return this.area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Solicitud> getSolicituds() {
-		return this.solicituds;
-	}
-
-	public void setSolicituds(List<Solicitud> solicituds) {
-		this.solicituds = solicituds;
-	}
-
-	public Solicitud addSolicitud(Solicitud solicitud) {
-		getSolicituds().add(solicitud);
-		solicitud.setCliente(this);
-
-		return solicitud;
-	}
-
-	public Solicitud removeSolicitud(Solicitud solicitud) {
-		getSolicituds().remove(solicitud);
-		solicitud.setCliente(null);
-
-		return solicitud;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Cliente[ clientePK=" + clientePK + " ]";
+    }
+    
 }

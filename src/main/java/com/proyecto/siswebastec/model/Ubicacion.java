@@ -1,69 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the ubicacion database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Ubicacion.findAll", query="SELECT u FROM Ubicacion u")
+@Table(name = "ubicacion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Ubicacion.findAll", query = "SELECT u FROM Ubicacion u")})
 public class Ubicacion implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_UBICACION")
+    private Integer idUbicacion;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_UBICACION")
+    private String nombreUbicacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
+    private List<Solicitud> solicitudList;
 
-	@Id
-	@Column(name="ID_UBICACION")
-	private int idUbicacion;
+    public Ubicacion() {
+    }
 
-	@Column(name="NOMBRE_UBICACION")
-	private String nombreUbicacion;
+    public Ubicacion(Integer idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@OneToMany(mappedBy="ubicacionBean")
-	private List<Solicitud> solicituds;
+    public Ubicacion(Integer idUbicacion, String nombreUbicacion) {
+        this.idUbicacion = idUbicacion;
+        this.nombreUbicacion = nombreUbicacion;
+    }
 
-	public Ubicacion() {
-	}
+    public Integer getIdUbicacion() {
+        return idUbicacion;
+    }
 
-	public int getIdUbicacion() {
-		return this.idUbicacion;
-	}
+    public void setIdUbicacion(Integer idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
 
-	public void setIdUbicacion(int idUbicacion) {
-		this.idUbicacion = idUbicacion;
-	}
+    public String getNombreUbicacion() {
+        return nombreUbicacion;
+    }
 
-	public String getNombreUbicacion() {
-		return this.nombreUbicacion;
-	}
+    public void setNombreUbicacion(String nombreUbicacion) {
+        this.nombreUbicacion = nombreUbicacion;
+    }
 
-	public void setNombreUbicacion(String nombreUbicacion) {
-		this.nombreUbicacion = nombreUbicacion;
-	}
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
 
-	public List<Solicitud> getSolicituds() {
-		return this.solicituds;
-	}
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
 
-	public void setSolicituds(List<Solicitud> solicituds) {
-		this.solicituds = solicituds;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUbicacion != null ? idUbicacion.hashCode() : 0);
+        return hash;
+    }
 
-	public Solicitud addSolicitud(Solicitud solicitud) {
-		getSolicituds().add(solicitud);
-		solicitud.setUbicacionBean(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Ubicacion)) {
+            return false;
+        }
+        Ubicacion other = (Ubicacion) object;
+        if ((this.idUbicacion == null && other.idUbicacion != null) || (this.idUbicacion != null && !this.idUbicacion.equals(other.idUbicacion))) {
+            return false;
+        }
+        return true;
+    }
 
-		return solicitud;
-	}
-
-	public Solicitud removeSolicitud(Solicitud solicitud) {
-		getSolicituds().remove(solicitud);
-		solicitud.setUbicacionBean(null);
-
-		return solicitud;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Ubicacion[ idUbicacion=" + idUbicacion + " ]";
+    }
+    
 }

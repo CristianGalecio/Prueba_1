@@ -1,69 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the estado database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Estado.findAll", query="SELECT e FROM Estado e")
+@Table(name = "estado")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e")})
 public class Estado implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_ESTADO")
+    private Integer idEstado;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_ESTADO")
+    private String nombreEstado;
+    @OneToMany(mappedBy = "idEstado")
+    private List<Solicitud> solicitudList;
 
-	@Id
-	@Column(name="ID_ESTADO")
-	private int idEstado;
+    public Estado() {
+    }
 
-	@Column(name="NOMBRE_ESTADO")
-	private String nombreEstado;
+    public Estado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@OneToMany(mappedBy="estado")
-	private List<Solicitud> solicituds;
+    public Estado(Integer idEstado, String nombreEstado) {
+        this.idEstado = idEstado;
+        this.nombreEstado = nombreEstado;
+    }
 
-	public Estado() {
-	}
+    public Integer getIdEstado() {
+        return idEstado;
+    }
 
-	public int getIdEstado() {
-		return this.idEstado;
-	}
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
 
-	public void setIdEstado(int idEstado) {
-		this.idEstado = idEstado;
-	}
+    public String getNombreEstado() {
+        return nombreEstado;
+    }
 
-	public String getNombreEstado() {
-		return this.nombreEstado;
-	}
+    public void setNombreEstado(String nombreEstado) {
+        this.nombreEstado = nombreEstado;
+    }
 
-	public void setNombreEstado(String nombreEstado) {
-		this.nombreEstado = nombreEstado;
-	}
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
 
-	public List<Solicitud> getSolicituds() {
-		return this.solicituds;
-	}
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
 
-	public void setSolicituds(List<Solicitud> solicituds) {
-		this.solicituds = solicituds;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idEstado != null ? idEstado.hashCode() : 0);
+        return hash;
+    }
 
-	public Solicitud addSolicitud(Solicitud solicitud) {
-		getSolicituds().add(solicitud);
-		solicitud.setEstado(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Estado)) {
+            return false;
+        }
+        Estado other = (Estado) object;
+        if ((this.idEstado == null && other.idEstado != null) || (this.idEstado != null && !this.idEstado.equals(other.idEstado))) {
+            return false;
+        }
+        return true;
+    }
 
-		return solicitud;
-	}
-
-	public Solicitud removeSolicitud(Solicitud solicitud) {
-		getSolicituds().remove(solicitud);
-		solicitud.setEstado(null);
-
-		return solicitud;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Estado[ idEstado=" + idEstado + " ]";
+    }
+    
 }

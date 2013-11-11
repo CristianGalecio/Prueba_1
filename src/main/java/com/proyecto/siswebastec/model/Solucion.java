@@ -1,68 +1,109 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the solucion database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Solucion.findAll", query="SELECT s FROM Solucion s")
+@Table(name = "solucion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Solucion.findAll", query = "SELECT s FROM Solucion s")})
 public class Solucion implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_SOLUCION")
+    private Integer idSolucion;
+    @Basic(optional = false)
+    @Column(name = "DESC_SOLUCION")
+    private String descSolucion;
+    @Basic(optional = false)
+    @Column(name = "FECHA_SOLUCION")
+    @Temporal(TemporalType.DATE)
+    private Date fechaSolucion;
+    @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
+    @ManyToOne(optional = false)
+    private Solicitud idSolicitud;
 
-	@Id
-	@Column(name="ID_SOLUCION")
-	private int idSolucion;
+    public Solucion() {
+    }
 
-	@Column(name="DESC_SOLUCION")
-	private String descSolucion;
+    public Solucion(Integer idSolucion) {
+        this.idSolucion = idSolucion;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_SOLUCION")
-	private Date fechaSolucion;
+    public Solucion(Integer idSolucion, String descSolucion, Date fechaSolucion) {
+        this.idSolucion = idSolucion;
+        this.descSolucion = descSolucion;
+        this.fechaSolucion = fechaSolucion;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@ManyToOne
-	@JoinColumn(name="ID_SOLICITUD")
-	private Solicitud solicitud;
+    public Integer getIdSolucion() {
+        return idSolucion;
+    }
 
-	public Solucion() {
-	}
+    public void setIdSolucion(Integer idSolucion) {
+        this.idSolucion = idSolucion;
+    }
 
-	public int getIdSolucion() {
-		return this.idSolucion;
-	}
+    public String getDescSolucion() {
+        return descSolucion;
+    }
 
-	public void setIdSolucion(int idSolucion) {
-		this.idSolucion = idSolucion;
-	}
+    public void setDescSolucion(String descSolucion) {
+        this.descSolucion = descSolucion;
+    }
 
-	public String getDescSolucion() {
-		return this.descSolucion;
-	}
+    public Date getFechaSolucion() {
+        return fechaSolucion;
+    }
 
-	public void setDescSolucion(String descSolucion) {
-		this.descSolucion = descSolucion;
-	}
+    public void setFechaSolucion(Date fechaSolucion) {
+        this.fechaSolucion = fechaSolucion;
+    }
 
-	public Date getFechaSolucion() {
-		return this.fechaSolucion;
-	}
+    public Solicitud getIdSolicitud() {
+        return idSolicitud;
+    }
 
-	public void setFechaSolucion(Date fechaSolucion) {
-		this.fechaSolucion = fechaSolucion;
-	}
+    public void setIdSolicitud(Solicitud idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
 
-	public Solicitud getSolicitud() {
-		return this.solicitud;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idSolucion != null ? idSolucion.hashCode() : 0);
+        return hash;
+    }
 
-	public void setSolicitud(Solicitud solicitud) {
-		this.solicitud = solicitud;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Solucion)) {
+            return false;
+        }
+        Solucion other = (Solucion) object;
+        if ((this.idSolucion == null && other.idSolucion != null) || (this.idSolucion != null && !this.idSolucion.equals(other.idSolucion))) {
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Solucion[ idSolucion=" + idSolucion + " ]";
+    }
+    
 }

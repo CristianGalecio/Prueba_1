@@ -10,7 +10,7 @@ public class JPAUtil {
 	
 	public JPAUtil() {
 		super();
-		aux = Persistence.createEntityManagerFactory("siswebastecPU");
+		aux = Persistence.createEntityManagerFactory("Prueba1");
 		entityManager = aux.createEntityManager();
 		
 	}

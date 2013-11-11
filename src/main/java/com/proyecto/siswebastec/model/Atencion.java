@@ -1,98 +1,134 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * The persistent class for the atencion database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Atencion.findAll", query="SELECT a FROM Atencion a")
+@Table(name = "atencion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Atencion.findAll", query = "SELECT a FROM Atencion a")})
 public class Atencion implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_ATENCION")
+    private Integer idAtencion;
+    @Basic(optional = false)
+    @Column(name = "FECHA_ATENCION")
+    @Temporal(TemporalType.DATE)
+    private Date fechaAtencion;
+    @Basic(optional = false)
+    @Column(name = "HORA_ATENCION")
+    @Temporal(TemporalType.TIME)
+    private Date horaAtencion;
+    @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
+    @ManyToOne(optional = false)
+    private Solicitud idSolicitud;
+    @JoinColumn(name = "ID_EVALUACION", referencedColumnName = "ID_EVALUACION")
+    @ManyToOne
+    private Evaluacion idEvaluacion;
+    @JoinColumns({
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
+        @JoinColumn(name = "ID_TRABAJADOR", referencedColumnName = "ID_TRABAJADOR")})
+    @ManyToOne
+    private Trabajador trabajador;
 
-	@Id
-	@Column(name="ID_ATENCION")
-	private int idAtencion;
+    public Atencion() {
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_ATENCION")
-	private Date fechaAtencion;
+    public Atencion(Integer idAtencion) {
+        this.idAtencion = idAtencion;
+    }
 
-	@Column(name="HORA_ATENCION")
-	private Time horaAtencion;
+    public Atencion(Integer idAtencion, Date fechaAtencion, Date horaAtencion) {
+        this.idAtencion = idAtencion;
+        this.fechaAtencion = fechaAtencion;
+        this.horaAtencion = horaAtencion;
+    }
 
-	//bi-directional many-to-one association to Evaluacion
-	@ManyToOne
-	@JoinColumn(name="ID_EVALUACION")
-	private Evaluacion evaluacion;
+    public Integer getIdAtencion() {
+        return idAtencion;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@ManyToOne
-	@JoinColumn(name="ID_SOLICITUD")
-	private Solicitud solicitud;
+    public void setIdAtencion(Integer idAtencion) {
+        this.idAtencion = idAtencion;
+    }
 
-	//bi-directional many-to-one association to Trabajador
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="ID_TRABAJADOR", referencedColumnName="ID_TRABAJADOR"),
-		@JoinColumn(name="ID_USUARIO", referencedColumnName="ID_USUARIO")
-		})
-	private Trabajador trabajador;
+    public Date getFechaAtencion() {
+        return fechaAtencion;
+    }
 
-	public Atencion() {
-	}
+    public void setFechaAtencion(Date fechaAtencion) {
+        this.fechaAtencion = fechaAtencion;
+    }
 
-	public int getIdAtencion() {
-		return this.idAtencion;
-	}
+    public Date getHoraAtencion() {
+        return horaAtencion;
+    }
 
-	public void setIdAtencion(int idAtencion) {
-		this.idAtencion = idAtencion;
-	}
+    public void setHoraAtencion(Date horaAtencion) {
+        this.horaAtencion = horaAtencion;
+    }
 
-	public Date getFechaAtencion() {
-		return this.fechaAtencion;
-	}
+    public Solicitud getIdSolicitud() {
+        return idSolicitud;
+    }
 
-	public void setFechaAtencion(Date fechaAtencion) {
-		this.fechaAtencion = fechaAtencion;
-	}
+    public void setIdSolicitud(Solicitud idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
 
-	public Time getHoraAtencion() {
-		return this.horaAtencion;
-	}
+    public Evaluacion getIdEvaluacion() {
+        return idEvaluacion;
+    }
 
-	public void setHoraAtencion(Time horaAtencion) {
-		this.horaAtencion = horaAtencion;
-	}
+    public void setIdEvaluacion(Evaluacion idEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+    }
 
-	public Evaluacion getEvaluacion() {
-		return this.evaluacion;
-	}
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
 
-	public void setEvaluacion(Evaluacion evaluacion) {
-		this.evaluacion = evaluacion;
-	}
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
 
-	public Solicitud getSolicitud() {
-		return this.solicitud;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idAtencion != null ? idAtencion.hashCode() : 0);
+        return hash;
+    }
 
-	public void setSolicitud(Solicitud solicitud) {
-		this.solicitud = solicitud;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Atencion)) {
+            return false;
+        }
+        Atencion other = (Atencion) object;
+        if ((this.idAtencion == null && other.idAtencion != null) || (this.idAtencion != null && !this.idAtencion.equals(other.idAtencion))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Trabajador getTrabajador() {
-		return this.trabajador;
-	}
-
-	public void setTrabajador(Trabajador trabajador) {
-		this.trabajador = trabajador;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Atencion[ idAtencion=" + idAtencion + " ]";
+    }
+    
 }

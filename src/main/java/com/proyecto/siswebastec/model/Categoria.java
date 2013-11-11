@@ -1,69 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the categoria database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Categoria.findAll", query="SELECT c FROM Categoria c")
+@Table(name = "categoria")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c")})
 public class Categoria implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_CATEGORIA")
+    private Integer idCategoria;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_CATEGORIA")
+    private String nombreCategoria;
+    @OneToMany(mappedBy = "idCategoria")
+    private List<Solicitud> solicitudList;
 
-	@Id
-	@Column(name="ID_CATEGORIA")
-	private int idCategoria;
+    public Categoria() {
+    }
 
-	@Column(name="NOMBRE_CATEGORIA")
-	private String nombreCategoria;
+    public Categoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@OneToMany(mappedBy="categoria")
-	private List<Solicitud> solicituds;
+    public Categoria(Integer idCategoria, String nombreCategoria) {
+        this.idCategoria = idCategoria;
+        this.nombreCategoria = nombreCategoria;
+    }
 
-	public Categoria() {
-	}
+    public Integer getIdCategoria() {
+        return idCategoria;
+    }
 
-	public int getIdCategoria() {
-		return this.idCategoria;
-	}
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
-	}
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
 
-	public String getNombreCategoria() {
-		return this.nombreCategoria;
-	}
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
 
-	public void setNombreCategoria(String nombreCategoria) {
-		this.nombreCategoria = nombreCategoria;
-	}
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
 
-	public List<Solicitud> getSolicituds() {
-		return this.solicituds;
-	}
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
 
-	public void setSolicituds(List<Solicitud> solicituds) {
-		this.solicituds = solicituds;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idCategoria != null ? idCategoria.hashCode() : 0);
+        return hash;
+    }
 
-	public Solicitud addSolicitud(Solicitud solicitud) {
-		getSolicituds().add(solicitud);
-		solicitud.setCategoria(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Categoria)) {
+            return false;
+        }
+        Categoria other = (Categoria) object;
+        if ((this.idCategoria == null && other.idCategoria != null) || (this.idCategoria != null && !this.idCategoria.equals(other.idCategoria))) {
+            return false;
+        }
+        return true;
+    }
 
-		return solicitud;
-	}
-
-	public Solicitud removeSolicitud(Solicitud solicitud) {
-		getSolicituds().remove(solicitud);
-		solicitud.setCategoria(null);
-
-		return solicitud;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Categoria[ idCategoria=" + idCategoria + " ]";
+    }
+    
 }

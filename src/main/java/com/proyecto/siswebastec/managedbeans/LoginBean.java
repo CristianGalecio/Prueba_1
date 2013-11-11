@@ -90,10 +90,10 @@ public class LoginBean implements Serializable {
 			context.addCallbackParam("estaLogeado", logeado);
 			
 			if (logeado && tipo.equals("cliente")){				
-				context.addCallbackParam("view", "/astec/pages/registroAtencion.xhtml");
+				context.addCallbackParam("view", "/Prueba_1/pages/registroAtencion.xhtml");
 			}else{
 				if(logeado && tipo.equals("trabajador")){
-					context.addCallbackParam("view", "/astec/pages/registroAtencionT.xhtml");
+					context.addCallbackParam("view", "/Prueba_1/pages/registroAtencionT.xhtml");
 				}
 			}		
 	}	

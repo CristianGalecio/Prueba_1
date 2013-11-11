@@ -1,174 +1,187 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the usuario database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+@Table(name = "usuario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_USUARIO")
+    private Integer idUsuario;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_USUARIO")
+    private String nombreUsuario;
+    @Basic(optional = false)
+    @Column(name = "APPAT_USUARIO")
+    private String appatUsuario;
+    @Basic(optional = false)
+    @Column(name = "APMAT_USUARIO")
+    private String apmatUsuario;
+    @Basic(optional = false)
+    @Column(name = "DNI_USUARIO")
+    private String dniUsuario;
+    @Column(name = "EMAIL_USUARIO")
+    private String emailUsuario;
+    @Basic(optional = false)
+    @Column(name = "CLAVE_USUARIO")
+    private String claveUsuario;
+    @Column(name = "CELULAR_USUARIO")
+    private Integer celularUsuario;
+    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
+    @ManyToOne(optional = false)
+    private Perfil idPerfil;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Trabajador> trabajadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Cliente> clienteList;
 
-	@Id
-	@Column(name="ID_USUARIO")
-	private int idUsuario;
+    public Usuario() {
+    }
 
-	@Column(name="APMAT_USUARIO")
-	private String apmatUsuario;
+    public Usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	@Column(name="APPAT_USUARIO")
-	private String appatUsuario;
+    public Usuario(Integer idUsuario, String nombreUsuario, String appatUsuario, String apmatUsuario, String dniUsuario, String claveUsuario) {
+        this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.appatUsuario = appatUsuario;
+        this.apmatUsuario = apmatUsuario;
+        this.dniUsuario = dniUsuario;
+        this.claveUsuario = claveUsuario;
+    }
 
-	@Column(name="CELULAR_USUARIO")
-	private int celularUsuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
 
-	@Column(name="CLAVE_USUARIO")
-	private String claveUsuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	@Column(name="DNI_USUARIO")
-	private String dniUsuario;
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 
-	@Column(name="EMAIL_USUARIO")
-	private String emailUsuario;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
-	@Column(name="NOMBRE_USUARIO")
-	private String nombreUsuario;
+    public String getAppatUsuario() {
+        return appatUsuario;
+    }
 
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="usuario")
-	private List<Cliente> clientes;
+    public void setAppatUsuario(String appatUsuario) {
+        this.appatUsuario = appatUsuario;
+    }
 
-	//bi-directional many-to-one association to Trabajador
-	@OneToMany(mappedBy="usuario")
-	private List<Trabajador> trabajadors;
+    public String getApmatUsuario() {
+        return apmatUsuario;
+    }
 
-	//bi-directional many-to-one association to Perfil
-	@ManyToOne
-	@JoinColumn(name="ID_PERFIL")
-	private Perfil perfil;
+    public void setApmatUsuario(String apmatUsuario) {
+        this.apmatUsuario = apmatUsuario;
+    }
 
-	public Usuario() {
-	}
+    public String getDniUsuario() {
+        return dniUsuario;
+    }
 
-	public int getIdUsuario() {
-		return this.idUsuario;
-	}
+    public void setDniUsuario(String dniUsuario) {
+        this.dniUsuario = dniUsuario;
+    }
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+    public String getEmailUsuario() {
+        return emailUsuario;
+    }
 
-	public String getApmatUsuario() {
-		return this.apmatUsuario;
-	}
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
+    }
 
-	public void setApmatUsuario(String apmatUsuario) {
-		this.apmatUsuario = apmatUsuario;
-	}
+    public String getClaveUsuario() {
+        return claveUsuario;
+    }
 
-	public String getAppatUsuario() {
-		return this.appatUsuario;
-	}
+    public void setClaveUsuario(String claveUsuario) {
+        this.claveUsuario = claveUsuario;
+    }
 
-	public void setAppatUsuario(String appatUsuario) {
-		this.appatUsuario = appatUsuario;
-	}
+    public Integer getCelularUsuario() {
+        return celularUsuario;
+    }
 
-	public int getCelularUsuario() {
-		return this.celularUsuario;
-	}
+    public void setCelularUsuario(Integer celularUsuario) {
+        this.celularUsuario = celularUsuario;
+    }
 
-	public void setCelularUsuario(int celularUsuario) {
-		this.celularUsuario = celularUsuario;
-	}
+    public Perfil getIdPerfil() {
+        return idPerfil;
+    }
 
-	public String getClaveUsuario() {
-		return this.claveUsuario;
-	}
+    public void setIdPerfil(Perfil idPerfil) {
+        this.idPerfil = idPerfil;
+    }
 
-	public void setClaveUsuario(String claveUsuario) {
-		this.claveUsuario = claveUsuario;
-	}
+    @XmlTransient
+    public List<Trabajador> getTrabajadorList() {
+        return trabajadorList;
+    }
 
-	public String getDniUsuario() {
-		return this.dniUsuario;
-	}
+    public void setTrabajadorList(List<Trabajador> trabajadorList) {
+        this.trabajadorList = trabajadorList;
+    }
 
-	public void setDniUsuario(String dniUsuario) {
-		this.dniUsuario = dniUsuario;
-	}
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
 
-	public String getEmailUsuario() {
-		return this.emailUsuario;
-	}
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
 
-	public void setEmailUsuario(String emailUsuario) {
-		this.emailUsuario = emailUsuario;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
 
-	public String getNombreUsuario() {
-		return this.nombreUsuario;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public List<Cliente> getClientes() {
-		return this.clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-	public Cliente addCliente(Cliente cliente) {
-		getClientes().add(cliente);
-		cliente.setUsuario(this);
-
-		return cliente;
-	}
-
-	public Cliente removeCliente(Cliente cliente) {
-		getClientes().remove(cliente);
-		cliente.setUsuario(null);
-
-		return cliente;
-	}
-
-	public List<Trabajador> getTrabajadors() {
-		return this.trabajadors;
-	}
-
-	public void setTrabajadors(List<Trabajador> trabajadors) {
-		this.trabajadors = trabajadors;
-	}
-
-	public Trabajador addTrabajador(Trabajador trabajador) {
-		getTrabajadors().add(trabajador);
-		trabajador.setUsuario(this);
-
-		return trabajador;
-	}
-
-	public Trabajador removeTrabajador(Trabajador trabajador) {
-		getTrabajadors().remove(trabajador);
-		trabajador.setUsuario(null);
-
-		return trabajador;
-	}
-
-	public Perfil getPerfil() {
-		return this.perfil;
-	}
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+    
 }

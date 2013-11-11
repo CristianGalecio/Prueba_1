@@ -1,57 +1,78 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * The primary key class for the cliente database table.
- * 
+ *
+ * @author johana
  */
 @Embeddable
 public class ClientePK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @Column(name = "ID_USUARIO")
+    private int idUsuario;
+    @Basic(optional = false)
+    @Column(name = "ID_CLIENTE")
+    private String idCliente;
 
-	@Column(name="ID_USUARIO", insertable=false, updatable=false)
-	private int idUsuario;
+    public ClientePK() {
+    }
 
-	@Column(name="ID_CLIENTE")
-	private String idCliente;
+    public ClientePK(int idUsuario, String idCliente) {
+        this.idUsuario = idUsuario;
+        this.idCliente = idCliente;
+    }
 
-	public ClientePK() {
-	}
-	public int getIdUsuario() {
-		return this.idUsuario;
-	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	public String getIdCliente() {
-		return this.idCliente;
-	}
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
-	}
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof ClientePK)) {
-			return false;
-		}
-		ClientePK castOther = (ClientePK)other;
-		return 
-			(this.idUsuario == castOther.idUsuario)
-			&& this.idCliente.equals(castOther.idCliente);
-	}
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.idUsuario;
-		hash = hash * prime + this.idCliente.hashCode();
-		
-		return hash;
-	}
+    public String getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (int) idUsuario;
+        hash += (idCliente != null ? idCliente.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ClientePK)) {
+            return false;
+        }
+        ClientePK other = (ClientePK) object;
+        if (this.idUsuario != other.idUsuario) {
+            return false;
+        }
+        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.ClientePK[ idUsuario=" + idUsuario + ", idCliente=" + idCliente + " ]";
+    }
+    
 }

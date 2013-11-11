@@ -1,92 +1,120 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the perfil database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Perfil.findAll", query="SELECT p FROM Perfil p")
+@Table(name = "perfil")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")})
 public class Perfil implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_PERFIL")
+    private Integer idPerfil;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_PERFIL")
+    private String nombrePerfil;
+    @Basic(optional = false)
+    @Column(name = "DESC_PERFIL")
+    private String descPerfil;
+    @ManyToMany(mappedBy = "perfilList")
+    private List<Privilegio> privilegioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
+    private List<Usuario> usuarioList;
 
-	@Id
-	@Column(name="ID_PERFIL")
-	private int idPerfil;
+    public Perfil() {
+    }
 
-	@Column(name="DESC_PERFIL")
-	private String descPerfil;
+    public Perfil(Integer idPerfil) {
+        this.idPerfil = idPerfil;
+    }
 
-	@Column(name="NOMBRE_PERFIL")
-	private String nombrePerfil;
+    public Perfil(Integer idPerfil, String nombrePerfil, String descPerfil) {
+        this.idPerfil = idPerfil;
+        this.nombrePerfil = nombrePerfil;
+        this.descPerfil = descPerfil;
+    }
 
-	//bi-directional many-to-many association to Privilegio
-	@ManyToMany(mappedBy="perfils")
-	private List<Privilegio> privilegios;
+    public Integer getIdPerfil() {
+        return idPerfil;
+    }
 
-	//bi-directional many-to-one association to Usuario
-	@OneToMany(mappedBy="perfil")
-	private List<Usuario> usuarios;
+    public void setIdPerfil(Integer idPerfil) {
+        this.idPerfil = idPerfil;
+    }
 
-	public Perfil() {
-	}
+    public String getNombrePerfil() {
+        return nombrePerfil;
+    }
 
-	public int getIdPerfil() {
-		return this.idPerfil;
-	}
+    public void setNombrePerfil(String nombrePerfil) {
+        this.nombrePerfil = nombrePerfil;
+    }
 
-	public void setIdPerfil(int idPerfil) {
-		this.idPerfil = idPerfil;
-	}
+    public String getDescPerfil() {
+        return descPerfil;
+    }
 
-	public String getDescPerfil() {
-		return this.descPerfil;
-	}
+    public void setDescPerfil(String descPerfil) {
+        this.descPerfil = descPerfil;
+    }
 
-	public void setDescPerfil(String descPerfil) {
-		this.descPerfil = descPerfil;
-	}
+    @XmlTransient
+    public List<Privilegio> getPrivilegioList() {
+        return privilegioList;
+    }
 
-	public String getNombrePerfil() {
-		return this.nombrePerfil;
-	}
+    public void setPrivilegioList(List<Privilegio> privilegioList) {
+        this.privilegioList = privilegioList;
+    }
 
-	public void setNombrePerfil(String nombrePerfil) {
-		this.nombrePerfil = nombrePerfil;
-	}
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
 
-	public List<Privilegio> getPrivilegios() {
-		return this.privilegios;
-	}
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
+    }
 
-	public void setPrivilegios(List<Privilegio> privilegios) {
-		this.privilegios = privilegios;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPerfil != null ? idPerfil.hashCode() : 0);
+        return hash;
+    }
 
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Perfil)) {
+            return false;
+        }
+        Perfil other = (Perfil) object;
+        if ((this.idPerfil == null && other.idPerfil != null) || (this.idPerfil != null && !this.idPerfil.equals(other.idPerfil))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-	public Usuario addUsuario(Usuario usuario) {
-		getUsuarios().add(usuario);
-		usuario.setPerfil(this);
-
-		return usuario;
-	}
-
-	public Usuario removeUsuario(Usuario usuario) {
-		getUsuarios().remove(usuario);
-		usuario.setPerfil(null);
-
-		return usuario;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Perfil[ idPerfil=" + idPerfil + " ]";
+    }
+    
 }

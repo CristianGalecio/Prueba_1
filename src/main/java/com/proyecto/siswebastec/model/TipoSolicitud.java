@@ -1,70 +1,96 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the tipo_solicitud database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@Table(name="tipo_solicitud")
-@NamedQuery(name="TipoSolicitud.findAll", query="SELECT t FROM TipoSolicitud t")
+@Table(name = "tipo_solicitud")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TipoSolicitud.findAll", query = "SELECT t FROM TipoSolicitud t")})
 public class TipoSolicitud implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_TIPO")
+    private Integer idTipo;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_TIPO")
+    private String nombreTipo;
+    @OneToMany(mappedBy = "idTipo")
+    private List<Solicitud> solicitudList;
 
-	@Id
-	@Column(name="ID_TIPO")
-	private int idTipo;
+    public TipoSolicitud() {
+    }
 
-	@Column(name="NOMBRE_TIPO")
-	private String nombreTipo;
+    public TipoSolicitud(Integer idTipo) {
+        this.idTipo = idTipo;
+    }
 
-	//bi-directional many-to-one association to Solicitud
-	@OneToMany(mappedBy="tipoSolicitud")
-	private List<Solicitud> solicituds;
+    public TipoSolicitud(Integer idTipo, String nombreTipo) {
+        this.idTipo = idTipo;
+        this.nombreTipo = nombreTipo;
+    }
 
-	public TipoSolicitud() {
-	}
+    public Integer getIdTipo() {
+        return idTipo;
+    }
 
-	public int getIdTipo() {
-		return this.idTipo;
-	}
+    public void setIdTipo(Integer idTipo) {
+        this.idTipo = idTipo;
+    }
 
-	public void setIdTipo(int idTipo) {
-		this.idTipo = idTipo;
-	}
+    public String getNombreTipo() {
+        return nombreTipo;
+    }
 
-	public String getNombreTipo() {
-		return this.nombreTipo;
-	}
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
+    }
 
-	public void setNombreTipo(String nombreTipo) {
-		this.nombreTipo = nombreTipo;
-	}
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
 
-	public List<Solicitud> getSolicituds() {
-		return this.solicituds;
-	}
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
 
-	public void setSolicituds(List<Solicitud> solicituds) {
-		this.solicituds = solicituds;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idTipo != null ? idTipo.hashCode() : 0);
+        return hash;
+    }
 
-	public Solicitud addSolicitud(Solicitud solicitud) {
-		getSolicituds().add(solicitud);
-		solicitud.setTipoSolicitud(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TipoSolicitud)) {
+            return false;
+        }
+        TipoSolicitud other = (TipoSolicitud) object;
+        if ((this.idTipo == null && other.idTipo != null) || (this.idTipo != null && !this.idTipo.equals(other.idTipo))) {
+            return false;
+        }
+        return true;
+    }
 
-		return solicitud;
-	}
-
-	public Solicitud removeSolicitud(Solicitud solicitud) {
-		getSolicituds().remove(solicitud);
-		solicitud.setTipoSolicitud(null);
-
-		return solicitud;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.TipoSolicitud[ idTipo=" + idTipo + " ]";
+    }
+    
 }

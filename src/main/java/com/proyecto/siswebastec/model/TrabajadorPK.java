@@ -1,57 +1,78 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * The primary key class for the trabajador database table.
- * 
+ *
+ * @author johana
  */
 @Embeddable
 public class TrabajadorPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @Column(name = "ID_USUARIO")
+    private int idUsuario;
+    @Basic(optional = false)
+    @Column(name = "ID_TRABAJADOR")
+    private String idTrabajador;
 
-	@Column(name="ID_USUARIO", insertable=false, updatable=false)
-	private int idUsuario;
+    public TrabajadorPK() {
+    }
 
-	@Column(name="ID_TRABAJADOR")
-	private String idTrabajador;
+    public TrabajadorPK(int idUsuario, String idTrabajador) {
+        this.idUsuario = idUsuario;
+        this.idTrabajador = idTrabajador;
+    }
 
-	public TrabajadorPK() {
-	}
-	public int getIdUsuario() {
-		return this.idUsuario;
-	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	public String getIdTrabajador() {
-		return this.idTrabajador;
-	}
-	public void setIdTrabajador(String idTrabajador) {
-		this.idTrabajador = idTrabajador;
-	}
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof TrabajadorPK)) {
-			return false;
-		}
-		TrabajadorPK castOther = (TrabajadorPK)other;
-		return 
-			(this.idUsuario == castOther.idUsuario)
-			&& this.idTrabajador.equals(castOther.idTrabajador);
-	}
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.idUsuario;
-		hash = hash * prime + this.idTrabajador.hashCode();
-		
-		return hash;
-	}
+    public String getIdTrabajador() {
+        return idTrabajador;
+    }
+
+    public void setIdTrabajador(String idTrabajador) {
+        this.idTrabajador = idTrabajador;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (int) idUsuario;
+        hash += (idTrabajador != null ? idTrabajador.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TrabajadorPK)) {
+            return false;
+        }
+        TrabajadorPK other = (TrabajadorPK) object;
+        if (this.idUsuario != other.idUsuario) {
+            return false;
+        }
+        if ((this.idTrabajador == null && other.idTrabajador != null) || (this.idTrabajador != null && !this.idTrabajador.equals(other.idTrabajador))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.TrabajadorPK[ idUsuario=" + idUsuario + ", idTrabajador=" + idTrabajador + " ]";
+    }
+    
 }

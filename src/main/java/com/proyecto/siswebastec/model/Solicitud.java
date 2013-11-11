@@ -1,260 +1,252 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the solicitud database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Solicitud.findAll", query="SELECT s FROM Solicitud s")
+@Table(name = "solicitud")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")})
 public class Solicitud implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_SOLICITUD")
+    private Integer idSolicitud;
+    @Basic(optional = false)
+    @Column(name = "DESC_SOLICITUD")
+    private String descSolicitud;
+    @Basic(optional = false)
+    @Column(name = "FECHA_INGRESO")
+    @Temporal(TemporalType.DATE)
+    private Date fechaIngreso;
+    @Basic(optional = false)
+    @Column(name = "FECHA_CIERRE")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCierre;
+    @Basic(optional = false)
+    @Column(name = "HORA_INGRESO")
+    @Temporal(TemporalType.TIME)
+    private Date horaIngreso;
+    @Basic(optional = false)
+    @Column(name = "HORA_CIERRE")
+    @Temporal(TemporalType.TIME)
+    private Date horaCierre;
+    @Basic(optional = false)
+    @Column(name = "UBICACION")
+    private String ubicacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
+    private List<Solucion> solucionList;
+    @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
+    @ManyToOne
+    private TipoSolicitud idTipo;
+    @JoinColumn(name = "ID_PRIORIDAD", referencedColumnName = "ID_PRIORIDAD")
+    @ManyToOne
+    private Prioridad idPrioridad;
+    @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID_ESTADO")
+    @ManyToOne
+    private Estado idEstado;
+    @JoinColumns({
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
+        @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")})
+    @ManyToOne(optional = false)
+    private Cliente cliente;
+    @JoinColumn(name = "ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA")
+    @ManyToOne
+    private Categoria idCategoria;
+    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
+    @ManyToOne(optional = false)
+    private Ubicacion idUbicacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
+    private List<Atencion> atencionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
+    private List<Diagnostico> diagnosticoList;
 
-	@Id
-	@Column(name="ID_SOLICITUD")
-	private int idSolicitud;
+    public Solicitud() {
+    }
 
-	@Column(name="DESC_SOLICITUD")
-	private String descSolicitud;
+    public Solicitud(Integer idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_CIERRE")
-	private Date fechaCierre;
+    public Solicitud(Integer idSolicitud, String descSolicitud, Date fechaIngreso, Date fechaCierre, Date horaIngreso, Date horaCierre, String ubicacion) {
+        this.idSolicitud = idSolicitud;
+        this.descSolicitud = descSolicitud;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaCierre = fechaCierre;
+        this.horaIngreso = horaIngreso;
+        this.horaCierre = horaCierre;
+        this.ubicacion = ubicacion;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_INGRESO")
-	private Date fechaIngreso;
+    public Integer getIdSolicitud() {
+        return idSolicitud;
+    }
 
-	@Column(name="HORA_CIERRE")
-	private Time horaCierre;
+    public void setIdSolicitud(Integer idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
 
-	@Column(name="HORA_INGRESO")
-	private Time horaIngreso;
+    public String getDescSolicitud() {
+        return descSolicitud;
+    }
 
-	private String ubicacion;
+    public void setDescSolicitud(String descSolicitud) {
+        this.descSolicitud = descSolicitud;
+    }
 
-	//bi-directional many-to-one association to Atencion
-	@OneToMany(mappedBy="solicitud")
-	private List<Atencion> atencions;
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
 
-	//bi-directional many-to-one association to Diagnostico
-	@OneToMany(mappedBy="solicitud")
-	private List<Diagnostico> diagnosticos;
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
 
-	//bi-directional many-to-one association to Categoria
-	@ManyToOne
-	@JoinColumn(name="ID_CATEGORIA")
-	private Categoria categoria;
+    public Date getFechaCierre() {
+        return fechaCierre;
+    }
 
-	//bi-directional many-to-one association to Cliente
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="ID_CLIENTE", referencedColumnName="ID_CLIENTE"),
-		@JoinColumn(name="ID_USUARIO", referencedColumnName="ID_USUARIO")
-		})
-	private Cliente cliente;
+    public void setFechaCierre(Date fechaCierre) {
+        this.fechaCierre = fechaCierre;
+    }
 
-	//bi-directional many-to-one association to Estado
-	@ManyToOne
-	@JoinColumn(name="ID_ESTADO")
-	private Estado estado;
+    public Date getHoraIngreso() {
+        return horaIngreso;
+    }
 
-	//bi-directional many-to-one association to Prioridad
-	@ManyToOne
-	@JoinColumn(name="ID_PRIORIDAD")
-	private Prioridad prioridad;
+    public void setHoraIngreso(Date horaIngreso) {
+        this.horaIngreso = horaIngreso;
+    }
 
-	//bi-directional many-to-one association to TipoSolicitud
-	@ManyToOne
-	@JoinColumn(name="ID_TIPO")
-	private TipoSolicitud tipoSolicitud;
+    public Date getHoraCierre() {
+        return horaCierre;
+    }
 
-	//bi-directional many-to-one association to Ubicacion
-	@ManyToOne
-	@JoinColumn(name="ID_UBICACION")
-	private Ubicacion ubicacionBean;
+    public void setHoraCierre(Date horaCierre) {
+        this.horaCierre = horaCierre;
+    }
 
-	//bi-directional many-to-one association to Solucion
-	@OneToMany(mappedBy="solicitud")
-	private List<Solucion> solucions;
+    public String getUbicacion() {
+        return ubicacion;
+    }
 
-	public Solicitud() {
-	}
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 
-	public int getIdSolicitud() {
-		return this.idSolicitud;
-	}
+    @XmlTransient
+    public List<Solucion> getSolucionList() {
+        return solucionList;
+    }
 
-	public void setIdSolicitud(int idSolicitud) {
-		this.idSolicitud = idSolicitud;
-	}
+    public void setSolucionList(List<Solucion> solucionList) {
+        this.solucionList = solucionList;
+    }
 
-	public String getDescSolicitud() {
-		return this.descSolicitud;
-	}
+    public TipoSolicitud getIdTipo() {
+        return idTipo;
+    }
 
-	public void setDescSolicitud(String descSolicitud) {
-		this.descSolicitud = descSolicitud;
-	}
+    public void setIdTipo(TipoSolicitud idTipo) {
+        this.idTipo = idTipo;
+    }
 
-	public Date getFechaCierre() {
-		return this.fechaCierre;
-	}
+    public Prioridad getIdPrioridad() {
+        return idPrioridad;
+    }
 
-	public void setFechaCierre(Date fechaCierre) {
-		this.fechaCierre = fechaCierre;
-	}
+    public void setIdPrioridad(Prioridad idPrioridad) {
+        this.idPrioridad = idPrioridad;
+    }
 
-	public Date getFechaIngreso() {
-		return this.fechaIngreso;
-	}
+    public Estado getIdEstado() {
+        return idEstado;
+    }
 
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
+    public void setIdEstado(Estado idEstado) {
+        this.idEstado = idEstado;
+    }
 
-	public Time getHoraCierre() {
-		return this.horaCierre;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public void setHoraCierre(Time horaCierre) {
-		this.horaCierre = horaCierre;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public Time getHoraIngreso() {
-		return this.horaIngreso;
-	}
+    public Categoria getIdCategoria() {
+        return idCategoria;
+    }
 
-	public void setHoraIngreso(Time horaIngreso) {
-		this.horaIngreso = horaIngreso;
-	}
+    public void setIdCategoria(Categoria idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
-	public String getUbicacion() {
-		return this.ubicacion;
-	}
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
 
-	public void setUbicacion(String ubicacion) {
-		this.ubicacion = ubicacion;
-	}
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
 
-	public List<Atencion> getAtencions() {
-		return this.atencions;
-	}
+    @XmlTransient
+    public List<Atencion> getAtencionList() {
+        return atencionList;
+    }
 
-	public void setAtencions(List<Atencion> atencions) {
-		this.atencions = atencions;
-	}
+    public void setAtencionList(List<Atencion> atencionList) {
+        this.atencionList = atencionList;
+    }
 
-	public Atencion addAtencion(Atencion atencion) {
-		getAtencions().add(atencion);
-		atencion.setSolicitud(this);
+    @XmlTransient
+    public List<Diagnostico> getDiagnosticoList() {
+        return diagnosticoList;
+    }
 
-		return atencion;
-	}
+    public void setDiagnosticoList(List<Diagnostico> diagnosticoList) {
+        this.diagnosticoList = diagnosticoList;
+    }
 
-	public Atencion removeAtencion(Atencion atencion) {
-		getAtencions().remove(atencion);
-		atencion.setSolicitud(null);
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idSolicitud != null ? idSolicitud.hashCode() : 0);
+        return hash;
+    }
 
-		return atencion;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Solicitud)) {
+            return false;
+        }
+        Solicitud other = (Solicitud) object;
+        if ((this.idSolicitud == null && other.idSolicitud != null) || (this.idSolicitud != null && !this.idSolicitud.equals(other.idSolicitud))) {
+            return false;
+        }
+        return true;
+    }
 
-	public List<Diagnostico> getDiagnosticos() {
-		return this.diagnosticos;
-	}
-
-	public void setDiagnosticos(List<Diagnostico> diagnosticos) {
-		this.diagnosticos = diagnosticos;
-	}
-
-	public Diagnostico addDiagnostico(Diagnostico diagnostico) {
-		getDiagnosticos().add(diagnostico);
-		diagnostico.setSolicitud(this);
-
-		return diagnostico;
-	}
-
-	public Diagnostico removeDiagnostico(Diagnostico diagnostico) {
-		getDiagnosticos().remove(diagnostico);
-		diagnostico.setSolicitud(null);
-
-		return diagnostico;
-	}
-
-	public Categoria getCategoria() {
-		return this.categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public Cliente getCliente() {
-		return this.cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Estado getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	public Prioridad getPrioridad() {
-		return this.prioridad;
-	}
-
-	public void setPrioridad(Prioridad prioridad) {
-		this.prioridad = prioridad;
-	}
-
-	public TipoSolicitud getTipoSolicitud() {
-		return this.tipoSolicitud;
-	}
-
-	public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
-		this.tipoSolicitud = tipoSolicitud;
-	}
-
-	public Ubicacion getUbicacionBean() {
-		return this.ubicacionBean;
-	}
-
-	public void setUbicacionBean(Ubicacion ubicacionBean) {
-		this.ubicacionBean = ubicacionBean;
-	}
-
-	public List<Solucion> getSolucions() {
-		return this.solucions;
-	}
-
-	public void setSolucions(List<Solucion> solucions) {
-		this.solucions = solucions;
-	}
-
-	public Solucion addSolucion(Solucion solucion) {
-		getSolucions().add(solucion);
-		solucion.setSolicitud(this);
-
-		return solucion;
-	}
-
-	public Solucion removeSolucion(Solucion solucion) {
-		getSolucions().remove(solucion);
-		solucion.setSolicitud(null);
-
-		return solucion;
-	}
-
+    @Override
+    public String toString() {
+        return "com.proyecto.siswebastec.model.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+    }
+    
 }
