@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Prueba_1">
+		<class>com.proyecto.siswebastec.model.Area</class>
+		<class>com.proyecto.siswebastec.model.Atencion</class>
+		<class>com.proyecto.siswebastec.model.Aula</class>
+		<class>com.proyecto.siswebastec.model.Categoria</class>
+		<class>com.proyecto.siswebastec.model.Cliente</class>
+		<class>com.proyecto.siswebastec.model.ClientePK</class>
+		<class>com.proyecto.siswebastec.model.Diagnostico</class>
+		<class>com.proyecto.siswebastec.model.Estado</class>
+		<class>com.proyecto.siswebastec.model.Evaluacion</class>
+		<class>com.proyecto.siswebastec.model.Laboratorio</class>
+		<class>com.proyecto.siswebastec.model.Perfil</class>
+		<class>com.proyecto.siswebastec.model.Prioridad</class>
+		<class>com.proyecto.siswebastec.model.Privilegio</class>
+		<class>com.proyecto.siswebastec.model.Solicitud</class>
+		<class>com.proyecto.siswebastec.model.Solucion</class>
+		<class>com.proyecto.siswebastec.model.TipoSolicitud</class>
+		<class>com.proyecto.siswebastec.model.Trabajador</class>
+		<class>com.proyecto.siswebastec.model.TrabajadorPK</class>
+		<class>com.proyecto.siswebastec.model.Turno</class>
+		<class>com.proyecto.siswebastec.model.Ubicacion</class>
+		<class>com.proyecto.siswebastec.model.Usuario</class>
+	</persistence-unit>
+</persistence>
