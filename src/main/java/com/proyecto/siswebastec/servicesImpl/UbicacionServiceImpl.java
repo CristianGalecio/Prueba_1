@@ -80,6 +80,14 @@ public class UbicacionServiceImpl implements UbicacionService{
 		ubicacion = ubicacionDAO.getUbicacionByIdubicacion(id);
 		return ubicacion;
 	}
+	
+	@Override
+	public Ubicacion getNombreByNombre(String nombre) {
+		objJpaUtil =  new JPAUtil();
+		ubicacionDAO = new UbicacionDAO(objJpaUtil.getEntityManager());
+		ubicacion = ubicacionDAO.getUbicacionByNombre(nombre);
+		return ubicacion;
+	}
 
 	public List<String> getNombreUbi() {
 		List<Ubicacion> ubs = getUbicaciones();
@@ -132,5 +140,7 @@ public class UbicacionServiceImpl implements UbicacionService{
 	public List<Laboratorio> getLabos(){
 		return getLaboratorioDAO().listarTodos();
 	}
+
+	
 	
 }

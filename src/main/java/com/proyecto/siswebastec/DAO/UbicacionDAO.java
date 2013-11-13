@@ -33,5 +33,18 @@ public class UbicacionDAO extends DaoGenericImpl<Ubicacion, Integer>{
 		entityManager.close();	
 		return trb;
 	}
+	
+	public Ubicacion getUbicacionByNombre(String nombre){
+		Ubicacion trb = null;
+		entityManager.getTransaction().begin();		
+		@SuppressWarnings("unchecked")
+		List<Ubicacion> aux =  entityManager.createQuery("SELECT u FROM Ubicacion u WHERE u.nombreUbicacion = '"+nombre+"'").getResultList();
+		if(aux.size()!=0){
+			trb=aux.get(0);
+		}
+		entityManager.getTransaction().commit();
+		entityManager.close();	
+		return trb;
+	}
 
 }

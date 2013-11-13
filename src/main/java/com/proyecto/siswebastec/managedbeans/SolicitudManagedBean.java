@@ -6,15 +6,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+
 import org.primefaces.context.RequestContext;
+
 import com.proyecto.siswebastec.model.Area;
 import com.proyecto.siswebastec.model.Aula;
 import com.proyecto.siswebastec.model.Cliente;
 import com.proyecto.siswebastec.model.Laboratorio;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Ubicacion;
 import com.proyecto.siswebastec.services.ClienteService;
 import com.proyecto.siswebastec.services.SolicitudService;
 import com.proyecto.siswebastec.services.UbicacionService;
@@ -31,6 +36,8 @@ public class SolicitudManagedBean implements Serializable {
 	private List<String> ubicaciones;
 	private String nombre;
 	private List<String> nombres;
+	private String descripcion;
+	//Flash n;
 	
 	UbicacionService ubicacionService;
 	SolicitudService solicitudService;
@@ -75,6 +82,14 @@ public class SolicitudManagedBean implements Serializable {
 		this.nombres = nombres;
 	}
 	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	public List<List<String>> UbicacionNombre(){
 		List<List<String>> ubns = new ArrayList<>();
 		ubns.add(0,ubicacionService.getNombreAreas());
@@ -99,25 +114,36 @@ public class SolicitudManagedBean implements Serializable {
 	
 	public void guardar(ActionEvent actionEvent){
 		//RequestContext context = RequestContext.getCurrentInstance();
-			
+		LoginBean lb = new LoginBean();	
 		Date Fecha = Calendar.getInstance().getTime();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
 		sdf.format(Fecha);
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fechaaaa:"+sdf.format(Fecha), nombre);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		
-		/*Cliente cliente = clienteService.getClienteById(nombre);
+		//FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fechaaaa:"+sdf.format(Fecha), nombre);
+		//FacesContext.getCurrentInstance().addMessage(null, msg);
+		Ubicacion ubi = ubicacionService.getNombreByNombre(getNombre());
+		System.out.println(lb.getUsuario());
+		Cliente cliente = clienteService.getClienteById(lb.getUsuario());
 		Solicitud solNueva = new Solicitud();
 		solNueva.setCliente(cliente);
-		solNueva.setUbicacion(nombre);
-		solNueva.setIdUbicacion(ubicaciones.);
-		solNueva.setDescSolicitud(descSolicitud);
-		solNueva.setFechaIngreso();*/
+		solNueva.setUbicacion(getNombre());
+		solNueva.setIdUbicacion(ubi);
+		solNueva.setDescSolicitud(getDescripcion());
+		solNueva.setFechaIngreso(Fecha);
+		
+		System.out.println("Cliente:"+cliente.getNombreUsuario());
+		System.out.println("Nombre:"+getNombre());
+		System.out.println("Ubicacion:"+ubi.getNombreUbicacion());
+		System.out.println("Descripcion:"+getDescripcion());
 		System.out.println("Fechaaaa:"+sdf.format(Fecha));
+		
 	}
 	
 	public void cancelar(){
 		
+	}
+	
+	public String grabar(){
+		return "Holitas";
 	}
 	
 

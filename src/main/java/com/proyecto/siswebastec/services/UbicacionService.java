@@ -14,6 +14,7 @@ public interface UbicacionService {
 	public void updateUbicacion(Ubicacion ubicacion);
 	public void deleteUbicacion(Ubicacion ubicacion);	
 	public Ubicacion getUbicacionById(int id);	
+	public Ubicacion getNombreByNombre(String nombre);
 	public List<Ubicacion> getUbicaciones();
 	public List<String> getNombreUbi();
 	public List<Area> getAreas();

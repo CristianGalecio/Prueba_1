@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+<h:head> 
+</h:head> 
+<h:body style="text-align:center">
+
+	<h1>JSF 2 actionListener example</h1>
+ 
+	<h:form id="form">
+	
+		<h:panelGrid columns="5" cellpadding="5">
+		          	<h:outputText value="Usuario:"/>
+		          	<h:outputText />
+		          	<h:outputText/>
+		          	<h:outputText value="Fecha y hora:"/>
+		          	<h:inputText id="textFecha"  disabled="false"/>
+
+		            <h:outputText value="Ubicacion"/>
+		            <p:selectOneMenu id="ubicacion" value="#{solicitudManagedBean.ubicacion}">  
+		                <f:selectItem itemLabel="Selecciona" itemValue="Default" />  
+		                <f:selectItems value="#{solicitudManagedBean.ubicaciones}" /> 
+		                <p:ajax update="nombres"  
+                        listener="#{solicitudManagedBean.handleUbicacionChange}" />
+		            </p:selectOneMenu>  
+		  			<h:outputText/>
+		            <p:selectOneMenu id="nombres" value="#{solicitudManagedBean.nombre}">  
+		                <f:selectItem itemLabel="Selecciona" itemValue="Default" />  
+		                <f:selectItems value="#{solicitudManagedBean.nombres}" />  
+		            </p:selectOneMenu>  
+		</h:panelGrid>  
+	
+		<br/>
+        <h:outputText value="Descripcion:"/><br/>
+  		<p:inputTextarea rows= "5"  cols = "100"  /> 
+  		<br/>		  		  
+  		<br/>
+  		<h:panelGrid columns="5" cellpadding="5">
+  			<p:commandButton id="submitButton" 
+		value="Submit" action="#{solicitudManagedBean.grabar}" 
+		actionListener="#{solicitudManagedBean.guardar}" />
+  		</h:panelGrid>
+ 
+	  
+ 
+	</h:form>
+
+</h:body>
+</html>
