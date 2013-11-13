@@ -7,10 +7,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.el.ELContext;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
@@ -21,10 +25,12 @@ import com.proyecto.siswebastec.model.Laboratorio;
 import com.proyecto.siswebastec.model.Solicitud;
 import com.proyecto.siswebastec.model.Ubicacion;
 import com.proyecto.siswebastec.services.ClienteService;
+import com.proyecto.siswebastec.services.LoginService;
 import com.proyecto.siswebastec.services.SolicitudService;
 import com.proyecto.siswebastec.services.UbicacionService;
 import com.proyecto.siswebastec.services.UsuarioService;
 import com.proyecto.siswebastec.servicesImpl.ClienteServiceImpl;
+import com.proyecto.siswebastec.servicesImpl.LoginServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.UbicacionServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.UsuarioServiceImpl;
@@ -37,17 +43,20 @@ public class SolicitudManagedBean implements Serializable {
 	private String nombre;
 	private List<String> nombres;
 	private String descripcion;
+	private String usuario;
 	//Flash n;
 	
 	UbicacionService ubicacionService;
 	SolicitudService solicitudService;
 	ClienteService clienteService;
+	LoginService loginService;
 	
 	public SolicitudManagedBean() {
 		ubicacionService = new UbicacionServiceImpl();
 		ubicaciones = ubicacionService.getNombreUbi();
 		solicitudService = new SolicitudServiceImpl();
-		clienteService = new ClienteServiceImpl(); 		
+		clienteService = new ClienteServiceImpl(); 
+		loginService = new LoginServiceImpl();
 	}
 	
 	public String getUbicacion() {
@@ -88,6 +97,14 @@ public class SolicitudManagedBean implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}	
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public List<List<String>> UbicacionNombre(){
@@ -114,37 +131,44 @@ public class SolicitudManagedBean implements Serializable {
 	
 	public void guardar(ActionEvent actionEvent){
 		//RequestContext context = RequestContext.getCurrentInstance();
-		LoginBean lb = new LoginBean();	
+		//Comunicacion entre ManagedBean
+		FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+		LoginBean nB =(LoginBean) session.getAttribute("loginBean");	
 		Date Fecha = Calendar.getInstance().getTime();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
-		sdf.format(Fecha);
+		Cliente cliente;
 		//FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fechaaaa:"+sdf.format(Fecha), nombre);
 		//FacesContext.getCurrentInstance().addMessage(null, msg);
-		Ubicacion ubi = ubicacionService.getNombreByNombre(getNombre());
-		System.out.println(lb.getUsuario());
-		Cliente cliente = clienteService.getClienteById(lb.getUsuario());
+		String tipo = loginService.DevolverTipoUsuario(nB.getUsuario(), nB.getClave());
+		System.out.println(tipo);
+		if(tipo.equals("cliente")){
+			cliente = clienteService.getClienteById(nB.getUsuario());
+		}else{
+			System.out.println(getUsuario());
+			cliente = clienteService.getClienteById(getUsuario());
+		}		
+		
+		Ubicacion ubi = ubicacionService.getNombreByNombre(getUbicacion());
 		Solicitud solNueva = new Solicitud();
 		solNueva.setCliente(cliente);
 		solNueva.setUbicacion(getNombre());
 		solNueva.setIdUbicacion(ubi);
 		solNueva.setDescSolicitud(getDescripcion());
+		solNueva.setIdSolicitante(nB.getUsuario());
 		solNueva.setFechaIngreso(Fecha);
+		solNueva.setFechaCierre(Fecha);
+		solNueva.setHoraIngreso(Fecha);
+		solNueva.setHoraCierre(Fecha);
 		
-		System.out.println("Cliente:"+cliente.getNombreUsuario());
-		System.out.println("Nombre:"+getNombre());
-		System.out.println("Ubicacion:"+ubi.getNombreUbicacion());
-		System.out.println("Descripcion:"+getDescripcion());
-		System.out.println("Fechaaaa:"+sdf.format(Fecha));
-		
+		solicitudService.addSolicitud(solNueva);		
 	}
 	
-	public void cancelar(){
-		
+	public void cancelar(ActionEvent actionEvent){
+		setDescripcion("");
+		setNombre("");
+		//setNombres(nombres);
+		setUbicacion("");
+		setUsuario("");
 	}
 	
-	public String grabar(){
-		return "Holitas";
-	}
-	
-
 }

@@ -49,6 +49,9 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "UBICACION")
     private String ubicacion;
+    @Basic(optional = false)
+    @Column(name = "ID_SOLICITANTE")
+    private String idSolicitante;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
     private List<Solucion> solucionList;
     @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
@@ -83,7 +86,7 @@ public class Solicitud implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
-    public Solicitud(Integer idSolicitud, String descSolicitud, Date fechaIngreso, Date fechaCierre, Date horaIngreso, Date horaCierre, String ubicacion) {
+    public Solicitud(Integer idSolicitud, String descSolicitud, Date fechaIngreso, Date fechaCierre, Date horaIngreso, Date horaCierre, String ubicacion, String idSolicitante) {
         this.idSolicitud = idSolicitud;
         this.descSolicitud = descSolicitud;
         this.fechaIngreso = fechaIngreso;
@@ -91,6 +94,7 @@ public class Solicitud implements Serializable {
         this.horaIngreso = horaIngreso;
         this.horaCierre = horaCierre;
         this.ubicacion = ubicacion;
+        this.idSolicitante = idSolicitante;
     }
 
     public Integer getIdSolicitud() {
@@ -148,8 +152,16 @@ public class Solicitud implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+    
+    public String getIdSolicitante() {
+		return idSolicitante;
+	}
 
-    @XmlTransient
+	public void setIdSolicitante(String idSolicitante) {
+		this.idSolicitante = idSolicitante;
+	}
+
+	@XmlTransient
     public List<Solucion> getSolucionList() {
         return solucionList;
     }

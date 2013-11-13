@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
@@ -96,5 +97,13 @@ public class LoginBean implements Serializable {
 					context.addCallbackParam("view", "/Prueba_1/pages/registroAtencionT.xhtml");
 				}
 			}		
-	}	
+	}
+	
+	/*public String navedata(){
+		 Flash flash = FacesContext.getCurrentInstance().  
+	              getExternalContext().getFlash();  
+		 flash.put("user", usuario);  
+	     flash.put("pass",clave);
+		return "";
+	}*/
 }
