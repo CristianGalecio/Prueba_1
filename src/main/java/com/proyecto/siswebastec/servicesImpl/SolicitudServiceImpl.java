@@ -43,8 +43,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	public List<Solicitud> getSolicitudes() {
-		// TODO Auto-generated method stub
-		return null;
+		objJpaUtil = new JPAUtil();
+		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
+		return solicitudDAO.listarTodos();
 	}
 
 	public boolean verificaSolicitud(int id) {

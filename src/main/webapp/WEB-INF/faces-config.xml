@@ -16,5 +16,10 @@
 		<managed-bean-class>com.proyecto.siswebastec.managedbeans.SolicitudManagedBean</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>tableBean</managed-bean-name>
+		<managed-bean-class>com.proyecto.siswebastec.managedbeans.TableBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
   	
 </faces-config>
