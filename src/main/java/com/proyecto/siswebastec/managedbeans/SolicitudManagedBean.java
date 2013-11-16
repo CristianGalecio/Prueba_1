@@ -175,4 +175,12 @@ public class SolicitudManagedBean implements Serializable {
 		setUsuario("");
 	}
 	
+	public String cambiarPagGen(){
+		return "regSolGenerar?faces-redirect=true";
+	}
+	
+	public String cambiarPagVis(){
+		return "regSolVisualizar?faces-redirect=true";
+	}
+	
 }

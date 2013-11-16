@@ -16,8 +16,8 @@
             
                    <center>
             <p:panelGrid columns="1" cellpadding="1">  
-                    <p:commandButton type="button" value="Generar"  />
-                    <p:commandButton type="button" value="Visualizar"/>                                            
+                    <p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGen}" />
+                    <p:commandButton Id="Generar" value="Historial" action="#{solicitudBean.cambiarPagVis}" />                                            
                 </p:panelGrid> 
                 </center>  
     </p:layoutUnit>    

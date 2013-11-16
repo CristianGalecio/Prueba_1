@@ -29,6 +29,7 @@ public class TableBean implements Serializable{
 	}
 
 	public List<Solicitud> getSolicitudespro() {
+		setSolicitudespro(solserv.getSolicitudesProceso());
 		return solicitudespro;
 	}
 
@@ -37,6 +38,7 @@ public class TableBean implements Serializable{
 	}
 
 	public List<Solicitud> getSolicitudesfin() {
+		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
 		return solicitudesfin;
 	}
 

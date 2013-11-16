@@ -16,8 +16,8 @@
             
                    <center>
             <p:panelGrid columns="1" cellpadding="1">  
-                    <p:commandButton type="button" value="Generar"  />
-                    <p:commandButton type="button" value="Historial"/>                                            
+                    <p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGen}" />
+                    <p:commandButton Id="Generar" value="Historial" action="#{solicitudBean.cambiarPagVis}" />                                            
                 </p:panelGrid> 
                 </center>  
     </p:layoutUnit>    
@@ -52,74 +52,66 @@
                           
               <p:tabView id="tabview" dinamic="true">
 				<p:tab title="Pendientes">
-					
-					<p:dataTable id="dataPendientes" var="Pendientes" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
-						
-					</p:dataTable>
-							
+					<p:dataTable id="dataPendientes" var="Solicitudes" value="#{tableBean.solicitudespend}"
+								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+				        <p:column headerText="ID" align="center">  
+				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
+				        </p:column>  
+				        <p:column headerText="Descripcion" align="center">  
+				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" align="center">  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        </p:column>  
+				    </p:dataTable>						
 				
 				</p:tab>
 				<p:tab title="En Proceso">
 									  
-					<p:dataTable id="dataProceso" var="Proceso" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
-						
-					</p:dataTable>
+					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.solicitudespro}"
+								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+				        <p:column headerText="ID" align="center">  
+				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
+				        </p:column>  
+				        <p:column headerText="Descripcion" align="center">  
+				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" align="center">  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        </p:column>  
+				    </p:dataTable>
 					
 				
 				</p:tab>
 				<p:tab title="Finalizado">
 				
-					<p:dataTable id="dataFinal" var="Finalizado" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
-						
-					</p:dataTable>
+					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.solicitudesfin}"
+								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+				        <p:column headerText="ID" align="center">  
+				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
+				        </p:column>  
+				        <p:column headerText="Descripcion" align="center">  
+				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" align="center">  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        </p:column>  
+				    </p:dataTable>
 						
 				</p:tab>			
 				
