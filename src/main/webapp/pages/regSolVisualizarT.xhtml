@@ -22,86 +22,105 @@
                 </center>  
     </p:layoutUnit>    
     <p:layoutUnit position="center">
-    	<h:form>
+    	<h:form id="form">
+    		<p:growl id="growl" showDetail="true"/>
                <p:tabView id="tabview" dinamic="true">
 				<p:tab title="Pendientes">
-					
-					<p:dataTable id="dataPendientes" var="Pendientes" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
+					  
+					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}"
+								 paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								 selection="#{tableBean.selectedSol}" selectionMode="single"	>
+						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}"   
+                    	update=":form:display :form:growl" oncomplete="solDialog.show()" />  
+        				<p:ajax event="rowUnselect" listener="#{tableBean.onRowUnselect}" update=":form:growl"/>
+        
+			        	<f:facet name="header">  
+				            Select a row to display a message  
+				        </f:facet>  
+				  
+				        <p:column headerText="ID">  
+				            #{Solicitud.idSolicitud}  
+				        </p:column>  
+				  
+				        <p:column headerText="Descripcion">  
+				            #{Solicitud.descSolicitud}  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" >  
+				            #{Solicitud.fechaIngreso}  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            #{Solicitud.fechaCierre}  
+				        </p:column> 			  
 						
 					</p:dataTable>
-							
-				
 				</p:tab>
+					
 				<p:tab title="En Proceso">
 									  
-					<p:dataTable id="dataProceso" var="Proceso" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
-						
-					</p:dataTable>
+					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.solicitudespro}"
+								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+				        <p:column headerText="ID" align="center">  
+				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
+				        </p:column>  
+				        <p:column headerText="Descripcion" align="center">  
+				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" align="center">  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        </p:column>  
+				    </p:dataTable>
 					
 				
 				</p:tab>
 				<p:tab title="Finalizado">
 				
-					<p:dataTable id="dataFinal" var="Finalizado" 
-								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
-						
-			        	<p:column id="docColumn" headerText="Documento" >  
-			            	<h:outputText />  
-			        	</p:column>
-			        				  
-			   			<p:column id="placaColumn" headerText="Placa">  
-			            	<h:outputText />  
-			        	</p:column>  
-			        	
-			        	<p:column id="marcaColumn" headerText="Marca">  
-			            	<h:outputText />  
-			        	</p:column> 
-			        	<p:column id="modeloColumn" headerText="Modelo" >  
-			            	<h:outputText />  
-			        	</p:column> 			  
-						
-					</p:dataTable>
+					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.solicitudesfin}"
+								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+				        <p:column headerText="ID" align="center">  
+				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
+				        </p:column>  
+				        <p:column headerText="Descripcion" align="center">  
+				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Ingreso" align="center">  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				        </p:column>  
+				  
+				        <p:column headerText="Fecha de Cierre">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        </p:column>  
+				    </p:dataTable>
 						
 				</p:tab>			
 				
 			</p:tabView>       
-                          
-                          
-     </h:form>  
-              
-       
+            <p:dialog id="dialog" header="Solicitud Detail" widgetVar="solDialog" resizable="false"  
+	                showEffect="fade" hideEffect="explode">  
+	  
+				        <h:panelGrid id="display" columns="2" cellpadding="4">  
+				  
+				            <h:outputText value="Id:" />  
+				            <h:outputText value="#{tableBean.selectedSol.idSolicitud}" />  
+				  
+				            <h:outputText value="Descripcion:" />  
+				            <h:outputText value="#{tableBean.selectedSol.descSolicitud}" />  
+				  
+				            <h:outputText value="Fecha Ingreso:" />  
+				            <h:outputText value="#{tableBean.selectedSol.fechaIngreso}" />  
+				  
+				            <h:outputText value="Fecha Cierre:" />  
+				            <h:outputText value="#{tableBean.selectedSol.fechaCierre}" />  
+				        </h:panelGrid>  
+				    </p:dialog>
+     </h:form>
     </p:layoutUnit>   
 </p:layout>
 </h:body> 
