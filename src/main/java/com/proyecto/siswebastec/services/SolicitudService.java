@@ -12,5 +12,8 @@ public interface SolicitudService {
 	public Solicitud getSolicitudById(String id);	
 	public List<Solicitud> getSolicitudes();
 	public boolean verificaSolicitud(int id);
+	public List<Solicitud> getSolicitudesPendientes();
+	public List<Solicitud> getSolicitudesProceso();
+	public List<Solicitud> getSolicitudesFinalizadas();
 
 }
