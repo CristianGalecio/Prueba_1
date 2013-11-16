@@ -21,6 +21,7 @@ import org.primefaces.context.RequestContext;
 import com.proyecto.siswebastec.model.Area;
 import com.proyecto.siswebastec.model.Aula;
 import com.proyecto.siswebastec.model.Cliente;
+import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Laboratorio;
 import com.proyecto.siswebastec.model.Solicitud;
 import com.proyecto.siswebastec.model.Ubicacion;
@@ -148,6 +149,8 @@ public class SolicitudManagedBean implements Serializable {
 			cliente = clienteService.getClienteById(getUsuario());
 		}		
 		
+		Estado est=new Estado(1);
+		
 		Ubicacion ubi = ubicacionService.getNombreByNombre(getUbicacion());
 		Solicitud solNueva = new Solicitud();
 		solNueva.setCliente(cliente);
@@ -159,6 +162,7 @@ public class SolicitudManagedBean implements Serializable {
 		solNueva.setFechaCierre(Fecha);
 		solNueva.setHoraIngreso(Fecha);
 		solNueva.setHoraCierre(Fecha);
+		solNueva.setIdEstado(est);
 		
 		solicitudService.addSolicitud(solNueva);		
 	}
