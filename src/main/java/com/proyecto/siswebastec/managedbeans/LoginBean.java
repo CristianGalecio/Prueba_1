@@ -83,7 +83,7 @@ public class LoginBean implements Serializable {
 					}					
 				}else{					
 					logeado = false;
-					msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error","Credenciales no válidas");
+					msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error","Credenciales no vï¿½lidas");
 				}				
 			}
 			
@@ -91,10 +91,10 @@ public class LoginBean implements Serializable {
 			context.addCallbackParam("estaLogeado", logeado);
 			
 			if (logeado && tipo.equals("cliente")){				
-				context.addCallbackParam("view", "/Prueba_1/pages/registroAtencion.xhtml");
+				context.addCallbackParam("view", "/Prueba_1/pages/regSolGenerar.xhtml");
 			}else{
 				if(logeado && tipo.equals("trabajador")){
-					context.addCallbackParam("view", "/Prueba_1/pages/registroAtencionT.xhtml");
+					context.addCallbackParam("view", "/Prueba_1/pages/regSolGenerarT.xhtml");
 				}
 			}		
 	}
