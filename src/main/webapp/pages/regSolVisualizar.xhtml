@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+
+<h:body>
+<p:layout fullPage="true">  
+  
+    <p:layoutUnit position="north" size="110" resizable="false" closable="false" collapsible="false">    
+        <Center><h2>SISWEB-ASTEC</h2></Center><!--  <H3>Bienvenido</H3>  -->
+    </p:layoutUnit>    
+  
+    <p:layoutUnit position="west" size="200" header="Solicitudes" collapsible="true"> 
+            <br/> 
+            
+                   <center>
+            <p:panelGrid columns="1" cellpadding="1">  
+                    <p:commandButton type="button" value="Generar"  />
+                    <p:commandButton type="button" value="Historial"/>                                            
+                </p:panelGrid> 
+                </center>  
+    </p:layoutUnit>    
+    <p:layoutUnit position="center">
+              
+      <h:form >
+               <!-- <p:growl id="messages" />  
+                <p:toolbar>  
+                            <p:toolbarGroup align="left">  
+                                <p:commandButton type="button" value="New" icon="ui-icon-document" />  
+  
+                                <p:commandButton type="button" value="Open" icon="ui-icon-folder-open"/>  
+  
+                                <p:separator />  
+  
+                                <p:commandButton type="button" title="Save" icon="ui-icon-disk"/>  
+                                <p:commandButton type="button" title="Delete" icon="ui-icon-trash"/>  
+                                <p:commandButton type="button" title="Print" icon="ui-icon-print"/>  
+                            </p:toolbarGroup>  
+  
+                            <p:toolbarGroup align="right">  
+                                <p:menuButton value="Options">  
+                                    <p:menuitem value="Home" url="http://www.primefaces.org" />  
+                                    <p:menuitem value="ShowCase"  
+                                                url="http://www.primefaces.org/showcase" />  
+                                    <p:menuitem value="TouchFaces"  
+                                                url="http://www.primefaces.org/showcase/touch" />  
+                                </p:menuButton>  
+                            </p:toolbarGroup>  
+  
+                          </p:toolbar>   -->
+                          
+              <p:tabView id="tabview" dinamic="true">
+				<p:tab title="Pendientes">
+					
+					<p:dataTable id="dataPendientes" var="Pendientes" 
+								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
+						
+			        	<p:column id="docColumn" headerText="Documento" >  
+			            	<h:outputText />  
+			        	</p:column>
+			        				  
+			   			<p:column id="placaColumn" headerText="Placa">  
+			            	<h:outputText />  
+			        	</p:column>  
+			        	
+			        	<p:column id="marcaColumn" headerText="Marca">  
+			            	<h:outputText />  
+			        	</p:column> 
+			        	<p:column id="modeloColumn" headerText="Modelo" >  
+			            	<h:outputText />  
+			        	</p:column> 			  
+						
+					</p:dataTable>
+							
+				
+				</p:tab>
+				<p:tab title="En Proceso">
+									  
+					<p:dataTable id="dataProceso" var="Proceso" 
+								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
+						
+			        	<p:column id="docColumn" headerText="Documento" >  
+			            	<h:outputText />  
+			        	</p:column>
+			        				  
+			   			<p:column id="placaColumn" headerText="Placa">  
+			            	<h:outputText />  
+			        	</p:column>  
+			        	
+			        	<p:column id="marcaColumn" headerText="Marca">  
+			            	<h:outputText />  
+			        	</p:column> 
+			        	<p:column id="modeloColumn" headerText="Modelo" >  
+			            	<h:outputText />  
+			        	</p:column> 			  
+						
+					</p:dataTable>
+					
+				
+				</p:tab>
+				<p:tab title="Finalizado">
+				
+					<p:dataTable id="dataFinal" var="Finalizado" 
+								 paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>
+						
+			        	<p:column id="docColumn" headerText="Documento" >  
+			            	<h:outputText />  
+			        	</p:column>
+			        				  
+			   			<p:column id="placaColumn" headerText="Placa">  
+			            	<h:outputText />  
+			        	</p:column>  
+			        	
+			        	<p:column id="marcaColumn" headerText="Marca">  
+			            	<h:outputText />  
+			        	</p:column> 
+			        	<p:column id="modeloColumn" headerText="Modelo" >  
+			            	<h:outputText />  
+			        	</p:column> 			  
+						
+					</p:dataTable>
+						
+				</p:tab>			
+				
+			</p:tabView>       
+                          
+                          
+     </h:form>  
+
+  </p:layoutUnit>   
+</p:layout>
+</h:body> 
+</html>
