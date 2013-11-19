@@ -8,7 +8,7 @@
 <p:layout fullPage="true">  
   
     <p:layoutUnit position="north" size="110" resizable="false" closable="false" collapsible="false">    
-        <Center><h2>SISWEB-ASTEC</h2></Center><!--  <H3>Bienvenido</H3>  -->
+        <Center><h2>SISTEMA WEB DE ASISTENCIA TECNICA</h2></Center><!--  <H3>Bienvenido</H3>  -->
     </p:layoutUnit>    
   
     <p:layoutUnit position="west" size="200" header="Solicitudes" collapsible="true"> 
@@ -17,7 +17,7 @@
                    <center>
             <p:panelGrid columns="1" cellpadding="1">  
                     <p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGen}" />
-                    <p:commandButton Id="Generar" value="Historial" action="#{solicitudBean.cambiarPagVis}" />                                            
+                    <p:commandButton Id="Historial" value="Historial" action="#{solicitudBean.cambiarPagVis}" />                                            
                 </p:panelGrid> 
                 </center>  
     </p:layoutUnit>    
@@ -53,7 +53,7 @@
               <p:tabView id="tabview" dinamic="true">
 				<p:tab title="Pendientes">
 					<p:dataTable id="dataPendientes" var="Solicitudes" value="#{tableBean.solicitudespend}"
-								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -62,11 +62,15 @@
 				        </p:column>  
 				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
-				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
+				            	<f:convertDateTime pattern="d/M/yyyy"/>
+				            </h:outputText>    
 				        </p:column>  
 				  
-				        <p:column headerText="Fecha de Cierre">  
-				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
+				        <p:column headerText="Hora de Ingreso">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" >
+				            	<f:convertDateTime pattern="hh:mm a"/>
+				            </h:outputText>  
 				        </p:column>  
 				    </p:dataTable>						
 				
@@ -74,7 +78,7 @@
 				<p:tab title="En Proceso">
 									  
 					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.solicitudespro}"
-								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+								paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -83,12 +87,16 @@
 				        </p:column>  
 				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
-				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
+				            	<f:convertDateTime pattern="d/M/yyyy"/>
+				            </h:outputText>    
 				        </p:column>  
 				  
-				        <p:column headerText="Fecha de Cierre">  
-				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
-				        </p:column>  
+				        <p:column headerText="Hora de Ingreso">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" >
+				            	<f:convertDateTime pattern="hh:mm a"/>
+				            </h:outputText>  
+				        </p:column> 
 				    </p:dataTable>
 					
 				
@@ -96,7 +104,7 @@
 				<p:tab title="Finalizado">
 				
 					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.solicitudesfin}"
-								paginator="true" rows="40" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -105,12 +113,16 @@
 				        </p:column>  
 				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
-				            <h:outputText value="#{Solicitudes.fechaIngreso}" />  
+				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
+				            	<f:convertDateTime pattern="d/M/yyyy"/>
+				            </h:outputText>    
 				        </p:column>  
 				  
-				        <p:column headerText="Fecha de Cierre">  
-				            <h:outputText value="#{Solicitudes.horaIngreso}" />  
-				        </p:column>  
+				        <p:column headerText="Hora de Ingreso">  
+				            <h:outputText value="#{Solicitudes.horaIngreso}" >
+				            	<f:convertDateTime pattern="hh:mm a"/>
+				            </h:outputText>  
+				        </p:column>
 				    </p:dataTable>
 						
 				</p:tab>			

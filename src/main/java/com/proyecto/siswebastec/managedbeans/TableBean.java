@@ -34,7 +34,8 @@ public class TableBean implements Serializable{
 	
 	public List<Solicitud> getSolicitudespend() {
 		System.out.println("TableBean.getSolicitudespend()");
-		//setSolicitudespend(solserv.getSolicitudesPendientes());
+		solserv=new SolicitudServiceImpl();
+		setSolicitudespend(solserv.getSolicitudesPendientes());		
 		return this.solicitudespend;
 	}
 
@@ -97,6 +98,7 @@ public class TableBean implements Serializable{
 
 	public SolicitudDataModel getMediumSolsModel() {
 		System.out.println("TableBean.getMediumSolsModel()");
+		setMediumSolsModel(new SolicitudDataModel(getSolicitudespend()));
 		return mediumSolsModel;
 	}
 

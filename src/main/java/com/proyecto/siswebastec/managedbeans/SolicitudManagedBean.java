@@ -24,6 +24,7 @@ import com.proyecto.siswebastec.model.Cliente;
 import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Laboratorio;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.TipoSolicitud;
 import com.proyecto.siswebastec.model.Ubicacion;
 import com.proyecto.siswebastec.services.ClienteService;
 import com.proyecto.siswebastec.services.LoginService;
@@ -149,8 +150,8 @@ public class SolicitudManagedBean implements Serializable {
 			cliente = clienteService.getClienteById(getUsuario());
 		}		
 		
-		Estado est=new Estado(1);
-		
+		Estado est=new Estado(1,"pendiente");
+		TipoSolicitud tip = new TipoSolicitud(1,"normal");
 		Ubicacion ubi = ubicacionService.getNombreByNombre(getUbicacion());
 		Solicitud solNueva = new Solicitud();
 		solNueva.setCliente(cliente);
@@ -163,6 +164,7 @@ public class SolicitudManagedBean implements Serializable {
 		solNueva.setHoraIngreso(Fecha);
 		solNueva.setHoraCierre(Fecha);
 		solNueva.setIdEstado(est);
+		solNueva.setIdTipo(tip);
 		
 		solicitudService.addSolicitud(solNueva);		
 	}
