@@ -16,17 +16,28 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 public class TableBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Solicitud> solicitudes,solicitudespend,solicitudespro,solicitudesfin;
 	private SolicitudService solserv;
 	private Solicitud selectedSol;
-	private SolicitudDataModel mediumSolsModel; 
+	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin; 
 	public TableBean(){
 		System.out.println("TableBean.TableBean()");
 		solicitudes=new ArrayList<Solicitud>();
 		solserv=new SolicitudServiceImpl();
 		solicitudespend=new ArrayList<Solicitud>();
 		solicitudespend = solserv.getSolicitudesPendientes();
+		solicitudespro=new ArrayList<Solicitud>();
+		solicitudespro = solserv.getSolicitudesProceso();
+		solicitudesfin=new ArrayList<Solicitud>();
+		solicitudesfin=solserv.getSolicitudesFinalizadas();
 		mediumSolsModel= new SolicitudDataModel(solicitudespend);
+		mediumSolsModelPro=new SolicitudDataModel(solicitudespro);
+		mediumSolsModelFin=new SolicitudDataModel(solicitudesfin);
 		//solicitudes=solserv.getSolicitudes();
 		
 //		System.out.println("Holitas!");
@@ -46,8 +57,18 @@ public class TableBean implements Serializable{
 
 	public List<Solicitud> getSolicitudespro() {
 		System.out.println("TableBean.getSolicitudespro()");
+		
+		solserv=new SolicitudServiceImpl();
 		setSolicitudespro(solserv.getSolicitudesProceso());
 		return solicitudespro;
+	}
+
+	public SolicitudDataModel getMediumSolsModelPro() {
+		return mediumSolsModelPro;
+	}
+
+	public void setMediumSolsModelPro(SolicitudDataModel mediumSolsModelPro) {
+		this.mediumSolsModelPro = mediumSolsModelPro;
 	}
 
 	public void setSolicitudespro(List<Solicitud> solicitudespro) {
@@ -57,6 +78,7 @@ public class TableBean implements Serializable{
 
 	public List<Solicitud> getSolicitudesfin() {
 		System.out.println("TableBean.getSolicitudesfin()");
+		solserv=new SolicitudServiceImpl();
 		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
 		return solicitudesfin;
 	}
@@ -98,8 +120,15 @@ public class TableBean implements Serializable{
 
 	public SolicitudDataModel getMediumSolsModel() {
 		System.out.println("TableBean.getMediumSolsModel()");
-		setMediumSolsModel(new SolicitudDataModel(getSolicitudespend()));
 		return mediumSolsModel;
+	}
+
+	public SolicitudDataModel getMediumSolsModelFin() {
+		return mediumSolsModelFin;
+	}
+
+	public void setMediumSolsModelFin(SolicitudDataModel mediumSolsModelFin) {
+		this.mediumSolsModelFin = mediumSolsModelFin;
 	}
 
 	public void setMediumSolsModel(SolicitudDataModel mediumSolsModel) {

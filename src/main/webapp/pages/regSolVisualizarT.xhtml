@@ -15,7 +15,8 @@
             <br/> 
             
                    <center>
-            <p:panelGrid columns="1" cellpadding="1">  
+            <p:panelGrid columns="1" cellpadding="1">
+                                                             
                     <p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGenT}" />
                     <p:commandButton Id="Historial" value="Historial" action="#{solicitudBean.cambiarPagVisT}" />                                            
                 </p:panelGrid> 
@@ -30,8 +31,7 @@
 					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}"
 								 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								 selection="#{tableBean.selectedSol}" selectionMode="single"	>
-						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}"   
-                    	update=":form:display :form:growl" oncomplete="solDialog.show()" />  
+						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" update=":form:display :form:growl" oncomplete="solDialog.show()" />  
         				<p:ajax event="rowUnselect" listener="#{tableBean.onRowUnselect}" update=":form:growl"/>
       				  
 				        <p:column headerText="ID" align="center">  
@@ -54,12 +54,21 @@
 				        </p:column> 			  
 						
 					</p:dataTable>
+					
+					
+					
 				</p:tab>
 					
-				<p:tab title="En Proceso">
+				<p:tab title="En Proceso">				
+					<p:contextMenu for="dataProceso">  
+        				<p:menuitem value="Atender" update="dataProceso" icon="ui-icon-search" oncomplete="PF('documentDialog').show()"/>  
+        				<p:menuitem value="Diagnosticar" update="dataProceso" icon="ui-icon-close"/> 
+        				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close"/>  
+    				</p:contextMenu>
 									  
-					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.solicitudespro}"
-								paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.mediumSolsModelPro}"
+								paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
+								selection="#{tableBean.selectedSol}" selectionMode="single">  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -79,13 +88,38 @@
 				            </h:outputText>  
 				        </p:column>  
 				    </p:dataTable>
+				    
+		     		
+				    <br/>
+					<br/>
+						
+					<h:form >
+						<p:panelGrid columns="2" border="0" cellpadding="0" cellspacing="0">
+							<f:facet name="header">  
+        							Registrar Diagnostico 
+    						</f:facet> 
+    						<p:panelGrid columns="1" cellpadding="1">
+    							<p:inputTextarea id="Diagnostico" rows="4" cols="103" />
+    							<p:commandButton id="Listo" value="Listo"/>
+    						</p:panelGrid> 
+							
+						    <h:graphicImage id="Image" url="/images/comunicaciones.jpg"></h:graphicImage>
+							
+						</p:panelGrid>						
+					</h:form>
 					
 				
 				</p:tab>
 				<p:tab title="Finalizado">
-				
-					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.solicitudesfin}"
-								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	>  
+					<p:contextMenu for="datafinalizadas">  
+        				<p:menuitem value="Atender" update="datafinalizadas" icon="ui-icon-search" oncomplete="PF('documentDialog').show()"/>  
+        				<p:menuitem value="Diagnosticar" update="datafinalizadas" icon="ui-icon-close"/>
+        				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close"/>  
+    				</p:contextMenu>
+					
+					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"
+								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
+								selection="#{tableBean.selectedSol}" selectionMode="single">  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -139,7 +173,7 @@
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
 				        </h:panelGrid>  
-				    </p:dialog>
+			</p:dialog>
      </h:form>
     </p:layoutUnit>   
 </p:layout>
