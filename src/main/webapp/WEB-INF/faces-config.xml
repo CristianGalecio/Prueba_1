@@ -22,6 +22,11 @@
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>buttonBean</managed-bean-name>
+		<managed-bean-class>com.proyecto.siswebastec.managedbeans.ButtonBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>createProduct</managed-bean-name>
 		<managed-bean-class>com.proyecto.siswebastec.prueba.CreateProduct</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>

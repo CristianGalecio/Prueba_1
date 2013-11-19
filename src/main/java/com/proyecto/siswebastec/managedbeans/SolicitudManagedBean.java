@@ -193,4 +193,5 @@ public class SolicitudManagedBean implements Serializable {
 		return "regSolVisualizarT?faces-redirect=true";
 	}
 	
+	
 }

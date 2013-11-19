@@ -27,6 +27,9 @@
     		<p:growl id="growl" showDetail="true"/>
                <p:tabView id="tabview" dinamic="true">
 				<p:tab title="Pendientes">
+					<p:contextMenu for="dataPendientes">
+						<p:menuitem value="Atender" update="dataPendientes" icon="ui-icon-search" oncomplete="atencionDialog.show()"/>        				  
+    				</p:contextMenu>
 					  
 					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}"
 								 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -51,17 +54,13 @@
 				            <h:outputText value="#{Solicitud.horaIngreso}" >
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
-				        </p:column> 			  
-						
-					</p:dataTable>
-					
-					
+				        </p:column> 			  						
+					</p:dataTable>	
 					
 				</p:tab>
 					
 				<p:tab title="En Proceso">				
-					<p:contextMenu for="dataProceso">  
-        				<p:menuitem value="Atender" update="dataProceso" icon="ui-icon-search" oncomplete="PF('documentDialog').show()"/>  
+					<p:contextMenu for="dataProceso">						        				  
         				<p:menuitem value="Diagnosticar" update="dataProceso" icon="ui-icon-close"/> 
         				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close"/>  
     				</p:contextMenu>
@@ -173,6 +172,15 @@
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
 				        </h:panelGrid>  
+			</p:dialog>
+			<p:dialog id="dialogA" header="Atencion" widgetVar="atencionDialog" resizable="false"  
+	                showEffect="fade" hideEffect="explode">
+				<h:panelGrid columns="2">  
+			        <h:outputLabel for="btnSelect" value="Prioridad: " />  
+			        <p:selectOneMenu id="btnSelect" value="#{buttonBean.btn}">  
+			            <f:selectItems value="#{buttonBean.prinames}" />  
+			        </p:selectOneMenu>  
+			    </h:panelGrid> 
 			</p:dialog>
      </h:form>
     </p:layoutUnit>   
