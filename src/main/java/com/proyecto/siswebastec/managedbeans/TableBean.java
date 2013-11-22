@@ -35,7 +35,7 @@ public class TableBean implements Serializable{
 	private List<Solicitud> solicitudes,solicitudespend,solicitudespro,solicitudesfin;
 	private SolicitudService solserv;
 	private Solicitud selectedSol;
-	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin; 
+	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin,mediumSolsPend; 
 	private Solicitud fija;
 	
 	private String prioridad;
@@ -72,6 +72,7 @@ public class TableBean implements Serializable{
 		mediumSolsModel= new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro=new SolicitudDataModel(solicitudespro);
 		mediumSolsModelFin=new SolicitudDataModel(solicitudesfin);
+		//mediumSolsPend= new SolicitudDataModel(solicitudes);
 		
 		
 		prioridadService = new PrioridadServiceImpl();
@@ -179,6 +180,15 @@ public class TableBean implements Serializable{
 		System.out.println("TableBean.setMediumSolsModel()");
 		this.mediumSolsModel = mediumSolsModel;
 	}
+	
+	public SolicitudDataModel getMediumSolsPend() {
+		return mediumSolsPend;
+	}
+
+	public void setMediumSolsPend(SolicitudDataModel mediumSolsPend) {
+		this.mediumSolsPend = mediumSolsPend;
+	}
+
 
 	public void onRowSelect(SelectEvent event) {
 		System.out.println("TableBean.onRowSelect()");
@@ -304,6 +314,7 @@ public class TableBean implements Serializable{
 		System.out.println(getSelectedSol().getIdSolicitud());
 	}
 
+	
 	
 	
 }
