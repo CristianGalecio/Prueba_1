@@ -10,7 +10,8 @@ public interface TrabajadorService {
 	public void updateTrabajador(Trabajador trabajador);
 	public void deleteTrabajador(Trabajador rabajador);	
 	public Trabajador getTrabajadorById(String id);	
-	public List<Trabajador> getTrabajadores();	
+	public List<Trabajador> getTrabajadores();
+	public List<String> getIdTrabajadores();
 	public Boolean verificarTrabajador(String id, String password);
 
 }

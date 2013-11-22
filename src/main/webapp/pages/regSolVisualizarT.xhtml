@@ -31,7 +31,7 @@
 						<p:menuitem value="Atender" update="dataPendientes" icon="ui-icon-search" oncomplete="atencionDialog.show()"/>        				  
     				</p:contextMenu>
 					  
-					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}"
+					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}" rowKey="#{Solicitud.idSolicitud}"
 								 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								 selection="#{tableBean.selectedSol}" selectionMode="single"	>
 						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" update=":form:display :form:growl" oncomplete="solDialog.show()" />  
@@ -142,7 +142,7 @@
 				</p:tab>			
 				
 			</p:tabView>       
-            <p:dialog id="dialog" header="Solicitud Detail" widgetVar="solDialog" resizable="false"  
+            <p:dialog id="dialog" header="Solicitud Detalle" widgetVar="solDialog" resizable="false"  
 	                showEffect="fade" hideEffect="explode">  
 	  
 				        <h:panelGrid id="display" columns="2" cellpadding="4">  
@@ -173,15 +173,31 @@
 				            </h:outputText>  
 				        </h:panelGrid>  
 			</p:dialog>
+			
 			<p:dialog id="dialogA" header="Atencion" widgetVar="atencionDialog" resizable="false"  
 	                showEffect="fade" hideEffect="explode">
+				
 				<h:panelGrid columns="2">  
-			        <h:outputLabel for="btnSelect" value="Prioridad: " />  
-			        <p:selectOneMenu id="btnSelect" value="#{buttonBean.btn}">  
-			            <f:selectItems value="#{buttonBean.prinames}" />  
-			        </p:selectOneMenu>  
+			        <h:outputLabel for="prioridad" value="Prioridad: " />  
+			        <p:selectOneMenu id="prioridad" value="#{tableBean.prioridad}">
+			         	<f:selectItem itemLabel="Selecciona" itemValue="" />  
+			            <f:selectItems value="#{tableBean.prinames}" />
+			            <p:ajax listener="#{tableBean.handleChangeP}" />
+			        </p:selectOneMenu>
+			        
+			        <h:outputLabel for="trabajador" value="Trabajador: " />  
+			        <p:selectOneMenu id="trabajador" value="#{tableBean.trabajador}">
+			        	<f:selectItem itemLabel="Selecciona" itemValue="" />   
+			            <f:selectItems value="#{tableBean.traid}" />  
+			        </p:selectOneMenu>
+			        <f:facet name="footer">
+			        	<p:commandButton id="Iniciar" value="Iniciar" actionListener="#{tableBean.asignarTecnico}" onComplete="atencionDialog.hide()"/> 
+			        </f:facet> 
 			    </h:panelGrid> 
+			        
+			    
 			</p:dialog>
+			
      </h:form>
     </p:layoutUnit>   
 </p:layout>

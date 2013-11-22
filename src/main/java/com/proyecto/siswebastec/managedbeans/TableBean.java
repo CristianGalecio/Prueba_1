@@ -1,30 +1,50 @@
 package com.proyecto.siswebastec.managedbeans;
 
+import com.proyecto.siswebastec.services.AtencionService;
+import com.proyecto.siswebastec.services.PrioridadService;
 import com.proyecto.siswebastec.services.SolicitudService;
+import com.proyecto.siswebastec.services.TrabajadorService;
+import com.proyecto.siswebastec.servicesImpl.AtencionServiceImpl;
+import com.proyecto.siswebastec.servicesImpl.PrioridadServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
+import com.proyecto.siswebastec.servicesImpl.TrabajadorServiceImpl;
 import com.proyecto.siswebastec.bean.SolicitudDataModel;
+import com.proyecto.siswebastec.model.Atencion;
+import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Trabajador;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 public class TableBean implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private List<Solicitud> solicitudes,solicitudespend,solicitudespro,solicitudesfin;
 	private SolicitudService solserv;
 	private Solicitud selectedSol;
 	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin; 
+	private Solicitud fija;
+	
+	private String prioridad;
+	private String trabajador;
+//    private List<Prioridad> prioridades;  
+    private List<String> prinames;
+    private List<String> traid;
+    private PrioridadService prioridadService;
+    private TrabajadorService trabajadorService;
+    private AtencionService atencionService;
+	
 	public TableBean(){
 		System.out.println("TableBean.TableBean()");
 		solicitudes=new ArrayList<Solicitud>();
@@ -38,7 +58,17 @@ public class TableBean implements Serializable{
 		mediumSolsModel= new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro=new SolicitudDataModel(solicitudespro);
 		mediumSolsModelFin=new SolicitudDataModel(solicitudesfin);
-		//solicitudes=solserv.getSolicitudes();
+		
+		
+		prioridadService = new PrioridadServiceImpl();
+    	trabajadorService = new TrabajadorServiceImpl();
+  //  	prioridades = new ArrayList<>();
+  //  	prioridades = prioridadService.getPrioridades();
+    	prinames = new ArrayList<>();
+    	traid = new ArrayList<>();
+    	prinames = prioridadService.getNombresPri();
+    	traid = trabajadorService.getIdTrabajadores();
+    	atencionService = new AtencionServiceImpl();
 		
 //		System.out.println("Holitas!");
 	}
@@ -139,6 +169,7 @@ public class TableBean implements Serializable{
 	public void onRowSelect(SelectEvent event) {
 		System.out.println("TableBean.onRowSelect()");
 		System.out.println(event.getObject());
+		fija = (Solicitud) event.getObject();
         //FacesMessage msg = new FacesMessage("Sol Selected",((Solicitud) event.getObject()).getIdSolicitud().toString());  
   
         //FacesContext.getCurrentInstance().addMessage(null, msg);  
@@ -150,15 +181,86 @@ public class TableBean implements Serializable{
   
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }
-	public void AsignarTecnico(){
+        
+    
+    public String getPrioridad() {
+		return prioridad;
+	}
+
+	public void setPrioridad(String prioridad) {
+		this.prioridad = prioridad;
+	}
+
+	public List<String> getPrinames() {		
+		prioridadService = new PrioridadServiceImpl();
+		setPrinames(prioridadService.getNombresPri());
+		return prinames;
+	}
+	
+	
+	public void setPrinames(List<String> prinames) {
+		this.prinames = prinames;
+	}
+
+	public String getTrabajador() {
+		return trabajador;
+	}
+
+	public void setTrabajador(String trabajador) {
+		this.trabajador = trabajador;
+	}
+
+	public List<String> getTraid() {
+		return traid;
+	}
+
+	public void setTraid(List<String> traid) {
+		this.traid = traid;
+	}
+	
+	public void asignarTecnico(ActionEvent actionEvent){
+		System.out.println("TableBean.asignarTecnico()");
+		Trabajador t = trabajadorService.getTrabajadorById(getTrabajador());
+		Date Fecha = Calendar.getInstance().getTime();
+		System.out.println("Prioridad"+getPrioridad());
+		System.out.println("Hooooooola fija"+ fija.getDescSolicitud());
+		Prioridad p = new Prioridad();
 		
+		p.setNombrePrioridad(getPrioridad());
 		
-//		solserv.getSolicitudById(id);
+		if(getPrioridad().equals("alta")){
+			p.setIdPrioridad(1);			
+		}
+		if(getPrioridad().equals("media")){
+			p.setIdPrioridad(2);			
+		}
+		if(getPrioridad().equals("baja")){
+			p.setIdPrioridad(3);			
+		}
+		
+		Solicitud sasig = fija;
+		System.out.println("Solicitud"+sasig.getDescSolicitud());
+		sasig.setIdPrioridad(p);		
+		solserv.updateSolicitud(sasig);
+		
+		//Creamos la atencion
+		
+		Atencion ate = new Atencion();
+		ate.setIdSolicitud(sasig);
+		ate.setFechaAtencion(Fecha);
+		ate.setHoraAtencion(Fecha);
+		ate.setTrabajador(t);
+		atencionService.addAtencion(ate);		
+		
 	}
 	
 	public void SeleccionaSolicitud(){
 		
 	}
+	
+	public void handleChangeP() {  
+		System.out.println("evento: "+prioridad);
+    }
 	
 	
 }

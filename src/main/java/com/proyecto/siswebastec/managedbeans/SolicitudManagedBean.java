@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -139,6 +140,7 @@ public class SolicitudManagedBean implements Serializable {
 		LoginBean nB =(LoginBean) session.getAttribute("loginBean");	
 		Date Fecha = Calendar.getInstance().getTime();
 		Cliente cliente;
+		
 		//FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fechaaaa:"+sdf.format(Fecha), nombre);
 		//FacesContext.getCurrentInstance().addMessage(null, msg);
 		String tipo = loginService.DevolverTipoUsuario(nB.getUsuario(), nB.getClave());

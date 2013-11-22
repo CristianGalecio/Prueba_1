@@ -1,10 +1,12 @@
 package com.proyecto.siswebastec.servicesImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.siswebastec.DAO.JPAUtil;
 import com.proyecto.siswebastec.DAO.TrabajadorDAO;
 import com.proyecto.siswebastec.DAO.UsuarioDAO;
+import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Trabajador;
 import com.proyecto.siswebastec.model.Usuario;
 import com.proyecto.siswebastec.services.TrabajadorService;
@@ -55,6 +57,15 @@ public class TrabajadorServiceImpl implements TrabajadorService{
 		return getTrabajadorDAO().listarTodos();
 	}
 	
+	public List<String> getIdTrabajadores() {
+		List<Trabajador> pri = getTrabajadores();
+		List<String> ars = new ArrayList<>();
+		for(int i=0; i<pri.size();i++){
+			ars.add(pri.get(i).getTrabajadorPK().getIdTrabajador());
+		}
+		return ars;
+		
+	}
 	public Boolean verificarTrabajador(String id, String password) {
 		if(getTrabajadorById(id).getClaveUsuario().equals(password)){
 			return true;

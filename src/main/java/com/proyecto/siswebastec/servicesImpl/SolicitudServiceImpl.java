@@ -30,8 +30,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	public void updateSolicitud(Solicitud solicitud) {
-		// TODO Auto-generated method stub
-		
+		objJpaUtil = new JPAUtil();
+		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
+		solicitudDAO.update(solicitud);		
 	}
 
 	public void deleteSolicitud(Solicitud solicitud) {
