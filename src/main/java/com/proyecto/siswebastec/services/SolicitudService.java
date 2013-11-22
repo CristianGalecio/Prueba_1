@@ -2,7 +2,9 @@ package com.proyecto.siswebastec.services;
 
 import java.util.List;
 
+import com.proyecto.siswebastec.model.Diagnostico;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Solucion;
 
 public interface SolicitudService {
 	
@@ -15,5 +17,7 @@ public interface SolicitudService {
 	public List<Solicitud> getSolicitudesPendientes();
 	public List<Solicitud> getSolicitudesProceso();
 	public List<Solicitud> getSolicitudesFinalizadas();
+	public void addDiagnostico(Diagnostico diag);
+	public void addSolucion(Solucion sol);
 
 }

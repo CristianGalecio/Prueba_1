@@ -43,8 +43,8 @@ public class Solucion implements Serializable {
         this.idSolucion = idSolucion;
     }
 
-    public Solucion(Integer idSolucion, String descSolucion, Date fechaSolucion) {
-        this.idSolucion = idSolucion;
+    public Solucion(Solicitud sol, String descSolucion, Date fechaSolucion) {
+        this.idSolicitud = sol;
         this.descSolucion = descSolucion;
         this.fechaSolucion = fechaSolucion;
     }

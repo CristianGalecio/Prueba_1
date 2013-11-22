@@ -43,8 +43,8 @@ public class Diagnostico implements Serializable {
         this.idDiagnostico = idDiagnostico;
     }
 
-    public Diagnostico(Integer idDiagnostico, String detDiagnostico, Date fechaDiagnostico) {
-        this.idDiagnostico = idDiagnostico;
+    public Diagnostico(Solicitud idSolicitud, String detDiagnostico, Date fechaDiagnostico) {
+        this.idSolicitud = idSolicitud;
         this.detDiagnostico = detDiagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
     }

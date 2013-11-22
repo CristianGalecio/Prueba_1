@@ -3,15 +3,20 @@ package com.proyecto.siswebastec.servicesImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.proyecto.siswebastec.DAO.DiagnosticoDAO;
 import com.proyecto.siswebastec.DAO.SolicitudDAO;
 import com.proyecto.siswebastec.DAO.JPAUtil;
+import com.proyecto.siswebastec.model.Diagnostico;
 import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Solucion;
 import com.proyecto.siswebastec.services.SolicitudService;
 
 public class SolicitudServiceImpl implements SolicitudService{
 
 	SolicitudDAO solicitudDAO;
+	DiagnosticoDAO diagnosticoDAO;
+	
 	JPAUtil objJpaUtil;
 	Solicitud solicitud;
 	
@@ -98,6 +103,24 @@ public class SolicitudServiceImpl implements SolicitudService{
 	public boolean verificaSolicitud(int id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	
+	public void addDiagnostico(Diagnostico diag) {
+		// TODO Auto-generated method stub
+		objJpaUtil = new JPAUtil();
+		diagnosticoDAO = new DiagnosticoDAO(objJpaUtil.getEntityManager());
+		diagnosticoDAO.insertarDiagnostico(diag);
+		System.out.println("addDiagnostico()");
+		
+	}
+
+	@Override
+	public void addSolucion(Solucion sol) {
+		objJpaUtil = new JPAUtil();
+		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
+		solicitudDAO.insertarSolucion(sol);
+		System.out.println("addSolicitud()");
 	}
 
 }

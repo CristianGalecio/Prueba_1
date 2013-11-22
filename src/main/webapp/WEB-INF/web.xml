@@ -34,4 +34,10 @@
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
+  <context-param>
+  	<param-name>primefaces.THEME</param-name>
+  	<param-value>overcast</param-value> 
+  </context-param>
+  
+  
 </web-app>

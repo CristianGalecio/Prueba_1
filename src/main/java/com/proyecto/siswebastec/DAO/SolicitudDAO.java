@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import com.proyecto.siswebastec.model.Area;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Solucion;
 
 public class SolicitudDAO extends DaoGenericImpl<Solicitud, Integer>{
 	
@@ -43,5 +44,14 @@ public class SolicitudDAO extends DaoGenericImpl<Solicitud, Integer>{
 		
 	}
 
+	public void insertarSolucion(Solucion sol) {
+		entityManager.getTransaction().begin();
+		entityManager.persist(sol);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+	}
+
+	
 }
 

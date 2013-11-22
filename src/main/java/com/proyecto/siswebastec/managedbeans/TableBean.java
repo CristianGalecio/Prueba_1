@@ -12,7 +12,9 @@ import com.proyecto.siswebastec.bean.SolicitudDataModel;
 import com.proyecto.siswebastec.model.Atencion;
 import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.Solucion;
 import com.proyecto.siswebastec.model.Trabajador;
+import com.proyecto.siswebastec.model.Diagnostico;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,7 +46,19 @@ public class TableBean implements Serializable{
     private PrioridadService prioridadService;
     private TrabajadorService trabajadorService;
     private AtencionService atencionService;
+    
+    /*******Diagnostico y Solucion*****/
+    private String Diagnostico;
+    private String Solucion;
 	
+	public String getSolucion() {
+		return Solucion;
+	}
+
+	public void setSolucion(String solucion) {
+		Solucion = solucion;
+	}
+
 	public TableBean(){
 		System.out.println("TableBean.TableBean()");
 		solicitudes=new ArrayList<Solicitud>();
@@ -75,8 +89,8 @@ public class TableBean implements Serializable{
 	
 	public List<Solicitud> getSolicitudespend() {
 		System.out.println("TableBean.getSolicitudespend()");
-		solserv=new SolicitudServiceImpl();
-		setSolicitudespend(solserv.getSolicitudesPendientes());		
+		//solserv=new SolicitudServiceImpl();
+		//setSolicitudespend(solserv.getSolicitudesPendientes());		
 		return this.solicitudespend;
 	}
 
@@ -88,8 +102,8 @@ public class TableBean implements Serializable{
 	public List<Solicitud> getSolicitudespro() {
 		System.out.println("TableBean.getSolicitudespro()");
 		
-		solserv=new SolicitudServiceImpl();
-		setSolicitudespro(solserv.getSolicitudesProceso());
+		//solserv=new SolicitudServiceImpl();
+		//setSolicitudespro(solserv.getSolicitudesProceso());
 		return solicitudespro;
 	}
 
@@ -108,8 +122,8 @@ public class TableBean implements Serializable{
 
 	public List<Solicitud> getSolicitudesfin() {
 		System.out.println("TableBean.getSolicitudesfin()");
-		solserv=new SolicitudServiceImpl();
-		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
+		//solserv=new SolicitudServiceImpl();
+		//setSolicitudesfin(solserv.getSolicitudesFinalizadas());
 		return solicitudesfin;
 	}
 
@@ -170,8 +184,8 @@ public class TableBean implements Serializable{
 		System.out.println("TableBean.onRowSelect()");
 		System.out.println(event.getObject());
 		fija = (Solicitud) event.getObject();
+		//setSelectedSol((Solicitud) event.getObject());
         //FacesMessage msg = new FacesMessage("Sol Selected",((Solicitud) event.getObject()).getIdSolicitud().toString());  
-  
         //FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
   
@@ -192,8 +206,8 @@ public class TableBean implements Serializable{
 	}
 
 	public List<String> getPrinames() {		
-		prioridadService = new PrioridadServiceImpl();
-		setPrinames(prioridadService.getNombresPri());
+		//prioridadService = new PrioridadServiceImpl();
+		//setPrinames(prioridadService.getNombresPri());
 		return prinames;
 	}
 	
@@ -217,6 +231,15 @@ public class TableBean implements Serializable{
 	public void setTraid(List<String> traid) {
 		this.traid = traid;
 	}
+	
+	public String getDiagnostico() {
+		return Diagnostico;
+	}
+
+	public void setDiagnostico(String diagnostico) {
+		Diagnostico = diagnostico;
+	}
+	
 	
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
@@ -261,6 +284,26 @@ public class TableBean implements Serializable{
 	public void handleChangeP() {  
 		System.out.println("evento: "+prioridad);
     }
+	
+	public void actualizarDiag(ActionEvent e){
+		System.out.println("actualizarDiag()");
+		System.out.println(Diagnostico);
+		System.out.println("fija:" + fija.getIdSolicitud());
+	//	System.out.println(getSelectedSol().getIdSolicitud().toString());
+		Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
+		solserv.addDiagnostico(diag);
+	}
+	
+	public void actualizarSol(ActionEvent e){
+		System.out.println("solucionDiag()");
+		Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
+		solserv.addSolucion(sol);
+	}
+	
+	public void rowSelect(ActionEvent e){
+		System.out.println(getSelectedSol().getIdSolicitud());
+	}
+
 	
 	
 }
