@@ -181,7 +181,8 @@
 			        <h:outputLabel for="trabajador" value="Trabajador: " />  
 			        <p:selectOneMenu id="trabajador" value="#{tableBean.trabajador}">
 			        	<f:selectItem itemLabel="Selecciona" itemValue="" />   
-			            <f:selectItems value="#{tableBean.traid}" />  
+			            <f:selectItems value="#{tableBean.traid}" />
+			            <p:ajax listener="#{tableBean.handleChangeT}" />  
 			        </p:selectOneMenu>
 			        <f:facet name="footer">			        
 						<p:commandButton id="Init" value="Listo" actionListener="#{tableBean.asignarTecnico}" oncomplete="atenDialog.hide();"/>

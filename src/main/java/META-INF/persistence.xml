@@ -4,6 +4,7 @@
 		<class>com.proyecto.siswebastec.model.Area</class>
 		<class>com.proyecto.siswebastec.model.Atencion</class>
 		<class>com.proyecto.siswebastec.model.Aula</class>
+		<class>com.proyecto.siswebastec.model.Calificacion</class>
 		<class>com.proyecto.siswebastec.model.Categoria</class>
 		<class>com.proyecto.siswebastec.model.Cliente</class>
 		<class>com.proyecto.siswebastec.model.ClientePK</class>

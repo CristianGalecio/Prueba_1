@@ -61,7 +61,7 @@
                         
             <p:dialog id="calificarDialog" header="Calificar Atencion" widgetVar="calificarDialog" showEffect="fade"  modal="false">
 		
-				<p:panelGrid columns="2" border="0" cellpadding="0" cellspacing="0">
+				<h:panelGrid columns="2" border="0" cellpadding="0" cellspacing="3">
 					<p:selectOneRadio columns="1" layout="pageDirection">
 						   <f:selectItem itemValue="1" itemLabel="Muy Bueno" />
 						   <f:selectItem itemValue="2" itemLabel="Bueno" />
@@ -76,7 +76,7 @@
   							<p:inputTextarea id="observacion" rows="4" cols="103" />
   							
   					</p:panelGrid> 	  					
-				</p:panelGrid>	
+				</h:panelGrid>	
 				<center><p:commandButton id="Listo2" value="Listo" oncomplete="calificarDialog.hide();"/></center>
 			</p:dialog>            
               

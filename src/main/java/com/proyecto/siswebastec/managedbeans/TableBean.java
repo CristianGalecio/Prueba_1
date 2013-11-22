@@ -290,6 +290,10 @@ public class TableBean implements Serializable{
 		System.out.println("evento: "+prioridad);
     }
 	
+	public void handleChangeT() {  
+		System.out.println("evento: "+trabajador);
+    }
+	
 	public void actualizarDiag(ActionEvent e){
 		System.out.println("actualizarDiag()");
 		System.out.println(Diagnostico);
