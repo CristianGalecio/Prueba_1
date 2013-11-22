@@ -140,30 +140,6 @@
 				        </h:panelGrid>  
 			</p:dialog>
 			
-			<p:dialog id="atencionDialog" header="Atencion" widgetVar="atencionDialog" resizable="false"  
-	                showEffect="fade" hideEffect="explode">
-				
-				<p:panelGrid columns="2">  
-			        <h:outputLabel for="prioridad" value="Prioridad: " />  
-			        <p:selectOneMenu id="prioridad" value="#{tableBean.prioridad}">
-			         	<f:selectItem itemLabel="Selecciona" itemValue="" />  
-			            <f:selectItems value="#{tableBean.prinames}" />
-			            <p:ajax listener="#{tableBean.handleChangeP}" />
-			        </p:selectOneMenu>
-			        
-			        <h:outputLabel for="trabajador" value="Trabajador: " />  
-			        <p:selectOneMenu id="trabajador" value="#{tableBean.trabajador}">
-			        	<f:selectItem itemLabel="Selecciona" itemValue="" />   
-			            <f:selectItems value="#{tableBean.traid}" />  
-			        </p:selectOneMenu>
-			        <f:facet name="footer">
-			        	<p:commandButton id="Iniciar" value="Iniciar" actionListener="#{tableBean.asignarTecnico}" onComplete="atencionDialog.hide();"/> 
-			        </f:facet> 
-			    </p:panelGrid> 
-			        
-			    
-			</p:dialog>
-			
 			<p:dialog id="diagnosticoDialog" header="Registrar Diagnostico" widgetVar="diagnosticoDialog" showEffect="fade"  modal="false">
 		
 				<p:panelGrid columns="2" border="0" cellpadding="0" cellspacing="0">
@@ -192,24 +168,27 @@
 			</p:dialog>
 			
 			<p:dialog id="atenDialog" header="Registrar Solucion" widgetVar="atenDialog" showEffect="fade"  modal="false">
-		
-				<p:panelGrid columns="2" border="0" cellpadding="0" cellspacing="0">
-					<h:outputLabel for="prioridad1" value="Prioridad: " />  
-			        <p:selectOneMenu id="prioridad1" value="#{tableBean.prioridad}">
+				<h:form>
+		      	
+				<h:panelGrid columns="2">  
+			        <h:outputLabel for="prioridad" value="Prioridad: " />  
+			        <p:selectOneMenu id="prioridad" value="#{tableBean.prioridad}">
 			         	<f:selectItem itemLabel="Selecciona" itemValue="" />  
 			            <f:selectItems value="#{tableBean.prinames}" />
 			            <p:ajax listener="#{tableBean.handleChangeP}" />
 			        </p:selectOneMenu>
 			        
-			        <h:outputLabel for="trabajador1" value="Trabajador: " />  
-			        <p:selectOneMenu id="trabajador1" value="#{tableBean.trabajador}">
+			        <h:outputLabel for="trabajador" value="Trabajador: " />  
+			        <p:selectOneMenu id="trabajador" value="#{tableBean.trabajador}">
 			        	<f:selectItem itemLabel="Selecciona" itemValue="" />   
 			            <f:selectItems value="#{tableBean.traid}" />  
 			        </p:selectOneMenu>
-			        
-					<p:commandButton id="Init" value="Listo" actionListener="#{tableBean.asignarTecnico}" oncomplete="atenDialog.hide();"/>
-					
-				</p:panelGrid>	
+			        <f:facet name="footer">			        
+						<p:commandButton id="Init" value="Listo" actionListener="#{tableBean.asignarTecnico}" oncomplete="atenDialog.hide();"/>
+					</f:facet> 
+			    </h:panelGrid> 
+			    
+		  		</h:form>	
 				
 			</p:dialog>
 			
