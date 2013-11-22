@@ -10,6 +10,7 @@ import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.TrabajadorServiceImpl;
 import com.proyecto.siswebastec.bean.SolicitudDataModel;
 import com.proyecto.siswebastec.model.Atencion;
+import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Solicitud;
 import com.proyecto.siswebastec.model.Solucion;
@@ -27,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
 
 public class TableBean implements Serializable{
@@ -197,15 +199,7 @@ public class TableBean implements Serializable{
 		//setSelectedSol((Solicitud) event.getObject());
         //FacesMessage msg = new FacesMessage("Sol Selected",((Solicitud) event.getObject()).getIdSolicitud().toString());  
         //FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
-  
-    public void onRowUnselect(UnselectEvent event) {
-    	System.out.println("TableBean.onRowUnselect()");
-        FacesMessage msg = new FacesMessage("Sol Unselected", ((Solicitud) event.getObject()).getIdSolicitud().toString());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }
-        
+    }       
     
     public String getPrioridad() {
 		return prioridad;
@@ -274,6 +268,7 @@ public class TableBean implements Serializable{
 		Solicitud sasig = fija;
 		System.out.println("Solicitud"+sasig.getDescSolicitud());
 		sasig.setIdPrioridad(p);		
+		sasig.setIdEstado(new Estado(2,"en proceso"));
 		solserv.updateSolicitud(sasig);
 		
 		//Creamos la atencion
@@ -308,13 +303,38 @@ public class TableBean implements Serializable{
 		System.out.println("solucionDiag()");
 		Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
 		solserv.addSolucion(sol);
+		fija.setFechaCierre(Calendar.getInstance().getTime());
+		fija.setHoraCierre(Calendar.getInstance().getTime());
+		fija.setIdEstado(new Estado(3, "finalizada"));
+		solserv.updateSolicitud(fija);
 	}
 	
-	public void rowSelect(ActionEvent e){
-		System.out.println(getSelectedSol().getIdSolicitud());
+	public void actualizarSolPen(){
+		solserv = new SolicitudServiceImpl();
+		setSolicitudespend(solserv.getSolicitudesPendientes());
+		setMediumSolsModel(new SolicitudDataModel(getSolicitudespend()));
 	}
+	
+	public void actualizarSolPro(){
+		solserv = new SolicitudServiceImpl();
+		setSolicitudespro(solserv.getSolicitudesProceso());
+		setMediumSolsModelPro(new SolicitudDataModel(getSolicitudespro()));
+	}
+	
+	public void actualizarSolFin(){
+		solserv = new SolicitudServiceImpl();
+		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
+		setMediumSolsModelFin(new SolicitudDataModel(getSolicitudesfin()));
+	}
+	
+	public void onTabChange(TabChangeEvent event) {
+        System.out.println(event.getTab().getTitle());
+        actualizarSolPen();
+		actualizarSolPro();
+		actualizarSolFin();
+		//FacesMessage msg = new FacesMessage("Tab Changed", "Active Tab: " + event.getTab().getTitle());
 
-	
-	
+        //FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 	
 }

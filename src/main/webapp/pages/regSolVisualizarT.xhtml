@@ -26,6 +26,7 @@
     	<h:form id="form">
     		<p:growl id="growl" showDetail="true"/>
                <p:tabView id="tabview" dinamic="true">
+               <p:ajax event="tabChange" listener="#{tableBean.onTabChange}"/>
 				<p:tab title="Pendientes">
 					<p:contextMenu for="dataPendientes">
 						<p:menuitem value="Atender" update="dataPendientes" icon="ui-icon-search" oncomplete="atenDialog.show()"/>        				  
@@ -34,37 +35,31 @@
 					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}" rowKey="#{Solicitud.idSolicitud}"
 								 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 								 selection="#{tableBean.selectedSol}" selectionMode="single"	>
-						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" update=":form:display :form:growl" oncomplete="solDialog.show()" />  
-        				<p:ajax event="rowUnselect" listener="#{tableBean.onRowUnselect}" update=":form:growl"/>
-      				  
+						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" update=":form:display :form:growl" oncomplete="solDialog.show()" />      				  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitud.idSolicitud}" />  
 				        </p:column>  
 				        <p:column headerText="Descripcion" align="center">  
 				            <h:outputText value="#{Solicitud.descSolicitud}" />  
-				        </p:column>  
-				  
+				        </p:column>				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
 				            <h:outputText value="#{Solicitud.fechaIngreso}" >
 				            	<f:convertDateTime pattern="d/M/yyyy"/>
 				            </h:outputText>    
-				        </p:column>  
-				  
+				        </p:column>				  
 				        <p:column headerText="Hora de Ingreso">  
 				            <h:outputText value="#{Solicitud.horaIngreso}" >
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
 				        </p:column> 			  						
-					</p:dataTable>	
-					
+					</p:dataTable>					
 				</p:tab>
 					
 				<p:tab title="En Proceso">				
 					<p:contextMenu for="dataProceso">						        				  
         				<p:menuitem value="Diagnosticar" update="dataProceso" icon="ui-icon-close" oncomplete="diagnosticoDialog.show()"/> 
         				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close" oncomplete="solucionDialog.show()"/>  
-    				</p:contextMenu>
-									  
+    				</p:contextMenu>									  
 					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.mediumSolsModelPro}"
 								paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
 								selection="#{tableBean.selectedSol}" selectionMode="single">
@@ -74,29 +69,20 @@
 				        </p:column>  
 				        <p:column headerText="Descripcion" align="center">  
 				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
-				        </p:column>  
-				  
+				        </p:column>				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
 				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
 				            	<f:convertDateTime pattern="d/M/yyyy"/>
 				            </h:outputText>    
-				        </p:column>  
-				  
+				        </p:column>				  
 				        <p:column headerText="Hora de Ingreso">  
 				            <h:outputText value="#{Solicitudes.horaIngreso}" >
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
-				        </p:column>  
-				    </p:dataTable>				    
-		     					
+				        </p:column>
+				    </p:dataTable>		     					
 				</p:tab>
-				<p:tab title="Finalizado">
-					<p:contextMenu for="datafinalizadas">  
-        				<p:menuitem value="Atender" update="datafinalizadas" icon="ui-icon-search" oncomplete="PF('documentDialog').show()"/>  
-        				<p:menuitem value="Diagnosticar" update="datafinalizadas" icon="ui-icon-close"/>
-        				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close"/>  
-    				</p:contextMenu>
-					
+				<p:tab title="Finalizado">					
 					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"
 								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
 								selection="#{tableBean.selectedSol}" selectionMode="single">  
@@ -105,8 +91,7 @@
 				        </p:column>  
 				        <p:column headerText="Descripcion" align="center">  
 				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
-				        </p:column>  
-				  
+				        </p:column>  				  
 				        <p:column headerText="Fecha de Ingreso" align="center">  
 				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
 				            	<f:convertDateTime pattern="d/M/yyyy"/>
@@ -172,7 +157,7 @@
 			            <f:selectItems value="#{tableBean.traid}" />  
 			        </p:selectOneMenu>
 			        <f:facet name="footer">
-			        	<p:commandButton id="Iniciar" value="Iniciar" actionListener="#{tableBean.asignarTecnico}" onComplete="atencionDialog.hide()"/> 
+			        	<p:commandButton id="Iniciar" value="Iniciar" actionListener="#{tableBean.asignarTecnico}" onComplete="atencionDialog.hide();"/> 
 			        </f:facet> 
 			    </p:panelGrid> 
 			        
