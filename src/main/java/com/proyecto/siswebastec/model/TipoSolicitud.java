@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipo_solicitud")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoSolicitud.findAll", query = "SELECT t FROM TipoSolicitud t")})
+    @NamedQuery(name = "TipoSolicitud.findAll", query = "SELECT t FROM TipoSolicitud t"),
+    @NamedQuery(name = "TipoSolicitud.findByIdTipo", query = "SELECT t FROM TipoSolicitud t WHERE t.idTipo = :idTipo"),
+    @NamedQuery(name = "TipoSolicitud.findByNombreTipo", query = "SELECT t FROM TipoSolicitud t WHERE t.nombreTipo = :nombreTipo")})
 public class TipoSolicitud implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,7 +92,7 @@ public class TipoSolicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.TipoSolicitud[ idTipo=" + idTipo + " ]";
+        return "prueba_1.TipoSolicitud[ idTipo=" + idTipo + " ]";
     }
     
 }

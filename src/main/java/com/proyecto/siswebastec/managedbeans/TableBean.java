@@ -196,9 +196,8 @@ public class TableBean implements Serializable{
 		System.out.println("TableBean.onRowSelect()");
 		System.out.println(event.getObject());
 		fija = (Solicitud) event.getObject();
-		//setSelectedSol((Solicitud) event.getObject());
-        //FacesMessage msg = new FacesMessage("Sol Selected",((Solicitud) event.getObject()).getIdSolicitud().toString());  
-        //FacesContext.getCurrentInstance().addMessage(null, msg);  
+		setSelectedSol(fija);
+		  
     }       
     
     public String getPrioridad() {
@@ -247,43 +246,51 @@ public class TableBean implements Serializable{
 	
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
-		Trabajador t = trabajadorService.getTrabajadorById(getTrabajador());
-		Date Fecha = Calendar.getInstance().getTime();
-		System.out.println("Prioridad"+getPrioridad());
-		System.out.println("Hooooooola fija"+ fija.getDescSolicitud());
-		Prioridad p = new Prioridad();
-		
-		p.setNombrePrioridad(getPrioridad());
-		
-		if(getPrioridad().equals("alta")){
-			p.setIdPrioridad(1);			
+		Boolean error = false;
+		if(fija!=null){
+			Trabajador t = trabajadorService.getTrabajadorById(getTrabajador());
+			Date Fecha = Calendar.getInstance().getTime();
+			System.out.println("Prioridad"+getPrioridad());
+			System.out.println("Hooooooola fija"+ fija.getDescSolicitud());
+			Prioridad p = new Prioridad();
+			if((getTrabajador()==null||getTrabajador().equals(""))
+					|| (getPrioridad()==null || getPrioridad().equals(""))){
+				error=true;
+			}
+			if(error==false){
+				p.setNombrePrioridad(getPrioridad());
+				
+				if(getPrioridad().equals("alta")){
+					p.setIdPrioridad(1);			
+				}
+				if(getPrioridad().equals("media")){
+					p.setIdPrioridad(2);			
+				}
+				if(getPrioridad().equals("baja")){
+					p.setIdPrioridad(3);			
+				}
+				
+				Solicitud sasig = fija;
+				System.out.println("Solicitud"+sasig.getDescSolicitud());
+				sasig.setIdPrioridad(p);		
+				sasig.setIdEstado(new Estado(2,"en proceso"));
+				solserv.updateSolicitud(sasig);
+				
+				//Creamos la atencion
+				
+				Atencion ate = new Atencion();
+				ate.setIdSolicitud(sasig);
+				ate.setFechaAtencion(Fecha);
+				ate.setHoraAtencion(Fecha);
+				ate.setTrabajador(t);
+				atencionService.addAtencion(ate);
+				mensajes("info","Atención registrada");
+			}else{
+				mensajes("error","Ingresar todos los campos");
+			}
+		}else{
+			mensajes("error","Seleccionar una solicitud");
 		}
-		if(getPrioridad().equals("media")){
-			p.setIdPrioridad(2);			
-		}
-		if(getPrioridad().equals("baja")){
-			p.setIdPrioridad(3);			
-		}
-		
-		Solicitud sasig = fija;
-		System.out.println("Solicitud"+sasig.getDescSolicitud());
-		sasig.setIdPrioridad(p);		
-		sasig.setIdEstado(new Estado(2,"en proceso"));
-		solserv.updateSolicitud(sasig);
-		
-		//Creamos la atencion
-		
-		Atencion ate = new Atencion();
-		ate.setIdSolicitud(sasig);
-		ate.setFechaAtencion(Fecha);
-		ate.setHoraAtencion(Fecha);
-		ate.setTrabajador(t);
-		atencionService.addAtencion(ate);		
-		
-	}
-	
-	public void SeleccionaSolicitud(){
-		
 	}
 	
 	public void handleChangeP() {  
@@ -340,5 +347,26 @@ public class TableBean implements Serializable{
 
         //FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+	
+	public void mensajes(String tipo, String msj){
+		FacesContext context = FacesContext.getCurrentInstance();  
+		FacesMessage msg = null;		
+		if(tipo.equals("error")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		if(tipo.equals("info")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		System.out.println("Context"+context.toString());
+		context.addMessage(null,msg);
+	}
+	
+	public void validaSel(ActionEvent ae){
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}
+	}
 	
 }

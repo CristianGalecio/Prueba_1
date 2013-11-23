@@ -72,7 +72,7 @@ public class ClientePK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.ClientePK[ idUsuario=" + idUsuario + ", idCliente=" + idCliente + " ]";
+        return "prueba_1.ClientePK[ idUsuario=" + idUsuario + ", idCliente=" + idCliente + " ]";
     }
     
 }

@@ -6,8 +6,10 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -17,7 +19,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "atencion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Atencion.findAll", query = "SELECT a FROM Atencion a")})
+    @NamedQuery(name = "Atencion.findAll", query = "SELECT a FROM Atencion a"),
+    @NamedQuery(name = "Atencion.findByIdAtencion", query = "SELECT a FROM Atencion a WHERE a.idAtencion = :idAtencion"),
+    @NamedQuery(name = "Atencion.findByFechaAtencion", query = "SELECT a FROM Atencion a WHERE a.fechaAtencion = :fechaAtencion"),
+    @NamedQuery(name = "Atencion.findByHoraAtencion", query = "SELECT a FROM Atencion a WHERE a.horaAtencion = :horaAtencion")})
 public class Atencion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,17 +38,19 @@ public class Atencion implements Serializable {
     @Column(name = "HORA_ATENCION")
     @Temporal(TemporalType.TIME)
     private Date horaAtencion;
+    @JoinColumns({
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
+        @JoinColumn(name = "ID_TRABAJADOR", referencedColumnName = "ID_TRABAJADOR")})
+    @ManyToOne
+    private Trabajador trabajador;
     @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
     @ManyToOne(optional = false)
     private Solicitud idSolicitud;
     @JoinColumn(name = "ID_EVALUACION", referencedColumnName = "ID_EVALUACION")
     @ManyToOne
     private Evaluacion idEvaluacion;
-    @JoinColumns({
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
-        @JoinColumn(name = "ID_TRABAJADOR", referencedColumnName = "ID_TRABAJADOR")})
-    @ManyToOne
-    private Trabajador trabajador;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAtencion")
+    private List<Evaluacion> evaluacionList;
 
     public Atencion() {
     }
@@ -82,6 +89,14 @@ public class Atencion implements Serializable {
         this.horaAtencion = horaAtencion;
     }
 
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
+
     public Solicitud getIdSolicitud() {
         return idSolicitud;
     }
@@ -98,12 +113,13 @@ public class Atencion implements Serializable {
         this.idEvaluacion = idEvaluacion;
     }
 
-    public Trabajador getTrabajador() {
-        return trabajador;
+    @XmlTransient
+    public List<Evaluacion> getEvaluacionList() {
+        return evaluacionList;
     }
 
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
+    public void setEvaluacionList(List<Evaluacion> evaluacionList) {
+        this.evaluacionList = evaluacionList;
     }
 
     @Override
@@ -128,7 +144,7 @@ public class Atencion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Atencion[ idAtencion=" + idAtencion + " ]";
+        return "prueba_1.Atencion[ idAtencion=" + idAtencion + " ]";
     }
     
 }

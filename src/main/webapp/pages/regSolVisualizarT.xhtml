@@ -29,13 +29,12 @@
                <p:ajax event="tabChange" listener="#{tableBean.onTabChange}"/>
 				<p:tab title="Pendientes">
 					<p:contextMenu for="dataPendientes">
-						<p:menuitem value="Atender" update="dataPendientes" icon="ui-icon-search" oncomplete="atenDialog.show()"/>        				  
+						<p:menuitem value="Atender" update=":form:growl" icon="ui-icon-search" actionListener="#{tableBean.validaSel}" oncomplete="atenDialog.show()" />        				  
     				</p:contextMenu>
 					  
-					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}" rowKey="#{Solicitud.idSolicitud}"
-								 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-								 selection="#{tableBean.selectedSol}" selectionMode="single"	>
-						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" update=":form:display :form:growl" oncomplete="solDialog.show()" />      				  
+					<p:dataTable id="dataPendientes" var="Solicitud" value="#{tableBean.mediumSolsModel}"								 
+								 selection="#{tableBean.selectedSol}" selectionMode="single">
+						<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}"/>      				  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitud.idSolicitud}" />  
 				        </p:column>  
@@ -51,7 +50,12 @@
 				            <h:outputText value="#{Solicitud.horaIngreso}" >
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
-				        </p:column> 			  						
+				        </p:column>
+				        <p:column style="width:4%">
+			                <p:commandButton id="selectButton"  update=":form:display :form:growl" oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+			                	<f:setPropertyActionListener value="#{Solicitud}" target="#{tableBean.selectedSol}" />
+			            	</p:commandButton>
+			        	</p:column> 			  						
 					</p:dataTable>					
 				</p:tab>
 					
@@ -60,8 +64,7 @@
         				<p:menuitem value="Diagnosticar" update="dataProceso" icon="ui-icon-close" oncomplete="diagnosticoDialog.show()"/> 
         				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close" oncomplete="solucionDialog.show()"/>  
     				</p:contextMenu>									  
-					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.mediumSolsModelPro}"
-								paginator="true" rows="7" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
+					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.mediumSolsModelPro}"									
 								selection="#{tableBean.selectedSol}" selectionMode="single">
 								<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}"/>  
 				        <p:column headerText="ID" align="center">  
@@ -80,11 +83,15 @@
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
 				        </p:column>
+				        <p:column style="width:4%">
+			                <p:commandButton id="selectButton2"  update=":form:display :form:growl" oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+			                	<f:setPropertyActionListener value="#{Solicitudes}" target="#{tableBean.selectedSol}" />
+			            	</p:commandButton>
+			        	</p:column>
 				    </p:dataTable>		     					
 				</p:tab>
 				<p:tab title="Finalizado">					
-					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"
-								paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"	
+					<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"									
 								selection="#{tableBean.selectedSol}" selectionMode="single">  
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
@@ -103,6 +110,11 @@
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
 				        </p:column>  
+				        <p:column style="width:4%">
+			                <p:commandButton id="selectButton3"  update=":form:display :form:growl" oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+			                	<f:setPropertyActionListener value="#{Solicitudes}" target="#{tableBean.selectedSol}" />
+			            	</p:commandButton>
+			        	</p:column>
 				    </p:dataTable>
 						
 				</p:tab>			
@@ -167,7 +179,7 @@
 					
 			</p:dialog>
 			
-			<p:dialog id="atenDialog" header="Registrar Solucion" widgetVar="atenDialog" showEffect="fade"  modal="false">
+			<p:dialog id="atenDialog" header="Iniciar Atencion" widgetVar="atenDialog" showEffect="fade"  modal="false">
 				<h:form>
 		      	
 				<h:panelGrid columns="2">  
@@ -185,7 +197,8 @@
 			            <p:ajax listener="#{tableBean.handleChangeT}" />  
 			        </p:selectOneMenu>
 			        <f:facet name="footer">			        
-						<p:commandButton id="Init" value="Listo" actionListener="#{tableBean.asignarTecnico}" oncomplete="atenDialog.hide();"/>
+						<p:commandButton id="Init" value="Listo" actionListener="#{tableBean.asignarTecnico}"
+										oncomplete="atenDialog.hide();" update=":form:growl"/>
 					</f:facet> 
 			    </h:panelGrid> 
 			    

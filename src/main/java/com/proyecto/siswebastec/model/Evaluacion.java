@@ -1,80 +1,149 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
-
+import java.util.List;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the evaluacion database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Evaluacion.findAll", query="SELECT e FROM Evaluacion e")
+@Table(name = "evaluacion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Evaluacion.findAll", query = "SELECT e FROM Evaluacion e"),
+    @NamedQuery(name = "Evaluacion.findByIdEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.idEvaluacion = :idEvaluacion"),
+    @NamedQuery(name = "Evaluacion.findByObsEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.obsEvaluacion = :obsEvaluacion"),
+    @NamedQuery(name = "Evaluacion.findByFechaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.fechaEvaluacion = :fechaEvaluacion"),
+    @NamedQuery(name = "Evaluacion.findByHoraEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaEvaluacion = :horaEvaluacion")})
 public class Evaluacion implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_EVALUACION")
+    private Integer idEvaluacion;
+    @Basic(optional = false)
+    @Column(name = "OBS_EVALUACION")
+    private String obsEvaluacion;
+    @Basic(optional = false)
+    @Column(name = "FECHA_EVALUACION")
+    @Temporal(TemporalType.DATE)
+    private Date fechaEvaluacion;
+    @Basic(optional = false)
+    @Column(name = "HORA_EVALUACION")
+    @Temporal(TemporalType.TIME)
+    private Date horaEvaluacion;
+    @OneToMany(mappedBy = "idEvaluacion")
+    private List<Atencion> atencionList;
+    @JoinColumn(name = "VALOR_EVALUACION", referencedColumnName = "ID_CALIFICACION")
+    @ManyToOne(optional = false)
+    private Calificacion valorEvaluacion;
+    @JoinColumn(name = "ID_ATENCION", referencedColumnName = "ID_ATENCION")
+    @ManyToOne(optional = false)
+    private Atencion idAtencion;
 
-	@Id
-	@Column(name="ID_EVALUACION")
-	private int idEvaluacion;
+    public Evaluacion() {
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_EVALUACION")
-	private Date fechaEvaluacion;
+    public Evaluacion(Integer idEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+    }
 
-	@Column(name="HORA_EVALUACION")
-	private Time horaEvaluacion;
+    public Evaluacion(Integer idEvaluacion, String obsEvaluacion, Date fechaEvaluacion, Date horaEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+        this.obsEvaluacion = obsEvaluacion;
+        this.fechaEvaluacion = fechaEvaluacion;
+        this.horaEvaluacion = horaEvaluacion;
+    }
 
-	@Column(name="OBS_EVALUACION")
-	private String obsEvaluacion;
+    public Integer getIdEvaluacion() {
+        return idEvaluacion;
+    }
 
-	//bi-directional many-to-one association to Calificacion
-	@ManyToOne
-	@JoinColumn(name="VALOR_EVALUACION")
-	private Calificacion calificacion;
+    public void setIdEvaluacion(Integer idEvaluacion) {
+        this.idEvaluacion = idEvaluacion;
+    }
 
-	public Evaluacion() {
-	}
+    public String getObsEvaluacion() {
+        return obsEvaluacion;
+    }
 
-	public int getIdEvaluacion() {
-		return this.idEvaluacion;
-	}
+    public void setObsEvaluacion(String obsEvaluacion) {
+        this.obsEvaluacion = obsEvaluacion;
+    }
 
-	public void setIdEvaluacion(int idEvaluacion) {
-		this.idEvaluacion = idEvaluacion;
-	}
+    public Date getFechaEvaluacion() {
+        return fechaEvaluacion;
+    }
 
-	public Date getFechaEvaluacion() {
-		return this.fechaEvaluacion;
-	}
+    public void setFechaEvaluacion(Date fechaEvaluacion) {
+        this.fechaEvaluacion = fechaEvaluacion;
+    }
 
-	public void setFechaEvaluacion(Date fechaEvaluacion) {
-		this.fechaEvaluacion = fechaEvaluacion;
-	}
+    public Date getHoraEvaluacion() {
+        return horaEvaluacion;
+    }
 
-	public Time getHoraEvaluacion() {
-		return this.horaEvaluacion;
-	}
+    public void setHoraEvaluacion(Date horaEvaluacion) {
+        this.horaEvaluacion = horaEvaluacion;
+    }
 
-	public void setHoraEvaluacion(Time horaEvaluacion) {
-		this.horaEvaluacion = horaEvaluacion;
-	}
+    @XmlTransient
+    public List<Atencion> getAtencionList() {
+        return atencionList;
+    }
 
-	public String getObsEvaluacion() {
-		return this.obsEvaluacion;
-	}
+    public void setAtencionList(List<Atencion> atencionList) {
+        this.atencionList = atencionList;
+    }
 
-	public void setObsEvaluacion(String obsEvaluacion) {
-		this.obsEvaluacion = obsEvaluacion;
-	}
+    public Calificacion getValorEvaluacion() {
+        return valorEvaluacion;
+    }
 
-	public Calificacion getCalificacion() {
-		return this.calificacion;
-	}
+    public void setValorEvaluacion(Calificacion valorEvaluacion) {
+        this.valorEvaluacion = valorEvaluacion;
+    }
 
-	public void setCalificacion(Calificacion calificacion) {
-		this.calificacion = calificacion;
-	}
+    public Atencion getIdAtencion() {
+        return idAtencion;
+    }
 
+    public void setIdAtencion(Atencion idAtencion) {
+        this.idAtencion = idAtencion;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idEvaluacion != null ? idEvaluacion.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Evaluacion)) {
+            return false;
+        }
+        Evaluacion other = (Evaluacion) object;
+        if ((this.idEvaluacion == null && other.idEvaluacion != null) || (this.idEvaluacion != null && !this.idEvaluacion.equals(other.idEvaluacion))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "prueba_1.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
+    }
+    
 }

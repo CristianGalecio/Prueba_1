@@ -18,7 +18,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cliente")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
+    @NamedQuery(name = "Cliente.findByIdUsuario", query = "SELECT c FROM Cliente c WHERE c.clientePK.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Cliente.findByIdPerfil", query = "SELECT c FROM Cliente c WHERE c.idPerfil = :idPerfil"),
+    @NamedQuery(name = "Cliente.findByNombreUsuario", query = "SELECT c FROM Cliente c WHERE c.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "Cliente.findByAppatUsuario", query = "SELECT c FROM Cliente c WHERE c.appatUsuario = :appatUsuario"),
+    @NamedQuery(name = "Cliente.findByApmatUsuario", query = "SELECT c FROM Cliente c WHERE c.apmatUsuario = :apmatUsuario"),
+    @NamedQuery(name = "Cliente.findByDniUsuario", query = "SELECT c FROM Cliente c WHERE c.dniUsuario = :dniUsuario"),
+    @NamedQuery(name = "Cliente.findByEmailUsuario", query = "SELECT c FROM Cliente c WHERE c.emailUsuario = :emailUsuario"),
+    @NamedQuery(name = "Cliente.findByClaveUsuario", query = "SELECT c FROM Cliente c WHERE c.claveUsuario = :claveUsuario"),
+    @NamedQuery(name = "Cliente.findByCelularUsuario", query = "SELECT c FROM Cliente c WHERE c.celularUsuario = :celularUsuario"),
+    @NamedQuery(name = "Cliente.findByCargoCliente", query = "SELECT c FROM Cliente c WHERE c.cargoCliente = :cargoCliente"),
+    @NamedQuery(name = "Cliente.findByAnexoCliente", query = "SELECT c FROM Cliente c WHERE c.anexoCliente = :anexoCliente"),
+    @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.clientePK.idCliente = :idCliente")})
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -46,12 +58,12 @@ public class Cliente implements Serializable {
     private Integer anexoCliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Solicitud> solicitudList;
-    @JoinColumn(name = "ID_AREA", referencedColumnName = "ID_AREA")
-    @ManyToOne
-    private Area idArea;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "ID_AREA", referencedColumnName = "ID_AREA")
+    @ManyToOne
+    private Area idArea;
 
     public Cliente() {
     }
@@ -166,20 +178,20 @@ public class Cliente implements Serializable {
         this.solicitudList = solicitudList;
     }
 
-    public Area getIdArea() {
-        return idArea;
-    }
-
-    public void setIdArea(Area idArea) {
-        this.idArea = idArea;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Area getIdArea() {
+        return idArea;
+    }
+
+    public void setIdArea(Area idArea) {
+        this.idArea = idArea;
     }
 
     @Override
@@ -204,7 +216,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Cliente[ clientePK=" + clientePK + " ]";
+        return "prueba_1.Cliente[ clientePK=" + clientePK + " ]";
     }
     
 }

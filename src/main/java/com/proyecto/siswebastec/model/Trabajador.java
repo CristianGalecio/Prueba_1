@@ -18,7 +18,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "trabajador")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Trabajador.findAll", query = "SELECT t FROM Trabajador t")})
+    @NamedQuery(name = "Trabajador.findAll", query = "SELECT t FROM Trabajador t"),
+    @NamedQuery(name = "Trabajador.findByIdUsuario", query = "SELECT t FROM Trabajador t WHERE t.trabajadorPK.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Trabajador.findByNombreUsuario", query = "SELECT t FROM Trabajador t WHERE t.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "Trabajador.findByAppatUsuario", query = "SELECT t FROM Trabajador t WHERE t.appatUsuario = :appatUsuario"),
+    @NamedQuery(name = "Trabajador.findByApmatUsuario", query = "SELECT t FROM Trabajador t WHERE t.apmatUsuario = :apmatUsuario"),
+    @NamedQuery(name = "Trabajador.findByDniUsuario", query = "SELECT t FROM Trabajador t WHERE t.dniUsuario = :dniUsuario"),
+    @NamedQuery(name = "Trabajador.findByEmailUsuario", query = "SELECT t FROM Trabajador t WHERE t.emailUsuario = :emailUsuario"),
+    @NamedQuery(name = "Trabajador.findByClaveUsuario", query = "SELECT t FROM Trabajador t WHERE t.claveUsuario = :claveUsuario"),
+    @NamedQuery(name = "Trabajador.findByCelularUsuario", query = "SELECT t FROM Trabajador t WHERE t.celularUsuario = :celularUsuario"),
+    @NamedQuery(name = "Trabajador.findByIdPerfil", query = "SELECT t FROM Trabajador t WHERE t.idPerfil = :idPerfil"),
+    @NamedQuery(name = "Trabajador.findByEstadoTrabajador", query = "SELECT t FROM Trabajador t WHERE t.estadoTrabajador = :estadoTrabajador"),
+    @NamedQuery(name = "Trabajador.findByIdTrabajador", query = "SELECT t FROM Trabajador t WHERE t.trabajadorPK.idTrabajador = :idTrabajador")})
 public class Trabajador implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -196,7 +207,7 @@ public class Trabajador implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
+        return "prueba_1.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
     }
     
 }

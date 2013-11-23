@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "prioridad")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Prioridad.findAll", query = "SELECT p FROM Prioridad p")})
+    @NamedQuery(name = "Prioridad.findAll", query = "SELECT p FROM Prioridad p"),
+    @NamedQuery(name = "Prioridad.findByIdPrioridad", query = "SELECT p FROM Prioridad p WHERE p.idPrioridad = :idPrioridad"),
+    @NamedQuery(name = "Prioridad.findByNombrePrioridad", query = "SELECT p FROM Prioridad p WHERE p.nombrePrioridad = :nombrePrioridad")})
 public class Prioridad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,7 +92,7 @@ public class Prioridad implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Prioridad[ idPrioridad=" + idPrioridad + " ]";
+        return "prueba_1.Prioridad[ idPrioridad=" + idPrioridad + " ]";
     }
     
 }

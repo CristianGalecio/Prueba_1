@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "area")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a")})
+    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a"),
+    @NamedQuery(name = "Area.findByIdArea", query = "SELECT a FROM Area a WHERE a.idArea = :idArea"),
+    @NamedQuery(name = "Area.findByNombreArea", query = "SELECT a FROM Area a WHERE a.nombreArea = :nombreArea")})
 public class Area implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,7 +93,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Area[ idArea=" + idArea + " ]";
+        return "prueba_1.Area[ idArea=" + idArea + " ]";
     }
     
 }

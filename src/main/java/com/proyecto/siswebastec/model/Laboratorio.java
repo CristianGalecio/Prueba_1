@@ -16,7 +16,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "laboratorio")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Laboratorio.findAll", query = "SELECT l FROM Laboratorio l")})
+    @NamedQuery(name = "Laboratorio.findAll", query = "SELECT l FROM Laboratorio l"),
+    @NamedQuery(name = "Laboratorio.findByIdLaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.idLaboratorio = :idLaboratorio"),
+    @NamedQuery(name = "Laboratorio.findByNombreLaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombreLaboratorio = :nombreLaboratorio")})
 public class Laboratorio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,7 +79,7 @@ public class Laboratorio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Laboratorio[ idLaboratorio=" + idLaboratorio + " ]";
+        return "prueba_1.Laboratorio[ idLaboratorio=" + idLaboratorio + " ]";
     }
     
 }

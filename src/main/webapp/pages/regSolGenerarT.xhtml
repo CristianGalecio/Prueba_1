@@ -50,10 +50,10 @@
   
                           </p:toolbar>  
                 </h:form>  -->
-
-                <h:form >
-                <p:growl id="mensajes" showDetail="true"/>
-                   <p:panel header="Nueva Solicitud" style="margin-bottom:10px;" visible="true">
+				<p:growl id="mensajes" showDetail="true"/>
+                <h:form id="formG">
+                
+                   <p:panel id="nuevaSol" header="Nueva Solicitud" style="margin-bottom:10px;" visible="true">
                    <br/>  
                         <h:panelGrid columns="5" cellpadding="5">
                         		  <h:outputText value="Solicitante:"/>
@@ -82,9 +82,9 @@
                                   <br/>
                                   <h:panelGrid columns="5" cellpadding="5">
                                           <p:commandButton id="guardar" value="Guardar"
-                                          actionListener="#{solicitudBean.guardar}" update="mensajes"/>
+                                          actionListener="#{solicitudBean.guardar}" update=":mensajes"/>
                                           <p:commandButton id="cancelar" value="Cancelar"
-                                          actionListener="#{solicitudBean.cancelar}" update="mensajes"/>
+                                          actionListener="#{solicitudBean.cancelar}" update="nuevaSol"/>
                                   </h:panelGrid>
                     </p:panel>                    
                     

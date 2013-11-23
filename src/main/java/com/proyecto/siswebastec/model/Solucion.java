@@ -6,6 +6,7 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -17,7 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "solucion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Solucion.findAll", query = "SELECT s FROM Solucion s")})
+    @NamedQuery(name = "Solucion.findAll", query = "SELECT s FROM Solucion s"),
+    @NamedQuery(name = "Solucion.findByIdSolucion", query = "SELECT s FROM Solucion s WHERE s.idSolucion = :idSolucion"),
+    @NamedQuery(name = "Solucion.findByDescSolucion", query = "SELECT s FROM Solucion s WHERE s.descSolucion = :descSolucion"),
+    @NamedQuery(name = "Solucion.findByFechaSolucion", query = "SELECT s FROM Solucion s WHERE s.fechaSolucion = :fechaSolucion")})
 public class Solucion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,13 +47,19 @@ public class Solucion implements Serializable {
         this.idSolucion = idSolucion;
     }
 
-    public Solucion(Solicitud sol, String descSolucion, Date fechaSolucion) {
-        this.idSolicitud = sol;
+    public Solucion(Integer idSolucion, String descSolucion, Date fechaSolucion) {
+        this.idSolucion = idSolucion;
         this.descSolucion = descSolucion;
         this.fechaSolucion = fechaSolucion;
     }
 
-    public Integer getIdSolucion() {
+    public Solucion(Solicitud fija, String solucion, Date time) {
+		this.idSolicitud=fija;
+		this.descSolucion=solucion;
+		this.fechaSolucion=time;
+	}
+
+	public Integer getIdSolucion() {
         return idSolucion;
     }
 
@@ -103,7 +113,7 @@ public class Solucion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Solucion[ idSolucion=" + idSolucion + " ]";
+        return "prueba_1.Solucion[ idSolucion=" + idSolucion + " ]";
     }
     
 }

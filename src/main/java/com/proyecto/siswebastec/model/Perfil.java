@@ -18,7 +18,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "perfil")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")})
+    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
+    @NamedQuery(name = "Perfil.findByIdPerfil", query = "SELECT p FROM Perfil p WHERE p.idPerfil = :idPerfil"),
+    @NamedQuery(name = "Perfil.findByNombrePerfil", query = "SELECT p FROM Perfil p WHERE p.nombrePerfil = :nombrePerfil"),
+    @NamedQuery(name = "Perfil.findByDescPerfil", query = "SELECT p FROM Perfil p WHERE p.descPerfil = :descPerfil")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,7 +35,10 @@ public class Perfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESC_PERFIL")
     private String descPerfil;
-    @ManyToMany(mappedBy = "perfilList")
+    @JoinTable(name = "pf_pri", joinColumns = {
+        @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_PRIVILEGIO", referencedColumnName = "ID_PRIVILEGIO")})
+    @ManyToMany
     private List<Privilegio> privilegioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
     private List<Usuario> usuarioList;
@@ -114,7 +120,7 @@ public class Perfil implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Perfil[ idPerfil=" + idPerfil + " ]";
+        return "prueba_1.Perfil[ idPerfil=" + idPerfil + " ]";
     }
     
 }

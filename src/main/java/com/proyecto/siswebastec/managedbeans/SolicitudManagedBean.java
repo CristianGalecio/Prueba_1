@@ -135,40 +135,66 @@ public class SolicitudManagedBean implements Serializable {
 	public void guardar(ActionEvent actionEvent){
 		//RequestContext context = RequestContext.getCurrentInstance();
 		//Comunicacion entre ManagedBean
+		System.out.println("SolicitudManagedBean.guardar()");
 		FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+		System.out.println("session"+session);
 		LoginBean nB =(LoginBean) session.getAttribute("loginBean");	
-		Date Fecha = Calendar.getInstance().getTime();
-		Cliente cliente;
 		
-		//FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fechaaaa:"+sdf.format(Fecha), nombre);
-		//FacesContext.getCurrentInstance().addMessage(null, msg);
-		String tipo = loginService.DevolverTipoUsuario(nB.getUsuario(), nB.getClave());
-		System.out.println(tipo);
-		if(tipo.equals("cliente")){
-			cliente = clienteService.getClienteById(nB.getUsuario());
+		System.out.println("nB"+nB);
+		if(nB.getUsuario()!=null){
+			System.out.println("entra");
+			Date Fecha = Calendar.getInstance().getTime();
+			Cliente cliente = new Cliente();
+			Boolean error = false;			
+			String tipo = loginService.DevolverTipoUsuario(nB.getUsuario(), nB.getClave());
+			System.out.println("Usuario"+nB.getUsuario());
+			Estado est=new Estado(1,"pendiente");
+			TipoSolicitud tip = new TipoSolicitud(1,"normal");
+			Ubicacion ubi = ubicacionService.getNombreByNombre(getUbicacion());
+			
+			if(tipo.equals("cliente")){
+				cliente = clienteService.getClienteById(nB.getUsuario());
+			}else{
+				if(tipo.equals("trabajador")){
+					System.out.println(getUsuario());
+					cliente = clienteService.getClienteById(getUsuario());
+				}else{
+					error = true;
+				}
+			}
+			
+			if((ubi == null || ubi.equals(""))
+			  ||(getNombre()==null || getNombre().equals(""))
+			  ||(getDescripcion()==null || getDescripcion().equals(""))
+			  ||(nB.getUsuario()==null || nB.getUsuario().equals(""))
+			  ||(cliente==null)){
+				error = true;
+			}		
+			System.out.println("error"+error);
+			if(error == false){
+				System.out.println("No errores");
+				Solicitud solNueva = new Solicitud();
+				solNueva.setCliente(cliente);
+				solNueva.setUbicacion(getNombre());
+				solNueva.setIdUbicacion(ubi);
+				solNueva.setDescSolicitud(getDescripcion());
+				solNueva.setIdSolicitante(nB.getUsuario());
+				solNueva.setFechaIngreso(Fecha);
+				solNueva.setFechaCierre(Fecha);
+				solNueva.setHoraIngreso(Fecha);
+				solNueva.setHoraCierre(Fecha);
+				solNueva.setIdEstado(est);
+				solNueva.setIdTipo(tip);				
+				solicitudService.addSolicitud(solNueva);
+				mensajes("info", "Registro exitoso");
+			}else{
+				mensajes("error", "Faltan datos");
+			}
 		}else{
-			System.out.println(getUsuario());
-			cliente = clienteService.getClienteById(getUsuario());
-		}		
-		
-		Estado est=new Estado(1,"pendiente");
-		TipoSolicitud tip = new TipoSolicitud(1,"normal");
-		Ubicacion ubi = ubicacionService.getNombreByNombre(getUbicacion());
-		Solicitud solNueva = new Solicitud();
-		solNueva.setCliente(cliente);
-		solNueva.setUbicacion(getNombre());
-		solNueva.setIdUbicacion(ubi);
-		solNueva.setDescSolicitud(getDescripcion());
-		solNueva.setIdSolicitante(nB.getUsuario());
-		solNueva.setFechaIngreso(Fecha);
-		solNueva.setFechaCierre(Fecha);
-		solNueva.setHoraIngreso(Fecha);
-		solNueva.setHoraCierre(Fecha);
-		solNueva.setIdEstado(est);
-		solNueva.setIdTipo(tip);
-		
-		solicitudService.addSolicitud(solNueva);		
+			System.out.println("else");
+			mensajes("error","No ha iniciado sesión");
+		}				
 	}
 	
 	public void cancelar(ActionEvent actionEvent){
@@ -195,5 +221,19 @@ public class SolicitudManagedBean implements Serializable {
 		return "regSolVisualizarT?faces-redirect=true";
 	}
 	
-	
+	public void mensajes(String tipo, String msj){
+		FacesContext context = FacesContext.getCurrentInstance();  
+		FacesMessage msg = null;
+		System.out.println("SolicitudManagedBean.mensajes()");
+		if(tipo.equals("error")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		if(tipo.equals("info")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		System.out.println("Context"+context.toString());
+		context.addMessage(null,msg);
+	}	
 }

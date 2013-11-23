@@ -19,7 +19,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "solicitud")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")})
+    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"),
+    @NamedQuery(name = "Solicitud.findByIdSolicitud", query = "SELECT s FROM Solicitud s WHERE s.idSolicitud = :idSolicitud"),
+    @NamedQuery(name = "Solicitud.findByIdSolicitante", query = "SELECT s FROM Solicitud s WHERE s.idSolicitante = :idSolicitante"),
+    @NamedQuery(name = "Solicitud.findByDescSolicitud", query = "SELECT s FROM Solicitud s WHERE s.descSolicitud = :descSolicitud"),
+    @NamedQuery(name = "Solicitud.findByFechaIngreso", query = "SELECT s FROM Solicitud s WHERE s.fechaIngreso = :fechaIngreso"),
+    @NamedQuery(name = "Solicitud.findByFechaCierre", query = "SELECT s FROM Solicitud s WHERE s.fechaCierre = :fechaCierre"),
+    @NamedQuery(name = "Solicitud.findByHoraIngreso", query = "SELECT s FROM Solicitud s WHERE s.horaIngreso = :horaIngreso"),
+    @NamedQuery(name = "Solicitud.findByHoraCierre", query = "SELECT s FROM Solicitud s WHERE s.horaCierre = :horaCierre"),
+    @NamedQuery(name = "Solicitud.findByUbicacion", query = "SELECT s FROM Solicitud s WHERE s.ubicacion = :ubicacion")})
 public class Solicitud implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,6 +35,9 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_SOLICITUD")
     private Integer idSolicitud;
+    @Basic(optional = false)
+    @Column(name = "ID_SOLICITANTE")
+    private String idSolicitante;
     @Basic(optional = false)
     @Column(name = "DESC_SOLICITUD")
     private String descSolicitud;
@@ -49,11 +60,11 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "UBICACION")
     private String ubicacion;
-    @Basic(optional = false)
-    @Column(name = "ID_SOLICITANTE")
-    private String idSolicitante;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
     private List<Solucion> solucionList;
+    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
+    @ManyToOne(optional = false)
+    private Ubicacion idUbicacion;
     @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
     @ManyToOne
     private TipoSolicitud idTipo;
@@ -71,9 +82,6 @@ public class Solicitud implements Serializable {
     @JoinColumn(name = "ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA")
     @ManyToOne
     private Categoria idCategoria;
-    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
-    @ManyToOne(optional = false)
-    private Ubicacion idUbicacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
     private List<Atencion> atencionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
@@ -86,15 +94,15 @@ public class Solicitud implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
-    public Solicitud(Integer idSolicitud, String descSolicitud, Date fechaIngreso, Date fechaCierre, Date horaIngreso, Date horaCierre, String ubicacion, String idSolicitante) {
+    public Solicitud(Integer idSolicitud, String idSolicitante, String descSolicitud, Date fechaIngreso, Date fechaCierre, Date horaIngreso, Date horaCierre, String ubicacion) {
         this.idSolicitud = idSolicitud;
+        this.idSolicitante = idSolicitante;
         this.descSolicitud = descSolicitud;
         this.fechaIngreso = fechaIngreso;
         this.fechaCierre = fechaCierre;
         this.horaIngreso = horaIngreso;
         this.horaCierre = horaCierre;
         this.ubicacion = ubicacion;
-        this.idSolicitante = idSolicitante;
     }
 
     public Integer getIdSolicitud() {
@@ -103,6 +111,14 @@ public class Solicitud implements Serializable {
 
     public void setIdSolicitud(Integer idSolicitud) {
         this.idSolicitud = idSolicitud;
+    }
+
+    public String getIdSolicitante() {
+        return idSolicitante;
+    }
+
+    public void setIdSolicitante(String idSolicitante) {
+        this.idSolicitante = idSolicitante;
     }
 
     public String getDescSolicitud() {
@@ -152,22 +168,22 @@ public class Solicitud implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    
-    public String getIdSolicitante() {
-		return idSolicitante;
-	}
 
-	public void setIdSolicitante(String idSolicitante) {
-		this.idSolicitante = idSolicitante;
-	}
-
-	@XmlTransient
+    @XmlTransient
     public List<Solucion> getSolucionList() {
         return solucionList;
     }
 
     public void setSolucionList(List<Solucion> solucionList) {
         this.solucionList = solucionList;
+    }
+
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     public TipoSolicitud getIdTipo() {
@@ -210,14 +226,6 @@ public class Solicitud implements Serializable {
         this.idCategoria = idCategoria;
     }
 
-    public Ubicacion getIdUbicacion() {
-        return idUbicacion;
-    }
-
-    public void setIdUbicacion(Ubicacion idUbicacion) {
-        this.idUbicacion = idUbicacion;
-    }
-
     @XmlTransient
     public List<Atencion> getAtencionList() {
         return atencionList;
@@ -258,7 +266,7 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+        return "prueba_1.Solicitud[ idSolicitud=" + idSolicitud + " ]";
     }
     
 }

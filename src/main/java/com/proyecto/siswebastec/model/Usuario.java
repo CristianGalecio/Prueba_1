@@ -18,7 +18,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "Usuario.findByAppatUsuario", query = "SELECT u FROM Usuario u WHERE u.appatUsuario = :appatUsuario"),
+    @NamedQuery(name = "Usuario.findByApmatUsuario", query = "SELECT u FROM Usuario u WHERE u.apmatUsuario = :apmatUsuario"),
+    @NamedQuery(name = "Usuario.findByDniUsuario", query = "SELECT u FROM Usuario u WHERE u.dniUsuario = :dniUsuario"),
+    @NamedQuery(name = "Usuario.findByEmailUsuario", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario"),
+    @NamedQuery(name = "Usuario.findByClaveUsuario", query = "SELECT u FROM Usuario u WHERE u.claveUsuario = :claveUsuario"),
+    @NamedQuery(name = "Usuario.findByCelularUsuario", query = "SELECT u FROM Usuario u WHERE u.celularUsuario = :celularUsuario")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -181,7 +189,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "prueba_1.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
 }

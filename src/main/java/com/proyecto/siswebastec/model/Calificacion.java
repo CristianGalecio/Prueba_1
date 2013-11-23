@@ -1,69 +1,98 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the calificacion database table.
- * 
+ *
+ * @author johana
  */
 @Entity
-@NamedQuery(name="Calificacion.findAll", query="SELECT c FROM Calificacion c")
+@Table(name = "calificacion")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Calificacion.findAll", query = "SELECT c FROM Calificacion c"),
+    @NamedQuery(name = "Calificacion.findByIdCalificacion", query = "SELECT c FROM Calificacion c WHERE c.idCalificacion = :idCalificacion"),
+    @NamedQuery(name = "Calificacion.findByNombreCalificacion", query = "SELECT c FROM Calificacion c WHERE c.nombreCalificacion = :nombreCalificacion")})
 public class Calificacion implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_CALIFICACION")
+    private Integer idCalificacion;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE_CALIFICACION")
+    private String nombreCalificacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "valorEvaluacion")
+    private List<Evaluacion> evaluacionList;
 
-	@Id
-	@Column(name="ID_CALIFICACION")
-	private int idCalificacion;
+    public Calificacion() {
+    }
 
-	@Column(name="NOMBRE_CALIFICACION")
-	private String nombreCalificacion;
+    public Calificacion(Integer idCalificacion) {
+        this.idCalificacion = idCalificacion;
+    }
 
-	//bi-directional many-to-one association to Evaluacion
-	@OneToMany(mappedBy="calificacion")
-	private List<Evaluacion> evaluacions;
+    public Calificacion(Integer idCalificacion, String nombreCalificacion) {
+        this.idCalificacion = idCalificacion;
+        this.nombreCalificacion = nombreCalificacion;
+    }
 
-	public Calificacion() {
-	}
+    public Integer getIdCalificacion() {
+        return idCalificacion;
+    }
 
-	public int getIdCalificacion() {
-		return this.idCalificacion;
-	}
+    public void setIdCalificacion(Integer idCalificacion) {
+        this.idCalificacion = idCalificacion;
+    }
 
-	public void setIdCalificacion(int idCalificacion) {
-		this.idCalificacion = idCalificacion;
-	}
+    public String getNombreCalificacion() {
+        return nombreCalificacion;
+    }
 
-	public String getNombreCalificacion() {
-		return this.nombreCalificacion;
-	}
+    public void setNombreCalificacion(String nombreCalificacion) {
+        this.nombreCalificacion = nombreCalificacion;
+    }
 
-	public void setNombreCalificacion(String nombreCalificacion) {
-		this.nombreCalificacion = nombreCalificacion;
-	}
+    @XmlTransient
+    public List<Evaluacion> getEvaluacionList() {
+        return evaluacionList;
+    }
 
-	public List<Evaluacion> getEvaluacions() {
-		return this.evaluacions;
-	}
+    public void setEvaluacionList(List<Evaluacion> evaluacionList) {
+        this.evaluacionList = evaluacionList;
+    }
 
-	public void setEvaluacions(List<Evaluacion> evaluacions) {
-		this.evaluacions = evaluacions;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idCalificacion != null ? idCalificacion.hashCode() : 0);
+        return hash;
+    }
 
-	public Evaluacion addEvaluacion(Evaluacion evaluacion) {
-		getEvaluacions().add(evaluacion);
-		evaluacion.setCalificacion(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Calificacion)) {
+            return false;
+        }
+        Calificacion other = (Calificacion) object;
+        if ((this.idCalificacion == null && other.idCalificacion != null) || (this.idCalificacion != null && !this.idCalificacion.equals(other.idCalificacion))) {
+            return false;
+        }
+        return true;
+    }
 
-		return evaluacion;
-	}
-
-	public Evaluacion removeEvaluacion(Evaluacion evaluacion) {
-		getEvaluacions().remove(evaluacion);
-		evaluacion.setCalificacion(null);
-
-		return evaluacion;
-	}
-
+    @Override
+    public String toString() {
+        return "prueba_1.Calificacion[ idCalificacion=" + idCalificacion + " ]";
+    }
+    
 }

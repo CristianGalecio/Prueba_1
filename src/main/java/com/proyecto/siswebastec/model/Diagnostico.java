@@ -6,6 +6,7 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -17,7 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "diagnostico")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Diagnostico.findAll", query = "SELECT d FROM Diagnostico d")})
+    @NamedQuery(name = "Diagnostico.findAll", query = "SELECT d FROM Diagnostico d"),
+    @NamedQuery(name = "Diagnostico.findByIdDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.idDiagnostico = :idDiagnostico"),
+    @NamedQuery(name = "Diagnostico.findByDetDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.detDiagnostico = :detDiagnostico"),
+    @NamedQuery(name = "Diagnostico.findByFechaDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.fechaDiagnostico = :fechaDiagnostico")})
 public class Diagnostico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,13 +47,19 @@ public class Diagnostico implements Serializable {
         this.idDiagnostico = idDiagnostico;
     }
 
-    public Diagnostico(Solicitud idSolicitud, String detDiagnostico, Date fechaDiagnostico) {
-        this.idSolicitud = idSolicitud;
+    public Diagnostico(Integer idDiagnostico, String detDiagnostico, Date fechaDiagnostico) {
+        this.idDiagnostico = idDiagnostico;
         this.detDiagnostico = detDiagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
     }
 
-    public Integer getIdDiagnostico() {
+    public Diagnostico(Solicitud fija, String diagnostico, Date time) {
+		this.idSolicitud=fija;
+		this.detDiagnostico=diagnostico;
+		this.fechaDiagnostico=time;
+	}
+
+	public Integer getIdDiagnostico() {
         return idDiagnostico;
     }
 
@@ -103,7 +113,7 @@ public class Diagnostico implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
+        return "prueba_1.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
     }
     
 }

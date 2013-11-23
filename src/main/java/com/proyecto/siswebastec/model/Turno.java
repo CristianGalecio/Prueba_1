@@ -17,7 +17,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "turno")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Turno.findAll", query = "SELECT t FROM Turno t")})
+    @NamedQuery(name = "Turno.findAll", query = "SELECT t FROM Turno t"),
+    @NamedQuery(name = "Turno.findByIdTurno", query = "SELECT t FROM Turno t WHERE t.idTurno = :idTurno"),
+    @NamedQuery(name = "Turno.findByTipoTurno", query = "SELECT t FROM Turno t WHERE t.tipoTurno = :tipoTurno"),
+    @NamedQuery(name = "Turno.findByHinicioTurno", query = "SELECT t FROM Turno t WHERE t.hinicioTurno = :hinicioTurno"),
+    @NamedQuery(name = "Turno.findByHfinTurno", query = "SELECT t FROM Turno t WHERE t.hfinTurno = :hfinTurno")})
 public class Turno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,7 +121,7 @@ public class Turno implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Turno[ idTurno=" + idTurno + " ]";
+        return "prueba_1.Turno[ idTurno=" + idTurno + " ]";
     }
     
 }

@@ -18,7 +18,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "privilegio")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Privilegio.findAll", query = "SELECT p FROM Privilegio p")})
+    @NamedQuery(name = "Privilegio.findAll", query = "SELECT p FROM Privilegio p"),
+    @NamedQuery(name = "Privilegio.findByIdPrivilegio", query = "SELECT p FROM Privilegio p WHERE p.idPrivilegio = :idPrivilegio"),
+    @NamedQuery(name = "Privilegio.findByNombrePrivilegio", query = "SELECT p FROM Privilegio p WHERE p.nombrePrivilegio = :nombrePrivilegio")})
 public class Privilegio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,10 +30,7 @@ public class Privilegio implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE_PRIVILEGIO")
     private String nombrePrivilegio;
-    @JoinTable(name = "pf_pri", joinColumns = {
-        @JoinColumn(name = "ID_PRIVILEGIO", referencedColumnName = "ID_PRIVILEGIO")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "privilegioList")
     private List<Perfil> perfilList;
 
     public Privilegio() {
@@ -93,7 +92,7 @@ public class Privilegio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.siswebastec.model.Privilegio[ idPrivilegio=" + idPrivilegio + " ]";
+        return "prueba_1.Privilegio[ idPrivilegio=" + idPrivilegio + " ]";
     }
     
 }

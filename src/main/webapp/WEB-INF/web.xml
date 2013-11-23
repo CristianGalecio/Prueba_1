@@ -36,7 +36,7 @@
   </listener>
   <context-param>
   	<param-name>primefaces.THEME</param-name>
-  	<param-value>overcast</param-value> 
+  	<param-value>glass-x</param-value> 
   </context-param>
   
   
