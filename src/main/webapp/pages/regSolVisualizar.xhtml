@@ -24,8 +24,9 @@
     <p:layoutUnit position="center">
               
       <h:form >
-              
+              <p:growl id="growl" showDetail="true"/>
               <p:tabView id="tabview" dinamic="true">
+              <p:ajax event="tabChange" listener="#{tableBean.onTabChange}"/>
 				<p:tab title="Atendidos">
 					<p:contextMenu for="dataAtencion">
 						<p:menuitem value="Calificar" update="dataAtencion" icon="ui-icon-search" oncomplete="calificarDialog.show()"/>        				  
@@ -61,13 +62,9 @@
             <p:dialog id="calificarDialog" header="Calificar Atencion" widgetVar="calificarDialog" showEffect="fade"  modal="false">
 		
 				<h:panelGrid columns="2" border="0" cellpadding="0" cellspacing="3">
-					<p:selectOneRadio columns="1" layout="pageDirection">
-						   <f:selectItem itemValue="1" itemLabel="Muy Bueno" />
-						   <f:selectItem itemValue="2" itemLabel="Bueno" />
-						   <f:selectItem itemValue="2" itemLabel="Regular" />
-						   <f:selectItem itemValue="2" itemLabel="Malo" />
-						   <f:selectItem itemValue="2" itemLabel="Muy Malo" />	   			
-					</p:selectOneRadio>					
+					<p:selectOneRadio id="grid" value="#{evaluacionBean.calificacion}" layout="pageDirection" >  
+			            <f:selectItems value="#{evaluacionBean.calificaciones}"/>  
+			        </p:selectOneRadio>  					
 					<p:panelGrid columns="1" cellpadding="1">
 							<f:facet name="header">  
 								Observacion 
@@ -76,7 +73,7 @@
   							
   					</p:panelGrid> 	  					
 				</h:panelGrid>	
-				<center><p:commandButton id="Listo2" value="Listo" oncomplete="calificarDialog.hide();"/></center>
+				<center><p:commandButton id="Listo2" value="Listo" actionListener="#{evaluacionBean.grabar}" oncomplete="calificarDialog.hide();" update="growl"/></center>
 			</p:dialog>            
               
      </h:form>  

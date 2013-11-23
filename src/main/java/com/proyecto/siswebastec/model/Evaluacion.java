@@ -7,6 +7,7 @@ package com.proyecto.siswebastec.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -27,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Evaluacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_EVALUACION")
     private Integer idEvaluacion;

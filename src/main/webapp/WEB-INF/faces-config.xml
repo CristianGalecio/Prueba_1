@@ -31,5 +31,10 @@
 		<managed-bean-class>com.proyecto.siswebastec.prueba.CreateProduct</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>evaluacionBean</managed-bean-name>
+		<managed-bean-class>com.proyecto.siswebastec.managedbeans.EvaluacionBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
   	
 </faces-config>

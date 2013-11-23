@@ -42,9 +42,11 @@ public class TableBean implements Serializable{
 	
 	private String prioridad;
 	private String trabajador;
+	private String categoria;
 //    private List<Prioridad> prioridades;  
     private List<String> prinames;
     private List<String> traid;
+    private List<String> categorias;
     private PrioridadService prioridadService;
     private TrabajadorService trabajadorService;
     private AtencionService atencionService;
@@ -52,14 +54,6 @@ public class TableBean implements Serializable{
     /*******Diagnostico y Solucion*****/
     private String Diagnostico;
     private String Solucion;
-	
-	public String getSolucion() {
-		return Solucion;
-	}
-
-	public void setSolucion(String solucion) {
-		Solucion = solucion;
-	}
 
 	public TableBean(){
 		System.out.println("TableBean.TableBean()");
@@ -83,6 +77,8 @@ public class TableBean implements Serializable{
   //  	prioridades = prioridadService.getPrioridades();
     	prinames = new ArrayList<>();
     	traid = new ArrayList<>();
+    	categorias=new ArrayList<>();
+    	categorias=solserv.getListaCat();
     	prinames = prioridadService.getNombresPri();
     	traid = trabajadorService.getIdTrabajadores();
     	atencionService = new AtencionServiceImpl();
@@ -243,6 +239,29 @@ public class TableBean implements Serializable{
 		Diagnostico = diagnostico;
 	}
 	
+	public String getSolucion() {
+		return Solucion;
+	}
+
+	public void setSolucion(String solucion) {
+		Solucion = solucion;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public List<String> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<String> categorias) {
+		this.categorias = categorias;
+	}
 	
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
@@ -300,6 +319,10 @@ public class TableBean implements Serializable{
 	public void handleChangeT() {  
 		System.out.println("evento: "+trabajador);
     }
+	
+	public void handleChangeC(){
+		System.out.println("evento: "+categoria);
+	}
 	
 	public void actualizarDiag(ActionEvent e){
 		System.out.println("actualizarDiag()");

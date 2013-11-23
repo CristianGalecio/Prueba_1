@@ -19,5 +19,7 @@ public interface SolicitudService {
 	public List<Solicitud> getSolicitudesFinalizadas();
 	public void addDiagnostico(Diagnostico diag);
 	public void addSolucion(Solucion sol);
+	public List<String> getListaCat();
+	void actualizarCat(Solicitud sasig);
 
 }

@@ -3,9 +3,11 @@ package com.proyecto.siswebastec.servicesImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.proyecto.siswebastec.DAO.CategoriaDAO;
 import com.proyecto.siswebastec.DAO.DiagnosticoDAO;
 import com.proyecto.siswebastec.DAO.SolicitudDAO;
 import com.proyecto.siswebastec.DAO.JPAUtil;
+import com.proyecto.siswebastec.model.Categoria;
 import com.proyecto.siswebastec.model.Diagnostico;
 import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Solicitud;
@@ -16,15 +18,19 @@ public class SolicitudServiceImpl implements SolicitudService{
 
 	SolicitudDAO solicitudDAO;
 	DiagnosticoDAO diagnosticoDAO;
-	
+	CategoriaDAO categoriaDAO;
 	JPAUtil objJpaUtil;
 	Solicitud solicitud;
+	Categoria categoria;
 	
 	public SolicitudServiceImpl() {
 		super();
 		objJpaUtil = new JPAUtil();
 		solicitudDAO =  new SolicitudDAO(objJpaUtil.getEntityManager());
 		solicitud = new Solicitud();
+		objJpaUtil = new JPAUtil();
+		categoriaDAO =  new CategoriaDAO(objJpaUtil.getEntityManager());
+		categoria = new Categoria();		
 	}
 	
 	public void addSolicitud(Solicitud solicitud) {
@@ -121,6 +127,28 @@ public class SolicitudServiceImpl implements SolicitudService{
 		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
 		solicitudDAO.insertarSolucion(sol);
 		System.out.println("addSolicitud()");
+	}
+
+	@Override
+	public List<String> getListaCat() {
+		System.out.println("SolicitudServiceImpl.getListaCat()");
+		objJpaUtil = new JPAUtil();
+		categoriaDAO = new CategoriaDAO(objJpaUtil.getEntityManager());
+		
+		List<Categoria> pri = categoriaDAO.listarTodos();
+		List<String> ars = new ArrayList<>();
+		for(int i=0; i<pri.size();i++){
+			ars.add(pri.get(i).getNombreCategoria());
+			System.out.println(pri.get(i).getNombreCategoria());
+		}
+		return ars;
+	}
+
+	@Override
+	public void actualizarCat(Solicitud sasig) {
+		objJpaUtil = new JPAUtil();
+		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
+		solicitudDAO.update(sasig);		
 	}
 
 }
