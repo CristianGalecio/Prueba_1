@@ -20,11 +20,13 @@ import com.proyecto.siswebastec.model.Trabajador;
 import com.proyecto.siswebastec.model.Diagnostico;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.BusyConversationException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -45,7 +47,9 @@ public class TableBean implements Serializable{
 	private String prioridad;
 	private String trabajador;
 	private String categoria;
-//    private List<Prioridad> prioridades;  
+	private String trbAten;
+	private String fcierre;
+	private String hcierre;
     private List<String> prinames;
     private List<String> traid;
     private List<String> categorias;
@@ -84,6 +88,9 @@ public class TableBean implements Serializable{
     	prinames = prioridadService.getNombresPri();
     	traid = trabajadorService.getIdTrabajadores();
     	atencionService = new AtencionServiceImpl();
+    	trbAten = "";
+    	fcierre = "";
+    	hcierre = "";
 		
 //		System.out.println("Holitas!");
 	}
@@ -265,6 +272,57 @@ public class TableBean implements Serializable{
 		this.categorias = categorias;
 	}
 	
+	public String getFcierre() {
+		return fcierre;
+	}
+
+	public void setFcierre(String fcierre) {
+		this.fcierre = fcierre;
+	}
+
+	public String getHcierre() {
+		return hcierre;
+	}
+
+	public void setHcierre(String hcierre) {
+		this.hcierre = hcierre;
+	}
+
+	public String getTrbAten() {
+		if(getSelectedSol()!=null){
+			if(getSelectedSol().getIdEstado().getIdEstado()!=1){
+				Atencion ate = atencionService.getAtencionByIdSol(getSelectedSol().getIdSolicitud());
+				System.out.println("Seleccionada"+getSelectedSol());
+				System.out.println("Atencion"+ate);
+				setTrbAten(ate.getTrabajador().getTrabajadorPK().getIdTrabajador());
+				if(getSelectedSol().getIdEstado().getIdEstado()==2){
+					setFcierre("-");
+					setHcierre("-");			
+				}else{
+					SimpleDateFormat sdff = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat sdfh = new SimpleDateFormat("h:mm a");
+					setFcierre(sdff.format(getSelectedSol().getFechaCierre()));
+					setHcierre(sdfh.format(getSelectedSol().getHoraCierre()));
+				}
+			}else{
+				setTrbAten("-");
+				Categoria catTemp = new Categoria();
+				catTemp.setNombreCategoria("-");
+				getSelectedSol().setIdCategoria(catTemp);
+				Prioridad priTemp = new Prioridad();
+				priTemp.setNombrePrioridad("-");
+				getSelectedSol().setIdPrioridad(priTemp);				
+				setFcierre("-");
+				setHcierre("-");			
+			}
+		}
+		return trbAten;
+	}
+
+	public void setTrbAten(String trbAten) {
+		this.trbAten = trbAten;
+	}
+
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
 		Boolean error = false;
