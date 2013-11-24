@@ -45,12 +45,14 @@ public class AtencionDAO extends DaoGenericImpl<Atencion, Integer>{
 
 	public Atencion buscarAtencion(int idSol) {
 		System.out.println("AtencionDAO.buscarAtencion()");
+		System.out.println(idSol);
 		Atencion trb = null;
 		entityManager.getTransaction().begin();		
 		@SuppressWarnings("unchecked")
-		List<Atencion> aux =  entityManager.createQuery("SELECT s FROM Atencion s WHERE s.idSolicitud = "+idSol).getResultList();
+		List<Atencion> aux =  entityManager.createQuery("SELECT s FROM Atencion s WHERE s.idSolicitud.idSolicitud = "+idSol).getResultList();
 		if(aux.size()!=0){
 			trb=aux.get(0);
+			System.out.println(aux.size());
 		}
 		entityManager.getTransaction().commit();
 		entityManager.close();	

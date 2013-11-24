@@ -10,6 +10,8 @@ import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.TrabajadorServiceImpl;
 import com.proyecto.siswebastec.bean.SolicitudDataModel;
 import com.proyecto.siswebastec.model.Atencion;
+import com.proyecto.siswebastec.model.Calificacion;
+import com.proyecto.siswebastec.model.Categoria;
 import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Solicitud;
@@ -327,10 +329,20 @@ public class TableBean implements Serializable{
 	public void actualizarDiag(ActionEvent e){
 		System.out.println("actualizarDiag()");
 		System.out.println(Diagnostico);
+		System.out.println(categoria);
 		System.out.println("fija:" + fija.getIdSolicitud());
 	//	System.out.println(getSelectedSol().getIdSolicitud().toString());
 		Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
 		solserv.addDiagnostico(diag);
+		fija.setIdCategoria(categoriaIdentificar(categoria));;
+	}
+	
+	public Categoria categoriaIdentificar(String cat){
+		Categoria cate=new Categoria();
+		 if(cate.equals("hardware")){cate.setIdCategoria(1);cate.setNombreCategoria(cat);}
+		 if(cate.equals("software")){cate.setIdCategoria(2);cate.setNombreCategoria(cat);}
+		 
+		return cate;
 	}
 	
 	public void actualizarSol(ActionEvent e){

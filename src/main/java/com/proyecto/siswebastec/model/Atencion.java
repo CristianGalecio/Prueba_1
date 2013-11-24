@@ -65,6 +65,10 @@ public class Atencion implements Serializable {
         this.fechaAtencion = fechaAtencion;
         this.horaAtencion = horaAtencion;
     }
+    /*
+    public Atencion(Evaluacion eval){
+    	this.id
+    }*/
 
     public Integer getIdAtencion() {
         return idAtencion;

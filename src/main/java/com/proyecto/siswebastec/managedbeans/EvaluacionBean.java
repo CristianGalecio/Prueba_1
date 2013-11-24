@@ -230,21 +230,20 @@ public class EvaluacionBean implements Serializable{
 		System.out.println(calif);
 		System.out.println(getObservacion());
 		Date Fecha = Calendar.getInstance().getTime();
-		//Atencion aten=new Atencion(1);
+		Atencion aten=buscarAtencion(fija.getIdSolicitud());
 		//Calificacion cal=new Calificacion();
-		Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha,buscarAtencion(fija.getIdSolicitud()), calificacionIdentificar(getCalificacion()));
-		//Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha,aten, calificacionIdentificar(getCalificacion()));
-
-		
+		Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha,aten, calificacionIdentificar(getCalificacion()));
 		atenserv.addEvaluacion(eval);
+		aten.setIdEvaluacion(eval);
+		atenserv.updateAtencion(aten);
 	}
 	
 	public Calificacion calificacionIdentificar(String cal){
 		Calificacion cali=new Calificacion();
-		 if(cal.equals("Excelente")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Bueno")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Regular")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Pesima")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
+		 if(cal.equals("Excelente")){cali.setIdCalificacion(5);cali.setNombreCalificacion(cal);}
+		 if(cal.equals("Bueno")){cali.setIdCalificacion(4);cali.setNombreCalificacion(cal);}
+		 if(cal.equals("Regular")){cali.setIdCalificacion(3);cali.setNombreCalificacion(cal);}
+		 if(cal.equals("Pesima")){cali.setIdCalificacion(2);cali.setNombreCalificacion(cal);}
 		 if(cal.equals("Mala")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
 
 		return cali;
