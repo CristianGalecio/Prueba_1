@@ -27,6 +27,7 @@
     		<p:growl id="growl" showDetail="true"/>
                <p:tabView id="tabview" dinamic="true">
                <p:ajax event="tabChange" listener="#{tableBean.onTabChange}"/>
+				
 				<p:tab title="Pendientes">
 					<p:contextMenu for="dataPendientes">
 						<p:menuitem value="Atender" update=":form:growl" icon="ui-icon-search" actionListener="#{tableBean.validaSel}" oncomplete="atenDialog.show()" />        				  
@@ -61,8 +62,8 @@
 					
 				<p:tab title="En Proceso">				
 					<p:contextMenu for="dataProceso">						        				  
-        				<p:menuitem value="Diagnosticar" update="dataProceso" icon="ui-icon-close" oncomplete="diagnosticoDialog.show()"/> 
-        				<p:menuitem value="Solucionar" update="datafinalizadas" icon="ui-icon-close" oncomplete="solucionDialog.show()"/>  
+        				<p:menuitem id="Diag" value="Diagnosticar" update=":form:growl" icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}" oncomplete="diagnosticoDialog.show()"/> 
+        				<p:menuitem id="Sol" value="Solucionar" update=":form:growl" icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}" oncomplete="solucionDialog.show()"/>  
     				</p:contextMenu>									  
 					<p:dataTable id="dataProceso" var="Solicitudes" value="#{tableBean.mediumSolsModelPro}"									
 								selection="#{tableBean.selectedSol}" selectionMode="single">

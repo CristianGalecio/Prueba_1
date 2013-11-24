@@ -392,4 +392,22 @@ public class TableBean implements Serializable{
 		}
 	}
 	
+	public void validaSelPro(ActionEvent ae){
+		System.out.println("TableBean.validaSelPro()");
+		if(fija==null){			
+			mensajes("error","Seleccionar una Solicitud");
+		}else{
+			System.out.println(fija.getIdSolicitud());
+			System.out.println(ae.getComponent().getId());
+			if(ae.getComponent().getId()=="Sol"){
+				if(fija.getDiagnosticoList().size()==0){
+					mensajes("error","Realize primero un diagnostico");
+				}
+			}
+			if(ae.getComponent().getId()=="Diag"){
+				
+			}
+		}
+	}
+	
 }
