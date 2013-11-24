@@ -26,14 +26,15 @@
       <h:form >
               <p:growl id="growl" showDetail="true"/>
               <p:tabView id="tabview" dinamic="true">
-              <p:ajax event="tabChange" listener="#{tableBean.onTabChange}"/>
+              <p:ajax event="tabChange" listener="#{evaluacionBean.onTabChange}"/>
 				<p:tab title="Atendidos">
 					<p:contextMenu for="dataAtencion">
 						<p:menuitem value="Calificar" update="dataAtencion" icon="ui-icon-search" oncomplete="calificarDialog.show()"/>        				  
     				</p:contextMenu>
 					
-					<p:dataTable id="dataAtencion" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"									
-								selection="#{tableBean.selectedSol}" selectionMode="single">  
+					<p:dataTable id="dataAtencion" var="Solicitudes" value="#{evaluacionBean.mediumSolsModelFin}"									
+								selection="#{evaluacionBean.selectedSol}" selectionMode="single">
+						<p:ajax event="rowSelect" listener="#{evaluacionBean.onRowSelect}"/>       
 				        <p:column headerText="ID" align="center">  
 				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
 				        </p:column>  
@@ -69,7 +70,7 @@
 							<f:facet name="header">  
 								Observacion 
 							</f:facet> 
-  							<p:inputTextarea id="observacion" rows="4" cols="103" />
+  							<p:inputTextarea id="observacion" rows="4" cols="103" value="#{evaluacionBean.observacion}" />
   							
   					</p:panelGrid> 	  					
 				</h:panelGrid>	

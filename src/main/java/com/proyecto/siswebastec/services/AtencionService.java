@@ -18,5 +18,7 @@ public interface AtencionService {
 	public List<String> getCalificacionesNombre();
 	public Calificacion getCalificacionporNombre(String nombrecalf);
 	public void addEvaluacion(Evaluacion evaluacion);
+	
+	public Atencion getAtencionByIdSol(int idSol);
 
 }

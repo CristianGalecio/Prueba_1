@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evaluacion.findByObsEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.obsEvaluacion = :obsEvaluacion"),
     @NamedQuery(name = "Evaluacion.findByFechaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.fechaEvaluacion = :fechaEvaluacion"),
     @NamedQuery(name = "Evaluacion.findByHoraEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaEvaluacion = :horaEvaluacion")})
+	
 public class Evaluacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,6 +65,15 @@ public class Evaluacion implements Serializable {
         this.obsEvaluacion = obsEvaluacion;
         this.fechaEvaluacion = fechaEvaluacion;
         this.horaEvaluacion = horaEvaluacion;
+    }
+    
+    public Evaluacion(String obsEvaluacion, Date fechaEvaluacion, Date horaEvaluacion,Atencion aten,Calificacion cal) {
+        //this.idEvaluacion = idEvaluacion;
+        this.obsEvaluacion = obsEvaluacion;
+        this.fechaEvaluacion = fechaEvaluacion;
+        this.horaEvaluacion = horaEvaluacion;
+        this.idAtencion=aten;
+        this.valorEvaluacion=cal;
     }
 
     public Integer getIdEvaluacion() {

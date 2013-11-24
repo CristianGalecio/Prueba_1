@@ -17,6 +17,8 @@ import com.proyecto.siswebastec.services.AtencionService;
 public class AtencionServiceImpl implements AtencionService{
 
 	AtencionDAO atencionDAO;
+	CalificacionDAO calificacionDAO;
+	EvaluacionDAO evaluacionDAO;
 	JPAUtil objJpaUtil;
 	Atencion atencion;
 	
@@ -24,6 +26,8 @@ public class AtencionServiceImpl implements AtencionService{
 		super();
 		objJpaUtil = new JPAUtil();
 		atencionDAO =  new AtencionDAO(objJpaUtil.getEntityManager());
+		calificacionDAO=new CalificacionDAO(objJpaUtil.getEntityManager());
+		evaluacionDAO=new EvaluacionDAO(objJpaUtil.getEntityManager());
 		atencion = new Atencion();
 	}
 
@@ -62,14 +66,14 @@ public class AtencionServiceImpl implements AtencionService{
 	}
 	public Calificacion getCalificacionById(int id){
 		objJpaUtil = new JPAUtil();
-		CalificacionDAO cal = new CalificacionDAO(objJpaUtil.getEntityManager());
-		return cal.getCalificacionByIdcalificacion(id);
+		calificacionDAO = new CalificacionDAO(objJpaUtil.getEntityManager());
+		return calificacionDAO.getCalificacionByIdcalificacion(id);
 	}
 	
 	public List<Calificacion> getCalificaciones() {
 		objJpaUtil = new JPAUtil();
-		CalificacionDAO cal= new CalificacionDAO(objJpaUtil.getEntityManager());
-		return cal.listarTodos();
+		calificacionDAO = new CalificacionDAO(objJpaUtil.getEntityManager());
+		return calificacionDAO.listarTodos();
 	}
 
 	public List<String> getCalificacionesNombre(){
@@ -83,15 +87,26 @@ public class AtencionServiceImpl implements AtencionService{
 
 	public Calificacion getCalificacionporNombre(String nombrecalf){
 		objJpaUtil = new JPAUtil();
-		CalificacionDAO cal= new CalificacionDAO(objJpaUtil.getEntityManager());
-		return cal.getCalificacionByNombrecalificacion(nombrecalf);
+		calificacionDAO = new CalificacionDAO(objJpaUtil.getEntityManager());
+		return calificacionDAO.getCalificacionByNombrecalificacion(nombrecalf);
 	}
 	
 	@Override
 	public void addEvaluacion(Evaluacion evaluacion) {
 		objJpaUtil = new JPAUtil();
-		EvaluacionDAO cal= new EvaluacionDAO(objJpaUtil.getEntityManager());
-		cal.insertarEvaluacion(evaluacion);
+		evaluacionDAO = new EvaluacionDAO(objJpaUtil.getEntityManager());
+		evaluacionDAO.insertarEvaluacion(evaluacion);
+	}
+
+	@Override
+	public Atencion getAtencionByIdSol(int idSol) {
+		System.out.println("AtencionServiceImpl.getAtencionByIdSol()");
+		Atencion aten=new Atencion();
+		objJpaUtil = new JPAUtil();
+		atencionDAO = new AtencionDAO(objJpaUtil.getEntityManager());
+		aten=atencionDAO.buscarAtencion(idSol);
+		System.out.println("Atencion: "+aten.getIdAtencion());
+		return aten;
 	}
 
 }
