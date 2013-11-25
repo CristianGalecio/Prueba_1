@@ -43,6 +43,7 @@ public class TableBean implements Serializable{
 	private Solicitud selectedSol;
 	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin,mediumSolsPend; 
 	private Solicitud fija;
+	private String idFija;
 	
 	private String prioridad;
 	private String trabajador;
@@ -91,6 +92,8 @@ public class TableBean implements Serializable{
     	trbAten = "";
     	fcierre = "";
     	hcierre = "";
+    	idFija="hola";
+    	//fija=new Solicitud();
 		
 //		System.out.println("Holitas!");
 	}
@@ -202,6 +205,8 @@ public class TableBean implements Serializable{
 		System.out.println(event.getObject());
 		fija = (Solicitud) event.getObject();
 		setSelectedSol(fija);
+		System.out.println(fija.getIdSolicitud().toString());
+		setIdFija(fija.getIdSolicitud().toString());
 		  
     }       
     
@@ -323,6 +328,17 @@ public class TableBean implements Serializable{
 		this.trbAten = trbAten;
 	}
 
+	public String getIdFija() {
+		if(fija!=null){
+			setIdFija(fija.getIdSolicitud().toString());
+		}		
+		return idFija;
+	}
+
+	public void setIdFija(String idFija) {
+		this.idFija = idFija;
+	}
+
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
 		Boolean error = false;
@@ -363,6 +379,8 @@ public class TableBean implements Serializable{
 				ate.setHoraAtencion(Fecha);
 				ate.setTrabajador(t);
 				atencionService.addAtencion(ate);
+				fija=null;
+				setIdFija("");
 				mensajes("info","Atención registrada");
 			}else{
 				mensajes("error","Ingresar todos los campos");
@@ -392,7 +410,10 @@ public class TableBean implements Serializable{
 	//	System.out.println(getSelectedSol().getIdSolicitud().toString());
 		Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
 		solserv.addDiagnostico(diag);
-		fija.setIdCategoria(categoriaIdentificar(categoria));;
+		fija.setIdCategoria(categoriaIdentificar(categoria));
+		solserv.updateSolicitud(fija);
+		fija=null;
+		setIdFija("");
 	}
 	
 	public Categoria categoriaIdentificar(String cat){
@@ -411,6 +432,8 @@ public class TableBean implements Serializable{
 		fija.setHoraCierre(Calendar.getInstance().getTime());
 		fija.setIdEstado(new Estado(3, "finalizada"));
 		solserv.updateSolicitud(fija);
+		fija=null;
+		setIdFija("");
 	}
 	
 	public void actualizarSolPen(){
@@ -433,6 +456,7 @@ public class TableBean implements Serializable{
 	
 	public void onTabChange(TabChangeEvent event) {
         System.out.println(event.getTab().getTitle());
+        fija=null;
         actualizarSolPen();
 		actualizarSolPro();
 		actualizarSolFin();
@@ -457,6 +481,9 @@ public class TableBean implements Serializable{
 	}
 	
 	public void validaSel(ActionEvent ae){
+		System.out.println("TableBean.validaSel()");
+		//setIdFija(fija.getIdSolicitud().toString());
+		System.out.println(getIdFija());
 		if(fija==null){
 			mensajes("error","Seleccionar una Solicitud");
 		}
