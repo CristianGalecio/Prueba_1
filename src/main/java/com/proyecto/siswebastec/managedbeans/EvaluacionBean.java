@@ -6,7 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
+
+
+
 
 
 
@@ -20,6 +26,10 @@ import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
+
+
+
+
 
 
 //import com.proyecto.siswebastec.DAO.EvaluacionDAO;
@@ -49,6 +59,7 @@ public class EvaluacionBean implements Serializable{
 	
 	/***temp***/
 	private Solicitud fija;
+	private String idFija;
 	
 	public EvaluacionBean(){
 		atenserv=new AtencionServiceImpl();
@@ -65,6 +76,8 @@ public class EvaluacionBean implements Serializable{
 		mediumSolsModel= new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro=new SolicitudDataModel(solicitudespro);
 		mediumSolsModelFin=new SolicitudDataModel(solicitudesfin);
+		
+		setIdFija("");
 	}
 
 	public String getObservacion() {
@@ -185,6 +198,17 @@ public class EvaluacionBean implements Serializable{
 		this.fija = fija;
 	}
 	
+	public String getIdFija() {
+		if(fija!=null){
+			setIdFija(fija.getIdSolicitud().toString());
+		}		
+		return idFija;
+	}
+
+	public void setIdFija(String idFija) {
+		this.idFija = idFija;
+	}
+
 	/****************************************************************************************/
 	public void actualizarSolPen(){
 		solserv = new SolicitudServiceImpl();
@@ -206,6 +230,7 @@ public class EvaluacionBean implements Serializable{
 	
 	public void onTabChange(TabChangeEvent event) {
         System.out.println(event.getTab().getTitle());
+        fija=null;
         actualizarSolPen();
 		actualizarSolPro();
 		actualizarSolFin();
@@ -219,6 +244,8 @@ public class EvaluacionBean implements Serializable{
 		System.out.println(event.getObject());
 		fija = (Solicitud) event.getObject();
 		setSelectedSol(fija);
+		System.out.println("Id fija:"+fija.getIdSolicitud().toString());
+		setIdFija(fija.getIdSolicitud().toString());
 		  
     }  
 	
@@ -236,6 +263,8 @@ public class EvaluacionBean implements Serializable{
 		atenserv.addEvaluacion(eval);
 		aten.setIdEvaluacion(eval);
 		atenserv.updateAtencion(aten);
+		fija=null;
+		setIdFija("");
 	}
 	
 	public Calificacion calificacionIdentificar(String cal){
@@ -255,6 +284,32 @@ public class EvaluacionBean implements Serializable{
 		aten=atenserv.getAtencionByIdSol(IdSol);		
 		return aten;
 	}
+	
+	public void mensajes(String tipo, String msj){
+		FacesContext context = FacesContext.getCurrentInstance();  
+		FacesMessage msg = null;		
+		if(tipo.equals("error")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		if(tipo.equals("info")){
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, "");
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		System.out.println("Context"+context.toString());
+		context.addMessage(null,msg);
+	}
+	
+	public void validaSolAten(ActionEvent ae){
+		System.out.println("TableBean.validaSel()");
+		//setIdFija(fija.getIdSolicitud().toString());
+		System.out.println(getIdFija());
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}
+	}
+
+
 
 	
 

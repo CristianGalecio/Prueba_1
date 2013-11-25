@@ -92,7 +92,7 @@ public class TableBean implements Serializable{
     	trbAten = "";
     	fcierre = "";
     	hcierre = "";
-    	idFija="hola";
+    	idFija="";
     	//fija=new Solicitud();
 		
 //		System.out.println("Holitas!");
@@ -408,10 +408,19 @@ public class TableBean implements Serializable{
 		System.out.println(categoria);
 		System.out.println("fija:" + fija.getIdSolicitud());
 	//	System.out.println(getSelectedSol().getIdSolicitud().toString());
-		Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
-		solserv.addDiagnostico(diag);
-		fija.setIdCategoria(categoriaIdentificar(categoria));
-		solserv.updateSolicitud(fija);
+		if(fija!=null){
+				if(Diagnostico==null || categoria==null||categoria==""|| Diagnostico==""){
+					mensajes("error","Ingresar todos los campos");
+				}else{
+					Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
+					solserv.addDiagnostico(diag);
+					fija.setIdCategoria(categoriaIdentificar(categoria));
+					solserv.updateSolicitud(fija);
+					
+				}
+		}else{
+			mensajes("error","Seleccione una solicitud");
+		}
 		fija=null;
 		setIdFija("");
 	}
@@ -426,12 +435,22 @@ public class TableBean implements Serializable{
 	
 	public void actualizarSol(ActionEvent e){
 		System.out.println("solucionDiag()");
-		Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
-		solserv.addSolucion(sol);
-		fija.setFechaCierre(Calendar.getInstance().getTime());
-		fija.setHoraCierre(Calendar.getInstance().getTime());
-		fija.setIdEstado(new Estado(3, "finalizada"));
-		solserv.updateSolicitud(fija);
+		if(fija!=null){
+			if(Solucion==null || Solucion==""){
+				mensajes("error","Ingresar todos los campos");
+			}else{
+				Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
+				solserv.addSolucion(sol);
+				fija.setFechaCierre(Calendar.getInstance().getTime());
+				fija.setHoraCierre(Calendar.getInstance().getTime());
+				fija.setIdEstado(new Estado(3, "finalizada"));
+				solserv.updateSolicitud(fija);
+			}
+			
+		}else{
+			mensajes("error","Seleccione una solicitud");
+		}
+		
 		fija=null;
 		setIdFija("");
 	}

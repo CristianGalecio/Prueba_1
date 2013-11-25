@@ -23,13 +23,13 @@
     </p:layoutUnit>    
     <p:layoutUnit position="center">
               
-      <h:form >
+      <h:form id="form">
               <p:growl id="growl" showDetail="true"/>
               <p:tabView id="tabview" dinamic="true">
               <p:ajax event="tabChange" listener="#{evaluacionBean.onTabChange}"/>
 				<p:tab title="Atendidos">
 					<p:contextMenu for="dataAtencion">
-						<p:menuitem value="Calificar" update="dataAtencion" icon="ui-icon-search" oncomplete="calificarDialog.show()"/>        				  
+						<p:menuitem value="Calificar" update=":form:growl :form:displayc" icon="ui-icon-search" actionListener="#{evaluacionBean.validaSolAten}" oncomplete="calificarDialog.show()"/>        				  
     				</p:contextMenu>
 					
 					<p:dataTable id="dataAtencion" var="Solicitudes" value="#{evaluacionBean.mediumSolsModelFin}"									
@@ -62,7 +62,12 @@
                         
             <p:dialog id="calificarDialog" header="Calificar Atencion" widgetVar="calificarDialog" showEffect="fade"  modal="false">
 		
-				<h:panelGrid columns="2" border="0" cellpadding="0" cellspacing="3">
+				<h:panelGrid id="displayc" columns="2" border="0" cellpadding="0" cellspacing="3">
+					<h:panelGrid columns="2" cellpadding="1">
+						<h:outputText value="Solicitud:" />  
+				    	<h:outputText value="#{evaluacionBean.idFija}" />
+					</h:panelGrid>
+					<h:outputText value=""/>
 					<p:selectOneRadio id="grid" value="#{evaluacionBean.calificacion}" layout="pageDirection" >  
 			            <f:selectItems value="#{evaluacionBean.calificaciones}"/>  
 			        </p:selectOneRadio>  					

@@ -188,13 +188,16 @@
 		
 				<h:panelGrid id="displayd" columns="2" border="0" cellpadding="0" cellspacing="0">
 					<h:panelGrid columns="1" cellpadding="1">
-						<h:outputText value="Id:" />  
-				        <h:inputText value="#{tableBean.idFija}" />
-  						<p:selectOneMenu id="categoria" value="#{tableBean.categoria}">
-                        	<f:selectItem itemLabel="Selecciona" itemValue="" />  
-                            <f:selectItems value="#{tableBean.categorias}" />
-                            <p:ajax listener="#{tableBean.handleChangeC}" />
-                        </p:selectOneMenu>
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />  
+					        <h:outputText value="#{tableBean.idFija}" />
+					        <h:outputText value="Categoria:" /> 
+	  						<p:selectOneMenu id="categoria" value="#{tableBean.categoria}">
+	                        	<f:selectItem itemLabel="Selecciona" itemValue="" />  
+	                            <f:selectItems value="#{tableBean.categorias}" />
+	                            <p:ajax listener="#{tableBean.handleChangeC}" />
+	                        </p:selectOneMenu>	
+                        </h:panelGrid>
   						<p:inputTextarea id="Diagnostico" rows="4" cols="103" value="#{tableBean.diagnostico}"/>
   						<p:commandButton id="Listo1" value="Listo" actionListener="#{tableBean.actualizarDiag}" oncomplete="diagnosticoDialog.hide();" update=":form:growl"/>
   					</h:panelGrid> 
@@ -206,17 +209,20 @@
 			</p:dialog>
 			<p:dialog id="solucionDialog" header="Registrar Solucion" widgetVar="solucionDialog" showEffect="fade"  modal="false">
 		
-				<p:panelGrid id="displays" columns="2" border="0" cellpadding="0" cellspacing="0">
-					<h:outputText value="Id:" />  
-				        <h:inputText value="#{tableBean.idFija}" />
-					<p:panelGrid columns="1" cellpadding="1">
+				<h:panelGrid id="displays" columns="2" border="0" cellpadding="0" cellspacing="0">
+						
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />  
+				        	<h:outputText value="#{tableBean.idFija}" />
+						</h:panelGrid>
   							<p:inputTextarea id="Solucion" rows="4" cols="103" value="#{tableBean.solucion}"/>
   							<p:commandButton id="Listo2" value="Listo" actionListener="#{tableBean.actualizarSol}" oncomplete="solucionDialog.hide();" update=":form:growl"/>
-  						</p:panelGrid> 
+  						</h:panelGrid> 
 					
 				    <h:graphicImage id="Image2" url="/images/comunicaciones.jpg"></h:graphicImage>
 					
-				</p:panelGrid>						
+				</h:panelGrid>						
 					
 			</p:dialog>
 			
@@ -224,7 +230,7 @@
 				
 		      	
 				<h:panelGrid id="displaya" columns="2">  
-					<h:outputText value="Id:" />  
+					<h:outputText value="Solicitud:" />  
 				    <h:outputText value="#{tableBean.idFija}" />				
 			        <h:outputLabel for="prioridad" value="Prioridad: " />  
 			        <p:selectOneMenu id="prioridad" value="#{tableBean.prioridad}">
