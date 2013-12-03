@@ -17,6 +17,7 @@ public interface SolicitudService {
 	public List<Solicitud> getSolicitudesPendientes();
 	public List<Solicitud> getSolicitudesProceso();
 	public List<Solicitud> getSolicitudesFinalizadas();
+	public List<Solicitud> getSolicitudesProcesoPendientes();
 	public void addDiagnostico(Diagnostico diag);
 	public void addSolucion(Solucion sol);
 	public List<String> getListaCat();

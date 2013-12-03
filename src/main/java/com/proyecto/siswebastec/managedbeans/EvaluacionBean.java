@@ -46,9 +46,9 @@ import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
 public class EvaluacionBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private List<Solicitud> solicitudes,solicitudespend,solicitudespro,solicitudesfin;
+	private List<Solicitud> solicitudes,solicitudespropen, solicitudespend,solicitudespro,solicitudesfin;
 	private SolicitudService solserv;
-	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin,mediumSolsPend; 
+	private SolicitudDataModel mediumSolsModel,mediumSolsModelPro,mediumSolsModelFin,mediumSolsPend,mediumSolsProPend; 
 	
 	private Solicitud selectedSol;
 	private String calificacion;
@@ -73,9 +73,12 @@ public class EvaluacionBean implements Serializable{
 		solicitudespro = solserv.getSolicitudesProceso();
 		solicitudesfin=new ArrayList<Solicitud>();
 		solicitudesfin=solserv.getSolicitudesFinalizadas();
+		solicitudespropen=new ArrayList<Solicitud>();
+		solicitudespropen=solserv.getSolicitudesProcesoPendientes();
 		mediumSolsModel= new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro=new SolicitudDataModel(solicitudespro);
 		mediumSolsModelFin=new SolicitudDataModel(solicitudesfin);
+		mediumSolsProPend=new SolicitudDataModel(solicitudespropen);
 		
 		setIdFija("");
 	}
@@ -148,6 +151,16 @@ public class EvaluacionBean implements Serializable{
 		this.solicitudesfin = solicitudesfin;
 	}
 	
+	public List<Solicitud> getSolicitudespropen() {
+		System.out.println("TableBean.getSolicitudespropend()");
+		return solicitudespropen;
+	}
+
+	public void setSolicitudespropen(List<Solicitud> solicitudespropen) {
+		System.out.println("TableBean.setSolicitudespropend()");
+		this.solicitudespropen = solicitudespropen;
+	}
+	
 	/************************************************************************************/
 	
 	public SolicitudDataModel getMediumSolsModelFin() {
@@ -179,6 +192,14 @@ public class EvaluacionBean implements Serializable{
 
 	public void setMediumSolsPend(SolicitudDataModel mediumSolsPend) {
 		this.mediumSolsPend = mediumSolsPend;
+	}
+	
+	public SolicitudDataModel getMediumSolsProPend() {
+		return mediumSolsProPend;
+	}
+
+	public void setMediumSolsProPend(SolicitudDataModel mediumSolsProPend) {
+		this.mediumSolsProPend = mediumSolsProPend;
 	}
 	
 	/****************************************************************************************/
@@ -225,6 +246,12 @@ public class EvaluacionBean implements Serializable{
 	public void actualizarSolFin(){
 		solserv = new SolicitudServiceImpl();
 		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
+		setMediumSolsModelFin(new SolicitudDataModel(getSolicitudesfin()));
+	}
+	
+	public void actualizarSolProPend(){
+		solserv = new SolicitudServiceImpl();
+		setSolicitudespropen(solserv.getSolicitudesProcesoPendientes());
 		setMediumSolsModelFin(new SolicitudDataModel(getSolicitudesfin()));
 	}
 	

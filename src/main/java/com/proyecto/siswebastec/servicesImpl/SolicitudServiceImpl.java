@@ -1,4 +1,4 @@
-package com.proyecto.siswebastec.servicesImpl;
+       package com.proyecto.siswebastec.servicesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +104,20 @@ public class SolicitudServiceImpl implements SolicitudService{
 			}
 		}
 		return finalizadas;
+	}
+
+	public List<Solicitud> getSolicitudesProcesoPendientes() {
+		List<Solicitud> todos=getSolicitudes();
+		List<Solicitud> propend=new ArrayList<>();
+		//Estado pend=new Estado(1);
+		for(int i=0;i<todos.size();i++){
+			if(todos.get(i).getIdEstado()!= null){
+				if(todos.get(i).getIdEstado().getIdEstado()==1 || todos.get(i).getIdEstado().getIdEstado()==2){
+					propend.add(todos.get(i));
+				}
+			}
+		}
+		return propend;
 	}
 	
 	public boolean verificaSolicitud(int id) {
