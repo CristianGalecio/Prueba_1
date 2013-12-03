@@ -27,7 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Trabajador.findByEmailUsuario", query = "SELECT t FROM Trabajador t WHERE t.emailUsuario = :emailUsuario"),
     @NamedQuery(name = "Trabajador.findByClaveUsuario", query = "SELECT t FROM Trabajador t WHERE t.claveUsuario = :claveUsuario"),
     @NamedQuery(name = "Trabajador.findByCelularUsuario", query = "SELECT t FROM Trabajador t WHERE t.celularUsuario = :celularUsuario"),
-    @NamedQuery(name = "Trabajador.findByIdPerfil", query = "SELECT t FROM Trabajador t WHERE t.idPerfil = :idPerfil"),
     @NamedQuery(name = "Trabajador.findByEstadoTrabajador", query = "SELECT t FROM Trabajador t WHERE t.estadoTrabajador = :estadoTrabajador"),
     @NamedQuery(name = "Trabajador.findByIdTrabajador", query = "SELECT t FROM Trabajador t WHERE t.trabajadorPK.idTrabajador = :idTrabajador")})
 public class Trabajador implements Serializable {
@@ -49,9 +48,6 @@ public class Trabajador implements Serializable {
     @Column(name = "CELULAR_USUARIO")
     private Integer celularUsuario;
     @Basic(optional = false)
-    @Column(name = "ID_PERFIL")
-    private int idPerfil;
-    @Basic(optional = false)
     @Column(name = "ESTADO_TRABAJADOR")
     private boolean estadoTrabajador;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
@@ -69,9 +65,8 @@ public class Trabajador implements Serializable {
         this.trabajadorPK = trabajadorPK;
     }
 
-    public Trabajador(TrabajadorPK trabajadorPK, int idPerfil, boolean estadoTrabajador) {
+    public Trabajador(TrabajadorPK trabajadorPK, boolean estadoTrabajador) {
         this.trabajadorPK = trabajadorPK;
-        this.idPerfil = idPerfil;
         this.estadoTrabajador = estadoTrabajador;
     }
 
@@ -143,14 +138,6 @@ public class Trabajador implements Serializable {
         this.celularUsuario = celularUsuario;
     }
 
-    public int getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(int idPerfil) {
-        this.idPerfil = idPerfil;
-    }
-
     public boolean getEstadoTrabajador() {
         return estadoTrabajador;
     }
@@ -207,7 +194,7 @@ public class Trabajador implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
+        return "javaapplication2.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
     }
     
 }

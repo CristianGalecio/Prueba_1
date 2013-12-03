@@ -53,11 +53,10 @@ public class Usuario implements Serializable {
     private String claveUsuario;
     @Column(name = "CELULAR_USUARIO")
     private Integer celularUsuario;
-    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
-    @ManyToOne(optional = false)
-    private Perfil idPerfil;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Trabajador> trabajadorList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<RolUsuario> rolUsuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Cliente> clienteList;
 
@@ -141,14 +140,6 @@ public class Usuario implements Serializable {
         this.celularUsuario = celularUsuario;
     }
 
-    public Perfil getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(Perfil idPerfil) {
-        this.idPerfil = idPerfil;
-    }
-
     @XmlTransient
     public List<Trabajador> getTrabajadorList() {
         return trabajadorList;
@@ -156,6 +147,15 @@ public class Usuario implements Serializable {
 
     public void setTrabajadorList(List<Trabajador> trabajadorList) {
         this.trabajadorList = trabajadorList;
+    }
+
+    @XmlTransient
+    public List<RolUsuario> getRolUsuarioList() {
+        return rolUsuarioList;
+    }
+
+    public void setRolUsuarioList(List<RolUsuario> rolUsuarioList) {
+        this.rolUsuarioList = rolUsuarioList;
     }
 
     @XmlTransient
@@ -189,7 +189,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "javaapplication2.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
 }

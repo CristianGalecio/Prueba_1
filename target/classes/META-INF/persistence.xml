@@ -12,9 +12,9 @@
 		<class>com.proyecto.siswebastec.model.Estado</class>
 		<class>com.proyecto.siswebastec.model.Evaluacion</class>
 		<class>com.proyecto.siswebastec.model.Laboratorio</class>
-		<class>com.proyecto.siswebastec.model.Perfil</class>
 		<class>com.proyecto.siswebastec.model.Prioridad</class>
-		<class>com.proyecto.siswebastec.model.Privilegio</class>
+		<class>com.proyecto.siswebastec.model.Rol</class>
+		<class>com.proyecto.siswebastec.model.RolUsuario</class>
 		<class>com.proyecto.siswebastec.model.Solicitud</class>
 		<class>com.proyecto.siswebastec.model.Solucion</class>
 		<class>com.proyecto.siswebastec.model.TipoSolicitud</class>

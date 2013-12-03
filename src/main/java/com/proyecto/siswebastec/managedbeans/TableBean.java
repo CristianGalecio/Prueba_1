@@ -412,8 +412,8 @@ public class TableBean implements Serializable{
 				if(Diagnostico==null || categoria==null||categoria==""|| Diagnostico==""){
 					mensajes("error","Ingresar todos los campos");
 				}else{
-					Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
-					solserv.addDiagnostico(diag);
+					//Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
+					//solserv.addDiagnostico(diag);
 					fija.setIdCategoria(categoriaIdentificar(categoria));
 					solserv.updateSolicitud(fija);
 					
@@ -439,8 +439,8 @@ public class TableBean implements Serializable{
 			if(Solucion==null || Solucion==""){
 				mensajes("error","Ingresar todos los campos");
 			}else{
-				Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
-				solserv.addSolucion(sol);
+				//Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
+				//solserv.addSolucion(sol);
 				fija.setFechaCierre(Calendar.getInstance().getTime());
 				fija.setHoraCierre(Calendar.getInstance().getTime());
 				fija.setIdEstado(new Estado(3, "finalizada"));

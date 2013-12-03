@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByIdUsuario", query = "SELECT c FROM Cliente c WHERE c.clientePK.idUsuario = :idUsuario"),
-    @NamedQuery(name = "Cliente.findByIdPerfil", query = "SELECT c FROM Cliente c WHERE c.idPerfil = :idPerfil"),
     @NamedQuery(name = "Cliente.findByNombreUsuario", query = "SELECT c FROM Cliente c WHERE c.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "Cliente.findByAppatUsuario", query = "SELECT c FROM Cliente c WHERE c.appatUsuario = :appatUsuario"),
     @NamedQuery(name = "Cliente.findByApmatUsuario", query = "SELECT c FROM Cliente c WHERE c.apmatUsuario = :apmatUsuario"),
@@ -35,9 +34,6 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ClientePK clientePK;
-    @Basic(optional = false)
-    @Column(name = "ID_PERFIL")
-    private int idPerfil;
     @Column(name = "NOMBRE_USUARIO")
     private String nombreUsuario;
     @Column(name = "APPAT_USUARIO")
@@ -58,23 +54,18 @@ public class Cliente implements Serializable {
     private Integer anexoCliente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Solicitud> solicitudList;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
     @JoinColumn(name = "ID_AREA", referencedColumnName = "ID_AREA")
     @ManyToOne
     private Area idArea;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Usuario usuario;
 
     public Cliente() {
     }
 
     public Cliente(ClientePK clientePK) {
         this.clientePK = clientePK;
-    }
-
-    public Cliente(ClientePK clientePK, int idPerfil) {
-        this.clientePK = clientePK;
-        this.idPerfil = idPerfil;
     }
 
     public Cliente(int idUsuario, String idCliente) {
@@ -87,14 +78,6 @@ public class Cliente implements Serializable {
 
     public void setClientePK(ClientePK clientePK) {
         this.clientePK = clientePK;
-    }
-
-    public int getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(int idPerfil) {
-        this.idPerfil = idPerfil;
     }
 
     public String getNombreUsuario() {
@@ -178,20 +161,20 @@ public class Cliente implements Serializable {
         this.solicitudList = solicitudList;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public Area getIdArea() {
         return idArea;
     }
 
     public void setIdArea(Area idArea) {
         this.idArea = idArea;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
@@ -216,7 +199,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Cliente[ clientePK=" + clientePK + " ]";
+        return "javaapplication2.Cliente[ clientePK=" + clientePK + " ]";
     }
     
 }

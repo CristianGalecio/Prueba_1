@@ -7,7 +7,6 @@ package com.proyecto.siswebastec.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -25,7 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evaluacion.findByObsEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.obsEvaluacion = :obsEvaluacion"),
     @NamedQuery(name = "Evaluacion.findByFechaEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.fechaEvaluacion = :fechaEvaluacion"),
     @NamedQuery(name = "Evaluacion.findByHoraEvaluacion", query = "SELECT e FROM Evaluacion e WHERE e.horaEvaluacion = :horaEvaluacion")})
-	
 public class Evaluacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,16 +40,13 @@ public class Evaluacion implements Serializable {
     private Date fechaEvaluacion;
     @Basic(optional = false)
     @Column(name = "HORA_EVALUACION")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaEvaluacion;
     @OneToMany(mappedBy = "idEvaluacion")
     private List<Atencion> atencionList;
-    @JoinColumn(name = "VALOR_EVALUACION", referencedColumnName = "ID_CALIFICACION")
+    @JoinColumn(name = "ID_CALIFICACION", referencedColumnName = "ID_CALIFICACION")
     @ManyToOne(optional = false)
-    private Calificacion valorEvaluacion;
-    @JoinColumn(name = "ID_ATENCION", referencedColumnName = "ID_ATENCION")
-    @ManyToOne(optional = false)
-    private Atencion idAtencion;
+    private Calificacion idCalificacion;
 
     public Evaluacion() {
     }
@@ -65,15 +60,6 @@ public class Evaluacion implements Serializable {
         this.obsEvaluacion = obsEvaluacion;
         this.fechaEvaluacion = fechaEvaluacion;
         this.horaEvaluacion = horaEvaluacion;
-    }
-    
-    public Evaluacion(String obsEvaluacion, Date fechaEvaluacion, Date horaEvaluacion,Atencion aten,Calificacion cal) {
-        //this.idEvaluacion = idEvaluacion;
-        this.obsEvaluacion = obsEvaluacion;
-        this.fechaEvaluacion = fechaEvaluacion;
-        this.horaEvaluacion = horaEvaluacion;
-        this.idAtencion=aten;
-        this.valorEvaluacion=cal;
     }
 
     public Integer getIdEvaluacion() {
@@ -117,20 +103,12 @@ public class Evaluacion implements Serializable {
         this.atencionList = atencionList;
     }
 
-    public Calificacion getValorEvaluacion() {
-        return valorEvaluacion;
+    public Calificacion getIdCalificacion() {
+        return idCalificacion;
     }
 
-    public void setValorEvaluacion(Calificacion valorEvaluacion) {
-        this.valorEvaluacion = valorEvaluacion;
-    }
-
-    public Atencion getIdAtencion() {
-        return idAtencion;
-    }
-
-    public void setIdAtencion(Atencion idAtencion) {
-        this.idAtencion = idAtencion;
+    public void setIdCalificacion(Calificacion idCalificacion) {
+        this.idCalificacion = idCalificacion;
     }
 
     @Override
@@ -155,7 +133,7 @@ public class Evaluacion implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
+        return "javaapplication2.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
     }
     
 }

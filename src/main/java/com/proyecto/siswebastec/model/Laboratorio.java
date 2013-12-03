@@ -79,7 +79,7 @@ public class Laboratorio implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Laboratorio[ idLaboratorio=" + idLaboratorio + " ]";
+        return "javaapplication2.Laboratorio[ idLaboratorio=" + idLaboratorio + " ]";
     }
     
 }

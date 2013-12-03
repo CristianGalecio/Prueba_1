@@ -72,7 +72,7 @@ public class TrabajadorPK implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.TrabajadorPK[ idUsuario=" + idUsuario + ", idTrabajador=" + idTrabajador + " ]";
+        return "javaapplication2.TrabajadorPK[ idUsuario=" + idUsuario + ", idTrabajador=" + idTrabajador + " ]";
     }
     
 }

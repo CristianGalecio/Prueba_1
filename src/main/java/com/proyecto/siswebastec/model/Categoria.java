@@ -92,7 +92,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Categoria[ idCategoria=" + idCategoria + " ]";
+        return "javaapplication2.Categoria[ idCategoria=" + idCategoria + " ]";
     }
     
 }

@@ -80,7 +80,7 @@ public class Aula implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Aula[ idAula=" + idAula + " ]";
+        return "javaapplication2.Aula[ idAula=" + idAula + " ]";
     }
     
 }

@@ -6,7 +6,6 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +38,9 @@ public class Diagnostico implements Serializable {
     @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
     @ManyToOne(optional = false)
     private Solicitud idSolicitud;
+    @JoinColumn(name = "ID_SOLUCION", referencedColumnName = "ID_SOLUCION")
+    @ManyToOne(optional = false)
+    private Solucion idSolucion;
 
     public Diagnostico() {
     }
@@ -53,13 +55,7 @@ public class Diagnostico implements Serializable {
         this.fechaDiagnostico = fechaDiagnostico;
     }
 
-    public Diagnostico(Solicitud fija, String diagnostico, Date time) {
-		this.idSolicitud=fija;
-		this.detDiagnostico=diagnostico;
-		this.fechaDiagnostico=time;
-	}
-
-	public Integer getIdDiagnostico() {
+    public Integer getIdDiagnostico() {
         return idDiagnostico;
     }
 
@@ -91,6 +87,14 @@ public class Diagnostico implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
+    public Solucion getIdSolucion() {
+        return idSolucion;
+    }
+
+    public void setIdSolucion(Solucion idSolucion) {
+        this.idSolucion = idSolucion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -113,7 +117,7 @@ public class Diagnostico implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
+        return "javaapplication2.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
     }
     
 }

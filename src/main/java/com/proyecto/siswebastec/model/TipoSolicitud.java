@@ -92,7 +92,7 @@ public class TipoSolicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.TipoSolicitud[ idTipo=" + idTipo + " ]";
+        return "javaapplication2.TipoSolicitud[ idTipo=" + idTipo + " ]";
     }
     
 }

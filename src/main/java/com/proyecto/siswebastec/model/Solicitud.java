@@ -60,11 +60,6 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "UBICACION")
     private String ubicacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
-    private List<Solucion> solucionList;
-    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
-    @ManyToOne(optional = false)
-    private Ubicacion idUbicacion;
     @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
     @ManyToOne
     private TipoSolicitud idTipo;
@@ -82,6 +77,9 @@ public class Solicitud implements Serializable {
     @JoinColumn(name = "ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA")
     @ManyToOne
     private Categoria idCategoria;
+    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
+    @ManyToOne(optional = false)
+    private Ubicacion idUbicacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
     private List<Atencion> atencionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
@@ -169,23 +167,6 @@ public class Solicitud implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    @XmlTransient
-    public List<Solucion> getSolucionList() {
-        return solucionList;
-    }
-
-    public void setSolucionList(List<Solucion> solucionList) {
-        this.solucionList = solucionList;
-    }
-
-    public Ubicacion getIdUbicacion() {
-        return idUbicacion;
-    }
-
-    public void setIdUbicacion(Ubicacion idUbicacion) {
-        this.idUbicacion = idUbicacion;
-    }
-
     public TipoSolicitud getIdTipo() {
         return idTipo;
     }
@@ -224,6 +205,14 @@ public class Solicitud implements Serializable {
 
     public void setIdCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
+    }
+
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @XmlTransient
@@ -266,7 +255,7 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+        return "javaapplication2.Solicitud[ idSolicitud=" + idSolicitud + " ]";
     }
     
 }

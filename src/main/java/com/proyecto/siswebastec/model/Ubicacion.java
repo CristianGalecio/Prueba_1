@@ -92,7 +92,7 @@ public class Ubicacion implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Ubicacion[ idUbicacion=" + idUbicacion + " ]";
+        return "javaapplication2.Ubicacion[ idUbicacion=" + idUbicacion + " ]";
     }
     
 }

@@ -121,7 +121,7 @@ public class Turno implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Turno[ idTurno=" + idTurno + " ]";
+        return "javaapplication2.Turno[ idTurno=" + idTurno + " ]";
     }
     
 }

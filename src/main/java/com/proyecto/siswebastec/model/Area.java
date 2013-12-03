@@ -93,7 +93,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Area[ idArea=" + idArea + " ]";
+        return "javaapplication2.Area[ idArea=" + idArea + " ]";
     }
     
 }

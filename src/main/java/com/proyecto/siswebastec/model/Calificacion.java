@@ -30,7 +30,7 @@ public class Calificacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE_CALIFICACION")
     private String nombreCalificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "valorEvaluacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCalificacion")
     private List<Evaluacion> evaluacionList;
 
     public Calificacion() {
@@ -92,7 +92,7 @@ public class Calificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Calificacion[ idCalificacion=" + idCalificacion + " ]";
+        return "javaapplication2.Calificacion[ idCalificacion=" + idCalificacion + " ]";
     }
     
 }

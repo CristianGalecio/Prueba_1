@@ -6,9 +6,10 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,9 +37,8 @@ public class Solucion implements Serializable {
     @Column(name = "FECHA_SOLUCION")
     @Temporal(TemporalType.DATE)
     private Date fechaSolucion;
-    @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
-    @ManyToOne(optional = false)
-    private Solicitud idSolicitud;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolucion")
+    private List<Diagnostico> diagnosticoList;
 
     public Solucion() {
     }
@@ -53,13 +53,7 @@ public class Solucion implements Serializable {
         this.fechaSolucion = fechaSolucion;
     }
 
-    public Solucion(Solicitud fija, String solucion, Date time) {
-		this.idSolicitud=fija;
-		this.descSolucion=solucion;
-		this.fechaSolucion=time;
-	}
-
-	public Integer getIdSolucion() {
+    public Integer getIdSolucion() {
         return idSolucion;
     }
 
@@ -83,12 +77,13 @@ public class Solucion implements Serializable {
         this.fechaSolucion = fechaSolucion;
     }
 
-    public Solicitud getIdSolicitud() {
-        return idSolicitud;
+    @XmlTransient
+    public List<Diagnostico> getDiagnosticoList() {
+        return diagnosticoList;
     }
 
-    public void setIdSolicitud(Solicitud idSolicitud) {
-        this.idSolicitud = idSolicitud;
+    public void setDiagnosticoList(List<Diagnostico> diagnosticoList) {
+        this.diagnosticoList = diagnosticoList;
     }
 
     @Override
@@ -113,7 +108,7 @@ public class Solucion implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Solucion[ idSolucion=" + idSolucion + " ]";
+        return "javaapplication2.Solucion[ idSolucion=" + idSolucion + " ]";
     }
     
 }

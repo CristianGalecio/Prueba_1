@@ -92,7 +92,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "prueba_1.Estado[ idEstado=" + idEstado + " ]";
+        return "javaapplication2.Estado[ idEstado=" + idEstado + " ]";
     }
     
 }

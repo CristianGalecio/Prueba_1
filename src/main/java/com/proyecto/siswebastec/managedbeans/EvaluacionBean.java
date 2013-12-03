@@ -285,10 +285,10 @@ public class EvaluacionBean implements Serializable{
 		System.out.println(getObservacion());
 		Date Fecha = Calendar.getInstance().getTime();
 		Atencion aten=buscarAtencion(fija.getIdSolicitud());
-		//Calificacion cal=new Calificacion();
-		Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha,aten, calificacionIdentificar(getCalificacion()));
-		atenserv.addEvaluacion(eval);
-		aten.setIdEvaluacion(eval);
+		
+		//Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha,aten, calificacionIdentificar(getCalificacion()));
+		//atenserv.addEvaluacion(eval);
+		//aten.setIdEvaluacion(eval);
 		atenserv.updateAtencion(aten);
 		fija=null;
 		setIdFija("");
