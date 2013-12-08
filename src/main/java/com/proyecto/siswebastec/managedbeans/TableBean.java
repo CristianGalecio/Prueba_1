@@ -404,32 +404,35 @@ public class TableBean implements Serializable{
 	
 	public void actualizarDiag(ActionEvent e){
 		System.out.println("actualizarDiag()");
-		System.out.println(Diagnostico);
-		System.out.println(categoria);
-		System.out.println("fija:" + fija.getIdSolicitud());
-	//	System.out.println(getSelectedSol().getIdSolicitud().toString());
-		if(fija!=null){
-				if(Diagnostico==null || categoria==null||categoria==""|| Diagnostico==""){
-					mensajes("error","Ingresar todos los campos");
-				}else{
-					//Diagnostico diag=new Diagnostico(fija,Diagnostico, Calendar.getInstance().getTime());
-					//solserv.addDiagnostico(diag);
-					fija.setIdCategoria(categoriaIdentificar(categoria));
-					solserv.updateSolicitud(fija);
-					
-				}
-		}else{
-			mensajes("error","Seleccione una solicitud");
-		}
-		fija=null;
-		setIdFija("");
+	 	System.out.println(Diagnostico);
+	 	System.out.println(categoria);
+	 	System.out.println("fija:" + fija.getIdSolicitud());
+	 //	System.out.println(getSelectedSol().getIdSolicitud().toString());
+	 	if(fija!=null){
+	 	 if(Diagnostico==null || categoria==null||categoria==""|| Diagnostico==""){
+	 	 mensajes("error","Ingresar todos los campos");
+	 	 }else{
+	 	 //Solucion tmpSol=new Solucion(10000);
+	 	 Diagnostico diag=new Diagnostico(fija, Diagnostico, Calendar.getInstance().getTime());
+	 	 solserv.addDiagnostico(diag);
+	 	 System.out.println("Esta es la categoria:"+categoria);
+	 	 fija.setIdCategoria(categoriaIdentificar(categoria));
+	 	 solserv.updateSolicitud(fija);
+	 	  
+	 	 }
+	 	}else{
+	 	 mensajes("error","Seleccione una solicitud");
+	 	}
+	 	fija=null;
+	 	setIdFija("");
+	 
 	}
 	
 	public Categoria categoriaIdentificar(String cat){
 		Categoria cate=new Categoria();
-		 if(cate.equals("hardware")){cate.setIdCategoria(1);cate.setNombreCategoria(cat);}
-		 if(cate.equals("software")){cate.setIdCategoria(2);cate.setNombreCategoria(cat);}
-		 
+		 if(cat.equals("hardware")){cate.setIdCategoria(1);cate.setNombreCategoria(cat);}
+		 if(cat.equals("software")){cate.setIdCategoria(2);cate.setNombreCategoria(cat);}
+		 System.out.println("Funciona cate"+cate.getNombreCategoria());
 		return cate;
 	}
 	

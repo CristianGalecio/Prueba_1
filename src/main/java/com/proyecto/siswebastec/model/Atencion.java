@@ -36,17 +36,17 @@ public class Atencion implements Serializable {
     @Column(name = "HORA_ATENCION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaAtencion;
+    @JoinColumns({
+        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
+        @JoinColumn(name = "ID_TRABAJADOR", referencedColumnName = "ID_TRABAJADOR")})
+    @ManyToOne(optional = false)
+    private Trabajador trabajador;
     @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
     @ManyToOne(optional = false)
     private Solicitud idSolicitud;
     @JoinColumn(name = "ID_EVALUACION", referencedColumnName = "ID_EVALUACION")
     @ManyToOne
     private Evaluacion idEvaluacion;
-    @JoinColumns({
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
-        @JoinColumn(name = "ID_TRABAJADOR", referencedColumnName = "ID_TRABAJADOR")})
-    @ManyToOne
-    private Trabajador trabajador;
 
     public Atencion() {
     }
@@ -85,6 +85,14 @@ public class Atencion implements Serializable {
         this.horaAtencion = horaAtencion;
     }
 
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
+
     public Solicitud getIdSolicitud() {
         return idSolicitud;
     }
@@ -99,14 +107,6 @@ public class Atencion implements Serializable {
 
     public void setIdEvaluacion(Evaluacion idEvaluacion) {
         this.idEvaluacion = idEvaluacion;
-    }
-
-    public Trabajador getTrabajador() {
-        return trabajador;
-    }
-
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
     }
 
     @Override
@@ -131,7 +131,7 @@ public class Atencion implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Atencion[ idAtencion=" + idAtencion + " ]";
+        return "com.proyecto.siswebastec.model.Atencion[ idAtencion=" + idAtencion + " ]";
     }
     
 }

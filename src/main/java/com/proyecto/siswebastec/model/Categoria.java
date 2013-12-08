@@ -92,7 +92,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Categoria[ idCategoria=" + idCategoria + " ]";
+        return "com.proyecto.siswebastec.model.Categoria[ idCategoria=" + idCategoria + " ]";
     }
     
 }

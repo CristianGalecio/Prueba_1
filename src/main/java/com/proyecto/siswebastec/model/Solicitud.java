@@ -60,14 +60,17 @@ public class Solicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "UBICACION")
     private String ubicacion;
+    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
+    @ManyToOne(optional = false)
+    private Ubicacion idUbicacion;
     @JoinColumn(name = "ID_TIPO", referencedColumnName = "ID_TIPO")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private TipoSolicitud idTipo;
     @JoinColumn(name = "ID_PRIORIDAD", referencedColumnName = "ID_PRIORIDAD")
     @ManyToOne
     private Prioridad idPrioridad;
     @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID_ESTADO")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Estado idEstado;
     @JoinColumns({
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
@@ -77,9 +80,6 @@ public class Solicitud implements Serializable {
     @JoinColumn(name = "ID_CATEGORIA", referencedColumnName = "ID_CATEGORIA")
     @ManyToOne
     private Categoria idCategoria;
-    @JoinColumn(name = "ID_UBICACION", referencedColumnName = "ID_UBICACION")
-    @ManyToOne(optional = false)
-    private Ubicacion idUbicacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
     private List<Atencion> atencionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitud")
@@ -167,6 +167,14 @@ public class Solicitud implements Serializable {
         this.ubicacion = ubicacion;
     }
 
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
+
     public TipoSolicitud getIdTipo() {
         return idTipo;
     }
@@ -205,14 +213,6 @@ public class Solicitud implements Serializable {
 
     public void setIdCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
-    }
-
-    public Ubicacion getIdUbicacion() {
-        return idUbicacion;
-    }
-
-    public void setIdUbicacion(Ubicacion idUbicacion) {
-        this.idUbicacion = idUbicacion;
     }
 
     @XmlTransient
@@ -255,7 +255,7 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+        return "com.proyecto.siswebastec.model.Solicitud[ idSolicitud=" + idSolicitud + " ]";
     }
     
 }

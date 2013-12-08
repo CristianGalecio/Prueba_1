@@ -92,7 +92,7 @@ public class Calificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Calificacion[ idCalificacion=" + idCalificacion + " ]";
+        return "com.proyecto.siswebastec.model.Calificacion[ idCalificacion=" + idCalificacion + " ]";
     }
     
 }

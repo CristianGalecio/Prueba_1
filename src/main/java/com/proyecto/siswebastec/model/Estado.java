@@ -30,7 +30,7 @@ public class Estado implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE_ESTADO")
     private String nombreEstado;
-    @OneToMany(mappedBy = "idEstado")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstado")
     private List<Solicitud> solicitudList;
 
     public Estado() {
@@ -92,7 +92,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Estado[ idEstado=" + idEstado + " ]";
+        return "com.proyecto.siswebastec.model.Estado[ idEstado=" + idEstado + " ]";
     }
     
 }

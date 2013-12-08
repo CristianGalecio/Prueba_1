@@ -133,7 +133,7 @@ public class Evaluacion implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
+        return "com.proyecto.siswebastec.model.Evaluacion[ idEvaluacion=" + idEvaluacion + " ]";
     }
     
 }

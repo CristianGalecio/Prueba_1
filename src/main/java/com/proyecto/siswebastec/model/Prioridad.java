@@ -92,7 +92,7 @@ public class Prioridad implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Prioridad[ idPrioridad=" + idPrioridad + " ]";
+        return "com.proyecto.siswebastec.model.Prioridad[ idPrioridad=" + idPrioridad + " ]";
     }
     
 }

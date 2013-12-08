@@ -55,7 +55,7 @@ public class Trabajador implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajador")
     private List<Turno> turnoList;
-    @OneToMany(mappedBy = "trabajador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trabajador")
     private List<Atencion> atencionList;
 
     public Trabajador() {
@@ -194,7 +194,7 @@ public class Trabajador implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
+        return "com.proyecto.siswebastec.model.Trabajador[ trabajadorPK=" + trabajadorPK + " ]";
     }
     
 }

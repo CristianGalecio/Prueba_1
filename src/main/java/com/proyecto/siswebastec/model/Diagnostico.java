@@ -6,6 +6,7 @@ package com.proyecto.siswebastec.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,12 +36,12 @@ public class Diagnostico implements Serializable {
     @Column(name = "FECHA_DIAGNOSTICO")
     @Temporal(TemporalType.DATE)
     private Date fechaDiagnostico;
+    @JoinColumn(name = "ID_SOLUCION", referencedColumnName = "ID_SOLUCION")
+    @ManyToOne
+    private Solucion idSolucion;
     @JoinColumn(name = "ID_SOLICITUD", referencedColumnName = "ID_SOLICITUD")
     @ManyToOne(optional = false)
     private Solicitud idSolicitud;
-    @JoinColumn(name = "ID_SOLUCION", referencedColumnName = "ID_SOLUCION")
-    @ManyToOne(optional = false)
-    private Solucion idSolucion;
 
     public Diagnostico() {
     }
@@ -55,7 +56,13 @@ public class Diagnostico implements Serializable {
         this.fechaDiagnostico = fechaDiagnostico;
     }
 
-    public Integer getIdDiagnostico() {
+    public Diagnostico(Solicitud fija, String diagnostico, Date time) {
+		this.idSolicitud = fija;
+		this.detDiagnostico = diagnostico;
+		this.fechaDiagnostico = time;
+	}
+
+	public Integer getIdDiagnostico() {
         return idDiagnostico;
     }
 
@@ -79,20 +86,20 @@ public class Diagnostico implements Serializable {
         this.fechaDiagnostico = fechaDiagnostico;
     }
 
-    public Solicitud getIdSolicitud() {
-        return idSolicitud;
-    }
-
-    public void setIdSolicitud(Solicitud idSolicitud) {
-        this.idSolicitud = idSolicitud;
-    }
-
     public Solucion getIdSolucion() {
         return idSolucion;
     }
 
     public void setIdSolucion(Solucion idSolucion) {
         this.idSolucion = idSolucion;
+    }
+
+    public Solicitud getIdSolicitud() {
+        return idSolicitud;
+    }
+
+    public void setIdSolicitud(Solicitud idSolicitud) {
+        this.idSolicitud = idSolicitud;
     }
 
     @Override
@@ -117,7 +124,7 @@ public class Diagnostico implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
+        return "com.proyecto.siswebastec.model.Diagnostico[ idDiagnostico=" + idDiagnostico + " ]";
     }
     
 }

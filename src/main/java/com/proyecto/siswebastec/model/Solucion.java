@@ -37,7 +37,7 @@ public class Solucion implements Serializable {
     @Column(name = "FECHA_SOLUCION")
     @Temporal(TemporalType.DATE)
     private Date fechaSolucion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolucion")
+    @OneToMany(mappedBy = "idSolucion")
     private List<Diagnostico> diagnosticoList;
 
     public Solucion() {
@@ -108,7 +108,7 @@ public class Solucion implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Solucion[ idSolucion=" + idSolucion + " ]";
+        return "com.proyecto.siswebastec.model.Solucion[ idSolucion=" + idSolucion + " ]";
     }
     
 }

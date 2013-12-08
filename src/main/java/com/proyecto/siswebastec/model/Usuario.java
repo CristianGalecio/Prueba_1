@@ -189,7 +189,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "com.proyecto.siswebastec.model.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
 }

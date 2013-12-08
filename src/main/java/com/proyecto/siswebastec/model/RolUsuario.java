@@ -84,7 +84,7 @@ public class RolUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.RolUsuario[ rolId=" + rolId + " ]";
+        return "com.proyecto.siswebastec.model.RolUsuario[ rolId=" + rolId + " ]";
     }
     
 }

@@ -92,7 +92,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Rol[ idRol=" + idRol + " ]";
+        return "com.proyecto.siswebastec.model.Rol[ idRol=" + idRol + " ]";
     }
     
 }

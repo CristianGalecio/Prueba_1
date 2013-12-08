@@ -30,7 +30,7 @@ public class TipoSolicitud implements Serializable {
     @Basic(optional = false)
     @Column(name = "NOMBRE_TIPO")
     private String nombreTipo;
-    @OneToMany(mappedBy = "idTipo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipo")
     private List<Solicitud> solicitudList;
 
     public TipoSolicitud() {
@@ -92,7 +92,7 @@ public class TipoSolicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.TipoSolicitud[ idTipo=" + idTipo + " ]";
+        return "com.proyecto.siswebastec.model.TipoSolicitud[ idTipo=" + idTipo + " ]";
     }
     
 }

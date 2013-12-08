@@ -199,7 +199,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication2.Cliente[ clientePK=" + clientePK + " ]";
+        return "com.proyecto.siswebastec.model.Cliente[ clientePK=" + clientePK + " ]";
     }
     
 }
