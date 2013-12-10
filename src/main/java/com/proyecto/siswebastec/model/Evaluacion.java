@@ -7,6 +7,7 @@ package com.proyecto.siswebastec.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -40,7 +41,7 @@ public class Evaluacion implements Serializable {
     private Date fechaEvaluacion;
     @Basic(optional = false)
     @Column(name = "HORA_EVALUACION")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaEvaluacion;
     @OneToMany(mappedBy = "idEvaluacion")
     private List<Atencion> atencionList;
@@ -62,7 +63,14 @@ public class Evaluacion implements Serializable {
         this.horaEvaluacion = horaEvaluacion;
     }
 
-    public Integer getIdEvaluacion() {
+    public Evaluacion(String observacion, Date fechaEvaluacion, Date horaEvaluacion, Calificacion cal) {
+		this.obsEvaluacion=observacion;
+		this.fechaEvaluacion = fechaEvaluacion;
+        this.horaEvaluacion = horaEvaluacion;
+        this.idCalificacion=cal;
+	}
+
+	public Integer getIdEvaluacion() {
         return idEvaluacion;
     }
 

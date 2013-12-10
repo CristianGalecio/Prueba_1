@@ -61,7 +61,8 @@ public class TableBean implements Serializable{
     /*******Diagnostico y Solucion*****/
     private String Diagnostico;
     private String Solucion;
-
+    private String nombreD;
+    
 	public TableBean(){
 		System.out.println("TableBean.TableBean()");
 		solicitudes=new ArrayList<Solicitud>();
@@ -339,6 +340,14 @@ public class TableBean implements Serializable{
 		this.idFija = idFija;
 	}
 
+	public String getNombreD() {
+		return nombreD;
+	}
+
+	public void setNombreD(String nombreD) {
+		this.nombreD = nombreD;
+	}
+
 	public void asignarTecnico(ActionEvent actionEvent){
 		System.out.println("TableBean.asignarTecnico()");
 		Boolean error = false;
@@ -400,20 +409,21 @@ public class TableBean implements Serializable{
 	
 	public void handleChangeC(){
 		System.out.println("evento: "+categoria);
+		//System.out.println("Diag"+getDiagnostico());
 	}
 	
 	public void actualizarDiag(ActionEvent e){
 		System.out.println("actualizarDiag()");
-	 	System.out.println(Diagnostico);
+	 //	System.out.println(Diagnostico);
 	 	System.out.println(categoria);
 	 	System.out.println("fija:" + fija.getIdSolicitud());
 	 //	System.out.println(getSelectedSol().getIdSolicitud().toString());
 	 	if(fija!=null){
 	 	 if(Diagnostico==null || categoria==null||categoria==""|| Diagnostico==""){
-	 	 mensajes("error","Ingresar todos los campos");
+	 		 mensajes("error","Ingresar todos los campos");
 	 	 }else{
 	 	 //Solucion tmpSol=new Solucion(10000);
-	 	 Diagnostico diag=new Diagnostico(fija, Diagnostico, Calendar.getInstance().getTime());
+	 	 Diagnostico diag=new Diagnostico(fija, nombreD, Diagnostico, Calendar.getInstance().getTime());
 	 	 solserv.addDiagnostico(diag);
 	 	 System.out.println("Esta es la categoria:"+categoria);
 	 	 fija.setIdCategoria(categoriaIdentificar(categoria));
@@ -437,12 +447,12 @@ public class TableBean implements Serializable{
 	}
 	
 	public void actualizarSol(ActionEvent e){
-		System.out.println("solucionDiag()");
+		/*System.out.println("solucionDiag()");
 		if(fija!=null){
 			if(Solucion==null || Solucion==""){
 				mensajes("error","Ingresar todos los campos");
 			}else{
-				//Solucion sol= new Solucion(fija, Solucion, Calendar.getInstance().getTime());
+				//Solucion sol= new Solucion(diagnostico, Solucion, Calendar.getInstance().getTime());
 				//solserv.addSolucion(sol);
 				fija.setFechaCierre(Calendar.getInstance().getTime());
 				fija.setHoraCierre(Calendar.getInstance().getTime());
@@ -455,7 +465,7 @@ public class TableBean implements Serializable{
 		}
 		
 		fija=null;
-		setIdFija("");
+		setIdFija("");*/
 	}
 	
 	public void actualizarSolPen(){

@@ -20,7 +20,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Diagnostico.findAll", query = "SELECT d FROM Diagnostico d"),
     @NamedQuery(name = "Diagnostico.findByIdDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.idDiagnostico = :idDiagnostico"),
-    @NamedQuery(name = "Diagnostico.findByDetDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.detDiagnostico = :detDiagnostico"),
+    @NamedQuery(name = "Diagnostico.findByNombreDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.nombreDiagnostico = :nombreDiagnostico"),
+    @NamedQuery(name = "Diagnostico.findByDescrDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.descrDiagnostico = :descrDiagnostico"),
     @NamedQuery(name = "Diagnostico.findByFechaDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.fechaDiagnostico = :fechaDiagnostico")})
 public class Diagnostico implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,8 +31,11 @@ public class Diagnostico implements Serializable {
     @Column(name = "ID_DIAGNOSTICO")
     private Integer idDiagnostico;
     @Basic(optional = false)
-    @Column(name = "DET_DIAGNOSTICO")
-    private String detDiagnostico;
+    @Column(name = "NOMBRE_DIAGNOSTICO")
+    private String nombreDiagnostico;
+    @Basic(optional = false)
+    @Column(name = "DESCR_DIAGNOSTICO")
+    private String descrDiagnostico;
     @Basic(optional = false)
     @Column(name = "FECHA_DIAGNOSTICO")
     @Temporal(TemporalType.DATE)
@@ -50,15 +54,17 @@ public class Diagnostico implements Serializable {
         this.idDiagnostico = idDiagnostico;
     }
 
-    public Diagnostico(Integer idDiagnostico, String detDiagnostico, Date fechaDiagnostico) {
+    public Diagnostico(Integer idDiagnostico, String nombreDiagnostico, String descrDiagnostico, Date fechaDiagnostico) {
         this.idDiagnostico = idDiagnostico;
-        this.detDiagnostico = detDiagnostico;
+        this.nombreDiagnostico = nombreDiagnostico;
+        this.descrDiagnostico = descrDiagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
     }
 
-    public Diagnostico(Solicitud fija, String diagnostico, Date time) {
+    public Diagnostico(Solicitud fija, String nombre, String diagnostico, Date time) {
 		this.idSolicitud = fija;
-		this.detDiagnostico = diagnostico;
+		this.nombreDiagnostico = nombre;
+		this.descrDiagnostico = diagnostico;
 		this.fechaDiagnostico = time;
 	}
 
@@ -70,12 +76,20 @@ public class Diagnostico implements Serializable {
         this.idDiagnostico = idDiagnostico;
     }
 
-    public String getDetDiagnostico() {
-        return detDiagnostico;
+    public String getNombreDiagnostico() {
+        return nombreDiagnostico;
     }
 
-    public void setDetDiagnostico(String detDiagnostico) {
-        this.detDiagnostico = detDiagnostico;
+    public void setNombreDiagnostico(String nombreDiagnostico) {
+        this.nombreDiagnostico = nombreDiagnostico;
+    }
+
+    public String getDescrDiagnostico() {
+        return descrDiagnostico;
+    }
+
+    public void setDescrDiagnostico(String descrDiagnostico) {
+        this.descrDiagnostico = descrDiagnostico;
     }
 
     public Date getFechaDiagnostico() {

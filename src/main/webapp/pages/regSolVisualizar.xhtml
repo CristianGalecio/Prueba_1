@@ -52,7 +52,13 @@
 				            <h:outputText value="#{Solicitudes.horaIngreso}" >
 				            	<f:convertDateTime pattern="hh:mm a"/>
 				            </h:outputText>  
-				        </p:column>  
+				        </p:column>
+				        
+				        <p:column style="width:4%">
+			                <p:commandButton id="selectButton3"  oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+			                	<f:setPropertyActionListener value="#{Solicitudes}" target="#{tableBean.selectedSol}" />
+			            	</p:commandButton>
+			        	</p:column>  
 				    </p:dataTable>						
 				
 				</p:tab>

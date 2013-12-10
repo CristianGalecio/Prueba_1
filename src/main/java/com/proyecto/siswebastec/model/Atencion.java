@@ -34,7 +34,7 @@ public class Atencion implements Serializable {
     private Date fechaAtencion;
     @Basic(optional = false)
     @Column(name = "HORA_ATENCION")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaAtencion;
     @JoinColumns({
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO"),
