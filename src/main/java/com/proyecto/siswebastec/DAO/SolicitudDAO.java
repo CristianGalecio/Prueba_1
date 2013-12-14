@@ -44,13 +44,7 @@ public class SolicitudDAO extends DaoGenericImpl<Solicitud, Integer>{
 		
 	}
 
-	public void insertarSolucion(Solucion sol) {
-		entityManager.getTransaction().begin();
-		entityManager.persist(sol);
-		entityManager.getTransaction().commit();
-		entityManager.close();
-		
-	}
+	
 
 	
 }

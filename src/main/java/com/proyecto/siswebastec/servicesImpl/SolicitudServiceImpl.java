@@ -7,6 +7,7 @@ import com.proyecto.siswebastec.DAO.CategoriaDAO;
 import com.proyecto.siswebastec.DAO.DiagnosticoDAO;
 import com.proyecto.siswebastec.DAO.SolicitudDAO;
 import com.proyecto.siswebastec.DAO.JPAUtil;
+import com.proyecto.siswebastec.DAO.SolucionDAO;
 import com.proyecto.siswebastec.model.Categoria;
 import com.proyecto.siswebastec.model.Diagnostico;
 import com.proyecto.siswebastec.model.Estado;
@@ -19,6 +20,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	SolicitudDAO solicitudDAO;
 	DiagnosticoDAO diagnosticoDAO;
 	CategoriaDAO categoriaDAO;
+	SolucionDAO solucionDAO;
 	JPAUtil objJpaUtil;
 	Solicitud solicitud;
 	Categoria categoria;
@@ -30,7 +32,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 		solicitud = new Solicitud();
 		objJpaUtil = new JPAUtil();
 		categoriaDAO =  new CategoriaDAO(objJpaUtil.getEntityManager());
-		categoria = new Categoria();		
+		categoria = new Categoria();
+		objJpaUtil = new JPAUtil();
+		solucionDAO =  new SolucionDAO(objJpaUtil.getEntityManager());
 	}
 	
 	public void addSolicitud(Solicitud solicitud) {
@@ -51,9 +55,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 		
 	}
 
-	public Solicitud getSolicitudById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Solicitud getSolicitudById(int id) {
+		objJpaUtil = new JPAUtil();
+		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
+		return solicitudDAO.getSolicitudByIdsolicitud(id);
+		 
 	}
 
 	public List<Solicitud> getSolicitudes() {
@@ -134,12 +140,18 @@ public class SolicitudServiceImpl implements SolicitudService{
 		System.out.println("addDiagnostico()");
 		
 	}
+	
+	public void updateDiagnostico(Diagnostico diagnostico) {
+		objJpaUtil = new JPAUtil();
+		diagnosticoDAO = new DiagnosticoDAO(objJpaUtil.getEntityManager());
+		diagnosticoDAO.update(diagnostico);		
+	}
 
 	@Override
 	public void addSolucion(Solucion sol) {
 		objJpaUtil = new JPAUtil();
-		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
-		solicitudDAO.insertarSolucion(sol);
+		solucionDAO = new SolucionDAO(objJpaUtil.getEntityManager());
+		solucionDAO.insertarSolucion(sol);
 		System.out.println("addSolicitud()");
 	}
 
@@ -163,6 +175,29 @@ public class SolicitudServiceImpl implements SolicitudService{
 		objJpaUtil = new JPAUtil();
 		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
 		solicitudDAO.update(sasig);		
+	}
+
+	@Override
+	public List<String> getListaDiagnosticos(int id) {
+		System.out.println("SolicitudServiceImpl.getListaDiagnosticos()");
+		Solicitud sol = getSolicitudById(id);
+		System.out.println(id);
+		System.out.println(sol.getIdSolicitante());
+		List<Diagnostico> diags = sol.getDiagnosticoList();
+		List<String> nomDiag = new ArrayList<String>();
+		if((diags.size() != 0)){
+			for(int i = 0; i<diags.size();i++){
+				nomDiag.add(diags.get(i).getIdDiagnostico() + "-" +diags.get(i).getNombreDiagnostico());
+			}
+		}
+		return nomDiag;
+	}
+
+	@Override
+	public Diagnostico getDiagnosticoById(int id) {
+		objJpaUtil = new JPAUtil();
+		diagnosticoDAO = new DiagnosticoDAO(objJpaUtil.getEntityManager());
+		return diagnosticoDAO.getDiagnosticoById(id);
 	}
 
 }

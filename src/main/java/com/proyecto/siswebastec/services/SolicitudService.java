@@ -11,7 +11,7 @@ public interface SolicitudService {
 	public void addSolicitud(Solicitud solicitud);	
 	public void updateSolicitud(Solicitud solicitud);
 	public void deleteSolicitud(Solicitud solicitud);	
-	public Solicitud getSolicitudById(String id);	
+	public Solicitud getSolicitudById(int id);	
 	public List<Solicitud> getSolicitudes();
 	public boolean verificaSolicitud(int id);
 	public List<Solicitud> getSolicitudesPendientes();
@@ -21,6 +21,9 @@ public interface SolicitudService {
 	public void addDiagnostico(Diagnostico diag);
 	public void addSolucion(Solucion sol);
 	public List<String> getListaCat();
-	void actualizarCat(Solicitud sasig);
+	public void actualizarCat(Solicitud sasig);
+	public List<String> getListaDiagnosticos(int id);
+	public void updateDiagnostico(Diagnostico diagnostico);
+	public Diagnostico getDiagnosticoById(int id);
 
 }

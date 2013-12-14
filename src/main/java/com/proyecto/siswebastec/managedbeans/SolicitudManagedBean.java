@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.naming.LimitExceededException;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -164,6 +165,7 @@ public class SolicitudManagedBean implements Serializable {
 				}
 			}
 			
+			
 			if((ubi == null || ubi.equals(""))
 			  ||(getNombre()==null || getNombre().equals(""))
 			  ||(getDescripcion()==null || getDescripcion().equals(""))
@@ -187,9 +189,15 @@ public class SolicitudManagedBean implements Serializable {
 				solNueva.setIdEstado(est);
 				solNueva.setIdTipo(tip);				
 				solicitudService.addSolicitud(solNueva);
+				limpiarPantalla();
 				mensajes("info", "Registro exitoso");
 			}else{
-				mensajes("error", "Faltan datos");
+				if(cliente == null){
+					mensajes("error", "Ingresar usuario valido");
+				}else{
+					mensajes("error", "Faltan datos");
+				}
+				
 			}
 		}else{
 			System.out.println("else");
@@ -198,6 +206,10 @@ public class SolicitudManagedBean implements Serializable {
 	}
 	
 	public void cancelar(ActionEvent actionEvent){
+		limpiarPantalla();
+	}
+
+	private void limpiarPantalla() {
 		setDescripcion("");
 		setNombre("");
 		//setNombres(nombres);
