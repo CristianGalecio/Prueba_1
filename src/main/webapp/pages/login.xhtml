@@ -4,13 +4,14 @@
        xmlns:p="http://primefaces.org/ui">
 <h:head>
 </h:head> 
-<h:body style="text-align:center">
+<body>
 <p:layout fullPage="true">
- <p:layoutUnit position="north" size="155" resizable="false"
-				closable="true" collapsible="true"
-				>
-	<h:graphicImage id="Image" url="/images/logo3.jpg"></h:graphicImage> 
- 	 <!-- <H1>SISTEMA WEB DE ASISTENCIA TECNICA</H1>-->
+ <p:layoutUnit  position="north" resizable="false" closable="false" collapsible="true">
+	 	 <!-- <H1>SISTEMA WEB DE ASISTENCIA TECNICA</H1>--> 	 
+ 	 <img  src="/Prueba_1/images/bannerbanco.png" />
+ 	 <p:breadCrumb>
+		<p:menuitem value="Inicio" url="/"/>
+	 </p:breadCrumb>			
  </p:layoutUnit>
  <p:layoutUnit position="center">  
  	<br/> 
@@ -38,7 +39,7 @@
 	</Center>
 </p:layoutUnit>
 </p:layout>
-</h:body>
+</body>
 <script type="text/javascript">
   //<![CDATA[
   function manejarLogin(xhr, status, args) {

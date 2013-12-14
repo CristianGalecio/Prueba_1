@@ -7,6 +7,7 @@ package com.proyecto.siswebastec.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -53,7 +54,12 @@ public class Solucion implements Serializable {
         this.fechaSolucion = fechaSolucion;
     }
 
-    public Integer getIdSolucion() {
+    public Solucion(String solucion, Date time) {
+    	this.descSolucion = solucion;
+        this.fechaSolucion = time;
+	}
+
+	public Integer getIdSolucion() {
         return idSolucion;
     }
 

@@ -60,7 +60,15 @@ public class Diagnostico implements Serializable {
         this.descrDiagnostico = descrDiagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
     }
-
+    
+    public Diagnostico(String nombreDiagnostico, String descrDiagnostico, Date fechaDiagnostico,Solicitud idSolicitud) {
+        //this.idDiagnostico = idDiagnostico;
+        this.nombreDiagnostico = nombreDiagnostico;
+        this.descrDiagnostico = descrDiagnostico;
+        this.fechaDiagnostico = fechaDiagnostico;
+        this.idSolicitud=idSolicitud;
+    }
+    
     public Diagnostico(Solicitud fija, String nombre, String diagnostico, Date time) {
 		this.idSolicitud = fija;
 		this.nombreDiagnostico = nombre;
