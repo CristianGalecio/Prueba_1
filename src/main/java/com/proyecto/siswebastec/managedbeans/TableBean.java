@@ -50,22 +50,27 @@ public class TableBean implements Serializable {
 	private String prioridad;
 	private String trabajador;
 	private String categoria;
+	private String categoriaM;
 	private String trbAten;
 	private String fcierre;
 	private String hcierre;
 	private List<String> prinames;
 	private List<String> traid;
 	private List<String> categorias;
+	private List<String> categoriasM;
 	private List<String> nomdiags;
+	private List<String> nomdiagsM;
 	private PrioridadService prioridadService;
 	private TrabajadorService trabajadorService;
 	private AtencionService atencionService;
 
 	/******* Diagnostico y Solucion *****/
-	private String Diagnostico;
+	private String diagnostico;
+	private String diagnosticoM;
 	private String Solucion;
 	private String nombreD;
 	private String nomdiag;
+	private String nomdiagM;
 
 	public TableBean() {
 		System.out.println("TableBean.TableBean()");
@@ -90,6 +95,8 @@ public class TableBean implements Serializable {
 		traid = new ArrayList<>();
 		categorias = new ArrayList<>();
 		categorias = solserv.getListaCat();
+		categoriasM = new ArrayList<>();
+		categoriasM = solserv.getListaCat();
 		prinames = prioridadService.getNombresPri();
 		traid = trabajadorService.getIdTrabajadores();
 		atencionService = new AtencionServiceImpl();
@@ -249,11 +256,11 @@ public class TableBean implements Serializable {
 	}
 
 	public String getDiagnostico() {
-		return Diagnostico;
+		return diagnostico;
 	}
 
 	public void setDiagnostico(String diagnostico) {
-		Diagnostico = diagnostico;
+		this.diagnostico = diagnostico;
 	}
 
 	public String getSolucion() {
@@ -368,6 +375,46 @@ public class TableBean implements Serializable {
 		this.nomdiag = nomdiag;
 	}
 
+	public String getCategoriaM() {
+		return categoriaM;
+	}
+
+	public void setCategoriaM(String categoriaM) {
+		this.categoriaM = categoriaM;
+	}
+
+	public List<String> getCategoriasM() {
+		return categoriasM;
+	}
+
+	public void setCategoriasM(List<String> categoriasM) {
+		this.categoriasM = categoriasM;
+	}
+
+	public List<String> getNomdiagsM() {
+		return nomdiagsM;
+	}
+
+	public void setNomdiagsM(List<String> nomdiagsM) {
+		this.nomdiagsM = nomdiagsM;
+	}
+
+	public String getNomdiagM() {
+		return nomdiagM;
+	}
+
+	public void setNomdiagM(String nomdiagM) {
+		this.nomdiagM = nomdiagM;
+	}
+
+	public String getDiagnosticoM() {
+		return diagnosticoM;
+	}
+
+	public void setDiagnosticoM(String diagnosticoM) {
+		this.diagnosticoM = diagnosticoM;
+	}
+
 	public void asignarTecnico(ActionEvent actionEvent) {
 		System.out.println("TableBean.asignarTecnico()");
 		Boolean error = false;
@@ -428,8 +475,7 @@ public class TableBean implements Serializable {
 		System.out.println("evento: " + trabajador);
 	}
 
-	public void handleChangeC() {
-		
+	public void handleChangeC() {	
 		
 	}
 
@@ -443,21 +489,21 @@ public class TableBean implements Serializable {
 	public void actualizarDiag(ActionEvent e) {
 
 		System.out.println("actualizarDiag()");
-		System.out.println("Diagnostico:" + Diagnostico);
+		System.out.println("Diagnostico:" + diagnostico);
 		System.out.println("Categoria:" + categoria);
 		System.out.println("fija:" + fija.getIdSolicitud());
 		// System.out.println(getSelectedSol().getIdSolicitud().toString());
 		if (fija != null) {
 			System.out.println(e.getComponent().getId());
 			if (e.getComponent().getId().equals("Listo1")) {
-				if (Diagnostico == null || categoria == null || categoria == ""
-						|| Diagnostico == "") {
+				if (diagnostico == null || categoria == null || categoria == ""
+						|| diagnostico == "") {
 					mensajes("error", "Ingresar todos los campos");
 				} else {
 					// Solucion tmpSol=new Solucion(10000);
 					// nombreD="DannyJ";
 					Diagnostico diag = new Diagnostico(fija, nombreD,
-							Diagnostico, Calendar.getInstance().getTime());
+							diagnostico, Calendar.getInstance().getTime());
 					solserv.addDiagnostico(diag);
 					System.out.println("Esta es la categoria:" + categoria);
 					fija.setIdCategoria(categoriaIdentificar(categoria));
@@ -468,17 +514,17 @@ public class TableBean implements Serializable {
 				}
 			} else {
 				if (e.getComponent().getId().equals("ListoM")) {
-					if (Diagnostico == null || categoria == null
-							|| categoria == "" || Diagnostico == ""
-							|| nomdiag == null || nomdiag.equals("")
-							|| nomdiag.equals("Selecciona")) {
+					if (diagnosticoM == null || categoriaM == null
+							|| categoriaM == "" || diagnosticoM == ""
+							|| nomdiagM == null || nomdiagM.equals("")
+							|| nomdiagM.equals("Selecciona")) {
 						mensajes("error", "Ingresar todos los campos");
 					} else {
 						// Solucion tmpSol=new Solucion(10000);
 						// nombreD="DannyJ";
-						Diagnostico dia = obtenerDiagnostico(getNomdiag());
-						dia.setDescrDiagnostico(Diagnostico);
-						fija.setIdCategoria(categoriaIdentificar(categoria));
+						Diagnostico dia = obtenerDiagnostico(getNomdiagM());
+						dia.setDescrDiagnostico(diagnosticoM);
+						fija.setIdCategoria(categoriaIdentificar(categoriaM));
 						solserv.updateSolicitud(fija);
 						solserv.updateDiagnostico(dia);
 						limpiarPantalla();
@@ -597,6 +643,7 @@ public class TableBean implements Serializable {
 	}
 
 	public void validaSelPro(ActionEvent ae) {
+		if(fija!=null){
 		List<String> diags = solserv
 				.getListaDiagnosticos(fija.getIdSolicitud());
 		System.out.println("TableBean.validaSelPro()");
@@ -618,9 +665,12 @@ public class TableBean implements Serializable {
 				if (diags.size() == 0) {
 					mensajes("error", "Realize primero un diagnostico");
 				} else {
-					setNomdiags(diags);
+					setNomdiagsM(diags);
 				}
 			}
+		}
+		}else{
+			mensajes("error", "Seleccionar una Solicitud");
 		}
 	}
 

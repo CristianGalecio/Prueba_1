@@ -81,7 +81,7 @@
 									actionListener="#{tableBean.validaSelPro}"
 									oncomplete="diagnosticoDialog.show()" />
 								<p:menuitem id="DiagModi" value="Modificar"
-									update=":form:growl" icon="ui-icon-close"
+									update=":form:displaydm :form:growl :form:diagModiDialog" icon="ui-icon-close"
 									actionListener="#{tableBean.validaSelPro}"
 									oncomplete="diagModiDialog.show()" />
 							</p:submenu>
@@ -211,31 +211,6 @@
 				            -->
 					</h:panelGrid>
 				</p:dialog>
-				
-				<p:dialog id="diagnosticoDialog" header="Registrar Diagnostico"	widgetVar="diagnosticoDialog" showEffect="fade">
-
-					<h:panelGrid id="displayd" columns="2" border="0" cellpadding="0" cellspacing="0">
-						<h:panelGrid columns="1" cellpadding="1">
-							<h:panelGrid columns="2" cellpadding="1">
-								<h:outputText value="Solicitud:" />
-								<h:outputText value="#{tableBean.idFija}" />
-								<h:outputText value="Categoria:" />
-								<p:selectOneMenu id="categoria" value="#{tableBean.categoria}">
-									<f:selectItem itemLabel="Selecciona" itemValue="" />
-									<f:selectItems value="#{tableBean.categorias}" />									
-								</p:selectOneMenu>
-								<h:outputText value="Nombre:" />
-								<h:inputText id="nombreD" value="#{tableBean.nombreD}" />
-							</h:panelGrid>
-							<!--<h:outputText value="Descripcion:" />-->
-							<p:inputTextarea id="Diagnostico" rows="4" cols="103" value="#{tableBean.diagnostico}" />
-							<p:commandButton id="Listo1" value="Listo"	actionListener="#{tableBean.actualizarDiag}"
-								oncomplete="diagnosticoDialog.hide();" update=":form:growl" />
-						</h:panelGrid>
-
-						<h:graphicImage id="Image1" url="/images/comunicaciones.jpg"/>
-					</h:panelGrid>
-				</p:dialog>
 
 				<p:dialog id="atenDialog" header="Iniciar Atencion"	widgetVar="atenDialog" showEffect="fade" modal="false">
 
@@ -293,8 +268,34 @@
 	
 						</h:panelGrid>
 					</h:panelGrid>
-				</p:dialog>	
-				 <p:dialog id="diagModiDialog" header="Modificar Diagnostico" widgetVar="diagModiDialog" showEffect="fade">
+				</p:dialog>
+				
+				<p:dialog id="diagnosticoDialog" header="Registrar Diagnostico"	widgetVar="diagnosticoDialog" showEffect="fade">
+					<h:panelGrid id="displayd" columns="2" border="0" cellpadding="0" cellspacing="0">
+						<h:panelGrid columns="1" cellpadding="1">
+							<h:panelGrid columns="2" cellpadding="1">
+								<h:outputText value="Solicitud:" />
+								<h:outputText value="#{tableBean.idFija}" />
+								<h:outputText value="Categoria:" />
+								<p:selectOneMenu id="categoria" value="#{tableBean.categoria}">
+									<p:ajax listener="#{tableBean.handleChangeC}" />
+									<f:selectItem itemLabel="Selecciona" itemValue="" />
+									<f:selectItems value="#{tableBean.categorias}" />									
+								</p:selectOneMenu>
+								<h:outputText value="Nombre:" />
+								<h:inputText id="nombreD" value="#{tableBean.nombreD}" />
+							</h:panelGrid>
+							<!--<h:outputText value="Descripcion:" />-->
+							<p:inputTextarea id="Diagnostico" rows="4" cols="103" value="#{tableBean.diagnostico}" />
+							<p:commandButton id="Listo1" value="Listo"	actionListener="#{tableBean.actualizarDiag}"
+								oncomplete="diagnosticoDialog.hide();" update=":form:growl" />
+						</h:panelGrid>
+
+						<h:graphicImage id="Image1" url="/images/comunicaciones.jpg"/>
+					</h:panelGrid>
+				</p:dialog>
+				
+				<p:dialog id="diagModiDialog" header="Modificar Diagnostico" widgetVar="diagModiDialog" showEffect="fade">
 					<h:panelGrid id="displaydm" columns="1" border="0" cellpadding="0" cellspacing="0">
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Solicitud:" />
@@ -302,21 +303,23 @@
 						</h:panelGrid>
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Diagnostico:" />
-							<p:selectOneMenu id="nomdiags" value="#{tableBean.nomdiag}">								
+							<p:selectOneMenu id="diagnostico" value="#{tableBean.nomdiagM}">								
 								<f:selectItem itemLabel="Selecciona" itemValue="" />
-								<f:selectItems value="#{tableBean.nomdiags}" />
+								<f:selectItems value="#{tableBean.nomdiagsM}" />
 							</p:selectOneMenu>
-						</h:panelGrid>
+						</h:panelGrid>						
+						<!-- <HR align="center" /> -->
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Categoria:" />
-							<p:selectOneMenu id="categorias" value="#{tableBean.categoria}">								
+							<p:selectOneMenu id="categoriaM" value="#{tableBean.categoriaM}">
+									<p:ajax listener="#{tableBean.handleChangeC}" />
 									<f:selectItem itemLabel="Selecciona" itemValue="" />
-									<f:selectItems value="#{tableBean.categorias}" />									
+									<f:selectItems value="#{tableBean.categoriasM}" />									
 							</p:selectOneMenu>
 						</h:panelGrid>
 						<h:panelGrid columns="2" cellpadding="0">
 							<h:panelGrid columns="1" cellpadding="1">
-								<p:inputTextarea id="DiagnosticoM" rows="4" cols="103" value="#{tableBean.diagnostico}" />
+								<p:inputTextarea id="DiagnosticoM" rows="4" cols="103" value="#{tableBean.diagnosticoM}" />
 								<p:commandButton id="ListoM" value="Listo" update=":form:growl" 
 									actionListener="#{tableBean.actualizarDiag}"
 									oncomplete="diagModiDialog.hide();"/>
@@ -324,7 +327,7 @@
 							<h:graphicImage id="ImageM" url="/images/comunicaciones.jpg"></h:graphicImage>
 						</h:panelGrid>
 					</h:panelGrid>
-				</p:dialog>
+				</p:dialog>				
 			</h:form>
 		</p:layoutUnit>
 	</p:layout>
