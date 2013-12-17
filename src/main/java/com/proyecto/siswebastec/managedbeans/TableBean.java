@@ -49,6 +49,7 @@ public class TableBean implements Serializable {
 
 	private String prioridad;
 	private String trabajador;
+	private String trabajadorR;
 	private String categoria;
 	private String categoriaM;
 	private String trbAten;
@@ -56,6 +57,7 @@ public class TableBean implements Serializable {
 	private String hcierre;
 	private List<String> prinames;
 	private List<String> traid;
+	private List<String> traidR;
 	private List<String> categorias;
 	private List<String> categoriasM;
 	private List<String> nomdiags;
@@ -79,8 +81,10 @@ public class TableBean implements Serializable {
 		solicitudespend = new ArrayList<Solicitud>();
 		solicitudespend = solserv.getSolicitudesPendientes();
 		solicitudespro = new ArrayList<Solicitud>();
+		solserv = new SolicitudServiceImpl();
 		solicitudespro = solserv.getSolicitudesProceso();
 		solicitudesfin = new ArrayList<Solicitud>();
+		solserv = new SolicitudServiceImpl();
 		solicitudesfin = solserv.getSolicitudesFinalizadas();
 		mediumSolsModel = new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro = new SolicitudDataModel(solicitudespro);
@@ -93,12 +97,14 @@ public class TableBean implements Serializable {
 		// prioridades = prioridadService.getPrioridades();
 		prinames = new ArrayList<>();
 		traid = new ArrayList<>();
+		traidR = new ArrayList<>();
 		categorias = new ArrayList<>();
 		categorias = solserv.getListaCat();
 		categoriasM = new ArrayList<>();
 		categoriasM = solserv.getListaCat();
 		prinames = prioridadService.getNombresPri();
 		traid = trabajadorService.getIdTrabajadores();
+		traidR = traid;
 		atencionService = new AtencionServiceImpl();
 		trbAten = "";
 		fcierre = "";
@@ -125,8 +131,8 @@ public class TableBean implements Serializable {
 	public List<Solicitud> getSolicitudespro() {
 		System.out.println("TableBean.getSolicitudespro()");
 
-		// solserv=new SolicitudServiceImpl();
-		// setSolicitudespro(solserv.getSolicitudesProceso());
+		 solserv=new SolicitudServiceImpl();
+		 setSolicitudespro(solserv.getSolicitudesProceso());
 		return solicitudespro;
 	}
 
@@ -415,6 +421,22 @@ public class TableBean implements Serializable {
 		this.diagnosticoM = diagnosticoM;
 	}
 
+	public String getTrabajadorR() {
+		return trabajadorR;
+	}
+
+	public void setTrabajadorR(String trabajadorR) {
+		this.trabajadorR = trabajadorR;
+	}
+
+	public List<String> getTraidR() {
+		return traidR;
+	}
+
+	public void setTraidR(List<String> traidR) {
+		this.traidR = traidR;
+	}
+
 	public void asignarTecnico(ActionEvent actionEvent) {
 		System.out.println("TableBean.asignarTecnico()");
 		Boolean error = false;
@@ -458,9 +480,43 @@ public class TableBean implements Serializable {
 				fija = null;
 				setIdFija("");
 				limpiarPantalla();
+				actualizarSolicitudes();
 				mensajes("info", "Atención registrada");
 			} else {
 				mensajes("error", "Ingresar todos los campos");
+			}
+		} else {
+			mensajes("error", "Seleccionar una solicitud");
+		}
+	}
+	
+	public void reasignarTecnico(ActionEvent actionEvent) {
+		System.out.println("TableBean.reasignarTecnico()");
+		Boolean error = false;
+		if (fija != null) {
+			Trabajador t = trabajadorService.getTrabajadorById(getTrabajadorR());
+			Date Fecha = Calendar.getInstance().getTime();
+			if (getTrabajadorR() == null || getTrabajadorR().equals("")) {
+				error = true;
+			}
+			if (error == false) {
+				
+				Solicitud sasig = fija;
+				System.out.println("Solicitud" + sasig.getDescSolicitud());
+				
+				Atencion ate = new Atencion();
+				ate.setIdSolicitud(sasig);
+				ate.setFechaAtencion(Fecha);
+				ate.setHoraAtencion(Fecha);
+				ate.setTrabajador(t);
+				atencionService.addAtencion(ate);
+				fija = null;
+				setIdFija("");
+				limpiarPantalla();
+				actualizarSolicitudes();
+				mensajes("info", "Nueva atención registrada");
+			} else {
+				mensajes("error", "Ingresar tecnico");
 			}
 		} else {
 			mensajes("error", "Seleccionar una solicitud");
@@ -509,6 +565,7 @@ public class TableBean implements Serializable {
 					fija.setIdCategoria(categoriaIdentificar(categoria));
 					solserv.updateSolicitud(fija);
 					limpiarPantalla();
+					actualizarSolicitudes();
 					mensajes("info", "Diagnostico Exitoso");
 
 				}
@@ -527,6 +584,7 @@ public class TableBean implements Serializable {
 						fija.setIdCategoria(categoriaIdentificar(categoriaM));
 						solserv.updateSolicitud(fija);
 						solserv.updateDiagnostico(dia);
+						actualizarSolicitudes();
 						limpiarPantalla();
 						mensajes("info", "Diagnostico modificado");
 
@@ -572,6 +630,7 @@ public class TableBean implements Serializable {
 				Diagnostico dia = obtenerDiagnostico(getNomdiag());
 				dia.setIdSolucion(sol);
 				solserv.updateDiagnostico(dia);
+				actualizarSolicitudes();
 				mensajes("info", "Solucion Exitosa");
 
 			}
@@ -609,13 +668,24 @@ public class TableBean implements Serializable {
 	public void onTabChange(TabChangeEvent event) {
 		System.out.println(event.getTab().getTitle());
 		fija = null;
-		actualizarSolPen();
-		actualizarSolPro();
-		actualizarSolFin();
+		actualizarSolicitudes();
 		// FacesMessage msg = new FacesMessage("Tab Changed", "Active Tab: " +
 		// event.getTab().getTitle());
 
 		// FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void actualizarSolicitudes() {
+		System.out.println("TableBean.actualizarSolicitudes()");
+		actualizarSolPen();
+		actualizarSolPro();
+		actualizarSolFin();
+		actualizarDiagnosticos();
+	
+	}
+
+	private void actualizarDiagnosticos() {
+		solserv = new SolicitudServiceImpl();
 	}
 
 	public void mensajes(String tipo, String msj) {
@@ -644,6 +714,7 @@ public class TableBean implements Serializable {
 
 	public void validaSelPro(ActionEvent ae) {
 		if(fija!=null){
+			solserv = new SolicitudServiceImpl();
 		List<String> diags = solserv
 				.getListaDiagnosticos(fija.getIdSolicitud());
 		System.out.println("TableBean.validaSelPro()");
@@ -661,6 +732,9 @@ public class TableBean implements Serializable {
 				}
 			}
 			if (ae.getComponent().getId().equals("DiagModi")) {
+				solserv = new SolicitudServiceImpl();
+				diags = solserv
+						.getListaDiagnosticos(fija.getIdSolicitud());
 				System.out.println(diags.size());
 				if (diags.size() == 0) {
 					mensajes("error", "Realize primero un diagnostico");
@@ -677,8 +751,11 @@ public class TableBean implements Serializable {
 	public void limpiarPantalla() {
 		setPrioridad("");
 		setTrabajador("");
+		setTrabajadorR("");
 		setCategoria("");
+		setCategoriaM("");
 		setDiagnostico("");
+		setDiagnosticoM("");
 		setNombreD("");
 		//setIdFija(null);
 		//setNomdiags(null);

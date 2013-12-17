@@ -64,7 +64,8 @@
 					<br />
 					<h:panelGrid columns="5" cellpadding="5">
 						<p:commandButton id="guardar" value="Guardar"
-							actionListener="#{solicitudBean.guardar}" update=":mensajes nuevaSol" />
+							actionListener="#{solicitudBean.guardar}" update=":mensajes nuevaSol" 
+							listener="#{tableBean.actualizarSolicitudes}" />
 						<p:commandButton id="cancelar" value="Cancelar"
 							actionListener="#{solicitudBean.cancelar}" update="nuevaSol" />
 					</h:panelGrid>

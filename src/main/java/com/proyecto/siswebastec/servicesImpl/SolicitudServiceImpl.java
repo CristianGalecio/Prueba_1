@@ -63,6 +63,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	public List<Solicitud> getSolicitudes() {
+		System.out.println("SolicitudServiceImpl.getSolicitudes()");
 		objJpaUtil = new JPAUtil();
 		solicitudDAO = new SolicitudDAO(objJpaUtil.getEntityManager());
 		return solicitudDAO.listarTodos();
@@ -85,6 +86,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	public List<Solicitud> getSolicitudesProceso() {
+		System.out.println("SolicitudServiceImpl.getSolicitudesProceso()");
 		List<Solicitud> todos=getSolicitudes();
 		List<Solicitud> proceso=new ArrayList<>();
 		//Estado pend=new Estado(1);
@@ -92,6 +94,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 			if(todos.get(i).getIdEstado()!= null){
 				if(todos.get(i).getIdEstado().getIdEstado()==2){
 					proceso.add(todos.get(i));
+					System.out.println("tam diags "+todos.get(i).getDiagnosticoList().size());
 				}
 			}
 		}
@@ -165,7 +168,6 @@ public class SolicitudServiceImpl implements SolicitudService{
 		List<String> ars = new ArrayList<>();
 		for(int i=0; i<pri.size();i++){
 			ars.add(pri.get(i).getNombreCategoria());
-			System.out.println(pri.get(i).getNombreCategoria());
 		}
 		return ars;
 	}
@@ -181,8 +183,6 @@ public class SolicitudServiceImpl implements SolicitudService{
 	public List<String> getListaDiagnosticos(int id) {
 		System.out.println("SolicitudServiceImpl.getListaDiagnosticos()");
 		Solicitud sol = getSolicitudById(id);
-		System.out.println(id);
-		System.out.println(sol.getIdSolicitante());
 		List<Diagnostico> diags = sol.getDiagnosticoList();
 		List<String> nomDiag = new ArrayList<String>();
 		if((diags.size() != 0)){

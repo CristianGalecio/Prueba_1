@@ -89,6 +89,10 @@
 								update=":form:displays :form:growl :form:solucionDialog" icon="ui-icon-close"   
 								actionListener="#{tableBean.validaSelPro}"
 								oncomplete="solucionDialog.show()" />
+							<p:menuitem id="ReaTec" value="Reasignar Tecnico"	
+								update=":form:displayrt :form:growl :form:reasignacionDialog" icon="ui-icon-close"   
+								actionListener="#{tableBean.validaSelPro}"
+								oncomplete="reasignacionDialog.show()" />	
 						</p:contextMenu>
 						<p:dataTable id="dataProceso" var="Solicitudes"
 							value="#{tableBean.mediumSolsModelPro}"
@@ -213,7 +217,6 @@
 				</p:dialog>
 
 				<p:dialog id="atenDialog" header="Iniciar Atencion"	widgetVar="atenDialog" showEffect="fade" modal="false">
-
 					<h:panelGrid id="displaya" columns="2">
 						<h:outputText value="Solicitud:" />
 						<h:outputText value="#{tableBean.idFija}" />
@@ -234,7 +237,7 @@
 							<p:commandButton id="Init" value="Listo"
 								actionListener="#{tableBean.asignarTecnico}"
 								oncomplete="atenDialog.hide();"
-								update=":form:growl :form:tabview:dataPendientes :form:atenDialog" />
+								update=":form:growl :form:tabview:dataPendientes :form:tabview:dataProceso :form:atenDialog" />
 						</f:facet>
 					</h:panelGrid>
 				</p:dialog>
@@ -261,7 +264,7 @@
 									value="#{tableBean.solucion}" />
 								<p:commandButton id="Listo2" value="Listo"
 									actionListener="#{tableBean.actualizarSol}"
-									oncomplete="solucionDialog.hide();" update=":form:growl" />
+									oncomplete="solucionDialog.hide();" update=":form:growl :form:tabview:dataProceso :form:tabview:datafinalizadas :form:solucionDialog" />
 							</h:panelGrid>
 	
 							<h:graphicImage id="Image2" url="/images/comunicaciones.jpg"></h:graphicImage>
@@ -288,7 +291,7 @@
 							<!--<h:outputText value="Descripcion:" />-->
 							<p:inputTextarea id="Diagnostico" rows="4" cols="103" value="#{tableBean.diagnostico}" />
 							<p:commandButton id="Listo1" value="Listo"	actionListener="#{tableBean.actualizarDiag}"
-								oncomplete="diagnosticoDialog.hide();" update=":form:growl" />
+								oncomplete="diagnosticoDialog.hide();" update=":form:growl :form:tabview:dataProceso :form:diagnosticoDialog :form:displaydm :form:diagModiDialog" />
 						</h:panelGrid>
 
 						<h:graphicImage id="Image1" url="/images/comunicaciones.jpg"/>
@@ -320,12 +323,32 @@
 						<h:panelGrid columns="2" cellpadding="0">
 							<h:panelGrid columns="1" cellpadding="1">
 								<p:inputTextarea id="DiagnosticoM" rows="4" cols="103" value="#{tableBean.diagnosticoM}" />
-								<p:commandButton id="ListoM" value="Listo" update=":form:growl" 
+								<p:commandButton id="ListoM" value="Listo" update=":form:growl :form:tabview:dataProceso :form:displaydm :form:diagModiDialog" 
 									actionListener="#{tableBean.actualizarDiag}"
 									oncomplete="diagModiDialog.hide();"/>
 							</h:panelGrid>
 							<h:graphicImage id="ImageM" url="/images/comunicaciones.jpg"></h:graphicImage>
 						</h:panelGrid>
+					</h:panelGrid>
+				</p:dialog>
+				
+				<p:dialog id="reasignacionDialog" header="Reasignar tecnico"	widgetVar="reasignacionDialog" showEffect="fade" modal="false">
+					<h:panelGrid id="displayrt" columns="2">
+						<h:outputText value="Solicitud:" />
+						<h:outputText value="#{tableBean.idFija}" />
+						
+						<h:outputLabel for="trabajadorR" value="Trabajador: " />
+						<p:selectOneMenu id="trabajadorR" value="#{tableBean.trabajadorR}">
+							<f:selectItem itemLabel="Selecciona" itemValue="" />
+							<f:selectItems value="#{tableBean.traidR}" />
+							<p:ajax listener="#{tableBean.handleChangeT}" />
+						</p:selectOneMenu>
+						<f:facet name="footer">
+							<p:commandButton id="InitR" value="Listo"
+								actionListener="#{tableBean.reasignarTecnico}"
+								oncomplete="reasignacionDialog.hide();"
+								update=":form:growl :form:tabview:dataProceso :form:reasignacionDialog" />
+						</f:facet>
 					</h:panelGrid>
 				</p:dialog>				
 			</h:form>
