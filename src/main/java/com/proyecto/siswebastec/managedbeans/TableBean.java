@@ -16,6 +16,7 @@ import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Prioridad;
 import com.proyecto.siswebastec.model.Solicitud;
 import com.proyecto.siswebastec.model.Solucion;
+import com.proyecto.siswebastec.model.TipoSolicitud;
 import com.proyecto.siswebastec.model.Trabajador;
 import com.proyecto.siswebastec.model.Diagnostico;
 
@@ -41,6 +42,7 @@ public class TableBean implements Serializable {
 	private List<Solicitud> solicitudes, solicitudespend, solicitudespro,
 			solicitudesfin;
 	private SolicitudService solserv;
+	private AtencionService atenserv;
 	private Solicitud selectedSol;
 	private SolicitudDataModel mediumSolsModel, mediumSolsModelPro,
 			mediumSolsModelFin, mediumSolsPend;
@@ -764,6 +766,66 @@ public class TableBean implements Serializable {
 		//setTraid(null);
 		setTrbAten("");
 		//setCategorias(null);
+	}
+	
+	public void validaSolReac(ActionEvent ae){
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}
+		else{
+			System.out.println("Estamos Reactivando");
+		}
+	}
+	
+	public void validaSolCancel(ActionEvent ae){
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}else{
+			System.out.println("Estamos Cancelando");
+		}	
+	}
+	
+	
+	public void reactivar(ActionEvent ae){
+		TipoSolicitud idTipo;
+		Estado idEstado;
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}else{
+			//System.out.println("Estamos Cancelando");
+			atenserv=new AtencionServiceImpl();
+			idTipo=atenserv.getTipoSolicitud(2);	
+			System.out.println("Esta es:"+idTipo.getNombreTipo());
+			
+			idEstado=atenserv.getEstado(1);	
+			System.out.println("Esta es:"+idEstado.getNombreEstado());
+			
+			fija.setIdTipo(idTipo);
+			fija.setIdEstado(idEstado);
+			solserv.updateSolicitud(fija);
+			mensajes("info","Solicitud Reactivada...!!!");
+		}	
+	}
+	
+	public void cancelar (ActionEvent ae){
+		TipoSolicitud idTipo;
+		Estado idEstado;
+		if(fija==null){
+			mensajes("error","Seleccionar una Solicitud");
+		}else{
+			//System.out.println("Estamos Cancelando");
+			atenserv=new AtencionServiceImpl();
+			idTipo=atenserv.getTipoSolicitud(3);	
+			System.out.println("Esta es:"+idTipo.getNombreTipo());
+			
+			idEstado=atenserv.getEstado(3);	
+			System.out.println("Esta es:"+idEstado.getNombreEstado());
+			
+			fija.setIdTipo(idTipo);
+			fija.setIdEstado(idEstado);
+			solserv.updateSolicitud(fija);
+			mensajes("info","Solicitud ha sido cancelada...!!!");
+		}	
 	}
 
 }

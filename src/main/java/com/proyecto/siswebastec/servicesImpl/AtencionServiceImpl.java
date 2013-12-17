@@ -10,8 +10,10 @@ import com.proyecto.siswebastec.DAO.JPAUtil;
 import com.proyecto.siswebastec.DAO.SolicitudDAO;
 import com.proyecto.siswebastec.model.Atencion;
 import com.proyecto.siswebastec.model.Calificacion;
+import com.proyecto.siswebastec.model.Estado;
 import com.proyecto.siswebastec.model.Evaluacion;
 import com.proyecto.siswebastec.model.Solicitud;
+import com.proyecto.siswebastec.model.TipoSolicitud;
 import com.proyecto.siswebastec.services.AtencionService;
 
 public class AtencionServiceImpl implements AtencionService{
@@ -108,5 +110,25 @@ public class AtencionServiceImpl implements AtencionService{
 		System.out.println("Atencion: "+aten.getIdAtencion());
 		return aten;
 	}
+	
+	@Override
+	public TipoSolicitud getTipoSolicitud(int idTipo) {
+		TipoSolicitud tipo=new TipoSolicitud();
+		objJpaUtil = new JPAUtil();
+		atencionDAO = new AtencionDAO(objJpaUtil.getEntityManager());
+		tipo=atencionDAO.buscarTipoSol(idTipo);
+		return tipo;
+	}
+
+	@Override
+	public Estado getEstado(int idEstado) {
+		Estado state=new Estado();
+		objJpaUtil = new JPAUtil();
+		atencionDAO = new AtencionDAO(objJpaUtil.getEntityManager());
+		state=atencionDAO.buscarEstado(idEstado);
+		return state;
+	}
+	
+	
 
 }

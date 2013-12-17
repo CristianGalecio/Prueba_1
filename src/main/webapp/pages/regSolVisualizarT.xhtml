@@ -93,6 +93,8 @@
 								update=":form:displayrt :form:growl :form:reasignacionDialog" icon="ui-icon-close"   
 								actionListener="#{tableBean.validaSelPro}"
 								oncomplete="reasignacionDialog.show()" />	
+							<p:menuitem id="Cancel" value="Cancelar" update=":form:growl :form:confCanc" icon="ui-icon-search" actionListener="#{tableBean.validaSolCancel}" oncomplete="confirCancelDialog.show()"/>        				  
+    												
 						</p:contextMenu>
 						<p:dataTable id="dataProceso" var="Solicitudes"
 							value="#{tableBean.mediumSolsModelPro}"
@@ -122,9 +124,15 @@
 						</p:dataTable>
 					</p:tab>
 					<p:tab title="Finalizado">
+						<p:contextMenu for="datafinalizadas">
+							<p:menuitem value="Reactivar" update=":form:growl :form:confReac" icon="ui-icon-search" actionListener="#{tableBean.validaSolReac}" oncomplete="confirDialog.show()"/>        				  
+	    				</p:contextMenu>
 						<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"
 							selection="#{tableBean.selectedSol}" selectionMode="single">
 							<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" />
+							
+							
+							
 							<p:column headerText="ID" align="center">
 								<h:outputText value="#{Solicitudes.idSolicitud}" />
 							</p:column>
@@ -350,7 +358,36 @@
 								update=":form:growl :form:tabview:dataProceso :form:reasignacionDialog" />
 						</f:facet>
 					</h:panelGrid>
-				</p:dialog>				
+				</p:dialog>	
+				
+					<p:dialog id="confirDialog" header="Confirmar" widgetVar="confirDialog" global="true" showEffect="fade" hideEffect="explode">
+			        <h:panelGrid id="confReac" columns="1" cellpadding="1">
+				        <h:outputText value="Desea reactivar la solicitud ?" />
+				        <h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />  
+					    	<h:outputText value="#{tableBean.idFija}" />
+								        
+					        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{tableBean.reactivar}" oncomplete="confirDialog.hide();" update=":form:growl" />
+					        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirDialog.hide();"/> 	
+		    			</h:panelGrid>
+	    			</h:panelGrid>
+	    		</p:dialog>
+	    		
+	    		<p:dialog id="confirCancelDialog" header="Confirmar" widgetVar="confirCancelDialog" global="true" showEffect="fade" hideEffect="explode">
+			        <h:panelGrid id="confCanc" columns="1" cellpadding="1">
+				        <h:outputText value="Desea reactivar la solicitud ?" />
+				        <h:panelGrid columns="2" cellpadding="1">
+								<h:outputText value="Solicitud:" />  
+						    	<h:outputText value="#{tableBean.idFija}" />
+						    	<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{tableBean.cancelar}" oncomplete="confirCancelDialog.hide();" update=":form:growl"/>
+			        			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirCancelDialog.hide();"/> 	
+	    	
+						</h:panelGrid>
+			        </h:panelGrid>
+			    </p:dialog>
+				
+				
+							
 			</h:form>
 		</p:layoutUnit>
 	</p:layout>

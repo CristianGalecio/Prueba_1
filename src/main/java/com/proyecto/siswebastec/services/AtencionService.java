@@ -5,6 +5,8 @@ import java.util.List;
 import com.proyecto.siswebastec.model.Atencion;
 import com.proyecto.siswebastec.model.Calificacion;
 import com.proyecto.siswebastec.model.Evaluacion;
+import com.proyecto.siswebastec.model.Estado;
+import com.proyecto.siswebastec.model.TipoSolicitud;
 
 public interface AtencionService {
 	
@@ -20,5 +22,7 @@ public interface AtencionService {
 	public void addEvaluacion(Evaluacion evaluacion);
 	
 	public Atencion getAtencionByIdSol(int idSol);
+	public Estado getEstado(int idEstado);
+	public TipoSolicitud getTipoSolicitud(int i);
 
 }
