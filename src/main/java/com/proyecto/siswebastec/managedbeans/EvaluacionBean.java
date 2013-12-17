@@ -47,6 +47,7 @@ public class EvaluacionBean implements Serializable {
 			mediumSolsModelFin, mediumSolsPend, mediumSolsProPend;
 	private Solicitud fija;
 	private String idFija;
+	private String evaluacion;
 	/********** CALIFICACION **********/
 	private String calificacion;
 	private AtencionService atenserv;
@@ -118,6 +119,7 @@ public class EvaluacionBean implements Serializable {
 		fcierre = "";
 		hcierre = "";
 		idFija = "";
+		evaluacion = "";
 		// categoria="";
 		// fija=new Solicitud();
 
@@ -451,6 +453,27 @@ public class EvaluacionBean implements Serializable {
 
 	public void setDiagnosticoM(String diagnosticoM) {
 		this.diagnosticoM = diagnosticoM;
+	}
+
+	public String getEvaluacion() {
+		
+			Atencion at = atencionService.getAtencionByIdSol(fija.getIdSolicitud());
+			
+			if(at!=null){
+				if(at.getIdEvaluacion()!=null){
+					setEvaluacion("Si");
+				}else{
+					setEvaluacion("No");
+				}
+			}else{
+				setEvaluacion("No");
+			}
+		
+		return evaluacion;
+	}
+
+	public void setEvaluacion(String evaluacion) {
+		this.evaluacion = evaluacion;
 	}
 
 	public void asignarTecnico(ActionEvent actionEvent) {

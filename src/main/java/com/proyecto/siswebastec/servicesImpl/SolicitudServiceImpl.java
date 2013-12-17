@@ -35,6 +35,8 @@ public class SolicitudServiceImpl implements SolicitudService{
 		categoria = new Categoria();
 		objJpaUtil = new JPAUtil();
 		solucionDAO =  new SolucionDAO(objJpaUtil.getEntityManager());
+		objJpaUtil = new JPAUtil();
+		diagnosticoDAO =  new DiagnosticoDAO(objJpaUtil.getEntityManager());
 	}
 	
 	public void addSolicitud(Solicitud solicitud) {
@@ -182,10 +184,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 	@Override
 	public List<String> getListaDiagnosticos(int id) {
 		System.out.println("SolicitudServiceImpl.getListaDiagnosticos()");
-		Solicitud sol = getSolicitudById(id);
-		List<Diagnostico> diags = sol.getDiagnosticoList();
+		//Solicitud sol = getSolicitudById(id);
+		List<Diagnostico> diags = diagnosticoDAO.getDiagnosticosByIdSol(id);
+		System.out.println("TAM en LISTA "+diags.size());
 		List<String> nomDiag = new ArrayList<String>();
-		if((diags.size() != 0)){
+		if((diags.size() > 0)){
 			for(int i = 0; i<diags.size();i++){
 				nomDiag.add(diags.get(i).getIdDiagnostico() + "-" +diags.get(i).getNombreDiagnostico());
 			}

@@ -28,6 +28,16 @@ public class DiagnosticoDAO extends DaoGenericImpl<Diagnostico, Integer>{
 		return trb;
 	}
 	
+	public List<Diagnostico> getDiagnosticosByIdSol(int id) {
+		entityManager.getTransaction().begin();		
+		@SuppressWarnings("unchecked")
+		List<Diagnostico> aux =  entityManager.createQuery("SELECT s FROM Diagnostico s WHERE s.idSolicitud.idSolicitud = "+id).getResultList();
+		System.out.println("TAM LISTA"+aux.size());
+		entityManager.getTransaction().commit();
+		entityManager.close();	
+		return aux;
+	}
+	
 	public void insertarDiagnostico(Diagnostico diag) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(diag);
