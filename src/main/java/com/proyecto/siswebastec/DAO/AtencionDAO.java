@@ -52,8 +52,9 @@ public class AtencionDAO extends DaoGenericImpl<Atencion, Integer>{
 		entityManager.getTransaction().begin();		
 		@SuppressWarnings("unchecked")
 		List<Atencion> aux =  entityManager.createQuery("SELECT s FROM Atencion s WHERE s.idSolicitud.idSolicitud = "+idSol).getResultList();
-		if(aux.size()!=0){
-			trb=aux.get(0);
+		int tam = aux.size();
+		if(tam!=0){
+			trb=aux.get(tam-1);
 			System.out.println(aux.size());
 		}
 		entityManager.getTransaction().commit();

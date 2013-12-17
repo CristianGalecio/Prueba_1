@@ -1,6 +1,6 @@
 package com.proyecto.siswebastec.managedbeans;
 
-import java.io.Serializable;	
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,23 +36,23 @@ import com.proyecto.siswebastec.servicesImpl.PrioridadServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.SolicitudServiceImpl;
 import com.proyecto.siswebastec.servicesImpl.TrabajadorServiceImpl;
 
-public class EvaluacionBean implements Serializable{
-	
+public class EvaluacionBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	private List<Solicitud> solicitudes, solicitudespend, solicitudespro,solicitudespropen,solicitudesfin;
+	private List<Solicitud> solicitudes, solicitudespend, solicitudespro,
+			solicitudespropen, solicitudesfin;
 	private SolicitudService solserv;
 	private Solicitud selectedSol;
 	private SolicitudDataModel mediumSolsModel, mediumSolsModelPro,
-			mediumSolsModelFin, mediumSolsPend,mediumSolsProPend; 
+			mediumSolsModelFin, mediumSolsPend, mediumSolsProPend;
 	private Solicitud fija;
 	private String idFija;
 	/********** CALIFICACION **********/
-	private String calificacion;	
+	private String calificacion;
 	private AtencionService atenserv;
 	private List<String> calificaciones;
 	private String observacion;
-	
-	
+
 	private String prioridad;
 	private String trabajador;
 	private String categoria;
@@ -79,10 +79,10 @@ public class EvaluacionBean implements Serializable{
 	private String nomdiagM;
 
 	public EvaluacionBean() {
-		
-		atenserv=new AtencionServiceImpl();
-        calificaciones=atenserv.getCalificacionesNombre();		
-		//System.out.println("TableBean.TableBean()");
+
+		atenserv = new AtencionServiceImpl();
+		calificaciones = atenserv.getCalificacionesNombre();
+		// System.out.println("TableBean.TableBean()");
 		solicitudes = new ArrayList<Solicitud>();
 		solserv = new SolicitudServiceImpl();
 		solicitudespend = new ArrayList<Solicitud>();
@@ -91,15 +91,14 @@ public class EvaluacionBean implements Serializable{
 		solicitudespro = solserv.getSolicitudesProceso();
 		solicitudesfin = new ArrayList<Solicitud>();
 		solicitudesfin = solserv.getSolicitudesFinalizadas();
-		solicitudespropen=new ArrayList<Solicitud>();
-		solicitudespropen=solserv.getSolicitudesProcesoPendientes();
-		
+		solicitudespropen = new ArrayList<Solicitud>();
+		solicitudespropen = solserv.getSolicitudesProcesoPendientes();
+
 		mediumSolsModel = new SolicitudDataModel(solicitudespend);
 		mediumSolsModelPro = new SolicitudDataModel(solicitudespro);
 		mediumSolsModelFin = new SolicitudDataModel(solicitudesfin);
-		mediumSolsProPend=new SolicitudDataModel(solicitudespropen);
-		
-		
+		mediumSolsProPend = new SolicitudDataModel(solicitudespropen);
+
 		// mediumSolsPend= new SolicitudDataModel(solicitudes);
 
 		prioridadService = new PrioridadServiceImpl();
@@ -124,7 +123,7 @@ public class EvaluacionBean implements Serializable{
 
 		// System.out.println("Holitas!");
 	}
-	
+
 	public String getObservacion() {
 		return observacion;
 	}
@@ -514,8 +513,8 @@ public class EvaluacionBean implements Serializable{
 		System.out.println("evento: " + trabajador);
 	}
 
-	public void handleChangeC() {	
-		
+	public void handleChangeC() {
+
 	}
 
 	public void handleChangeDiagM() {
@@ -644,13 +643,12 @@ public class EvaluacionBean implements Serializable{
 		setSolicitudesfin(solserv.getSolicitudesFinalizadas());
 		setMediumSolsModelFin(new SolicitudDataModel(getSolicitudesfin()));
 	}
-	
-	public void actualizarSolProPend(){
+
+	public void actualizarSolProPend() {
 		solserv = new SolicitudServiceImpl();
 		setSolicitudespropen(solserv.getSolicitudesProcesoPendientes());
 		setMediumSolsModelFin(new SolicitudDataModel(getSolicitudesfin()));
 	}
-	
 
 	public void onTabChange(TabChangeEvent event) {
 		System.out.println(event.getTab().getTitle());
@@ -690,33 +688,33 @@ public class EvaluacionBean implements Serializable{
 	}
 
 	public void validaSelPro(ActionEvent ae) {
-		if(fija!=null){
-		List<String> diags = solserv
-				.getListaDiagnosticos(fija.getIdSolicitud());
-		System.out.println("TableBean.validaSelPro()");
-		if (fija == null) {
-			mensajes("error", "Seleccionar una Solicitud");
+		if (fija != null) {
+			List<String> diags = solserv.getListaDiagnosticos(fija
+					.getIdSolicitud());
+			System.out.println("TableBean.validaSelPro()");
+			if (fija == null) {
+				mensajes("error", "Seleccionar una Solicitud");
+			} else {
+				System.out.println(fija.getIdSolicitud());
+				System.out.println(ae.getComponent().getId());
+				if (ae.getComponent().getId().equals("Sol")) {
+					System.out.println(diags.size());
+					if (diags.size() == 0) {
+						mensajes("error", "Realize primero un diagnostico");
+					} else {
+						setNomdiags(diags);
+					}
+				}
+				if (ae.getComponent().getId().equals("DiagModi")) {
+					System.out.println(diags.size());
+					if (diags.size() == 0) {
+						mensajes("error", "Realize primero un diagnostico");
+					} else {
+						setNomdiagsM(diags);
+					}
+				}
+			}
 		} else {
-			System.out.println(fija.getIdSolicitud());
-			System.out.println(ae.getComponent().getId());
-			if (ae.getComponent().getId().equals("Sol")) {
-				System.out.println(diags.size());
-				if (diags.size() == 0) {
-					mensajes("error", "Realize primero un diagnostico");
-				} else {
-					setNomdiags(diags);
-				}
-			}
-			if (ae.getComponent().getId().equals("DiagModi")) {
-				System.out.println(diags.size());
-				if (diags.size() == 0) {
-					mensajes("error", "Realize primero un diagnostico");
-				} else {
-					setNomdiagsM(diags);
-				}
-			}
-		}
-		}else{
 			mensajes("error", "Seleccionar una Solicitud");
 		}
 	}
@@ -727,19 +725,17 @@ public class EvaluacionBean implements Serializable{
 		setCategoria("");
 		setDiagnostico("");
 		setNombreD("");
-		//setIdFija(null);
-		//setNomdiags(null);
-		//setPrinames(null);
+		// setIdFija(null);
+		// setNomdiags(null);
+		// setPrinames(null);
 		setSolucion("");
-		//setTraid(null);
+		// setTraid(null);
 		setTrbAten("");
-		//setCategorias(null);
+		// setCategorias(null);
 	}
-	
-	/*********************************************CAMBIO*******************************************************/
-	
 
-	
+	/********************************************* CAMBIO *******************************************************/
+
 	public List<Solicitud> getSolicitudespropen() {
 		System.out.println("TableBean.getSolicitudespropend()");
 		return solicitudespropen;
@@ -749,10 +745,9 @@ public class EvaluacionBean implements Serializable{
 		System.out.println("TableBean.setSolicitudespropend()");
 		this.solicitudespropen = solicitudespropen;
 	}
-	
+
 	/************************************************************************************/
-	
-	
+
 	public SolicitudDataModel getMediumSolsProPend() {
 		return mediumSolsProPend;
 	}
@@ -760,9 +755,9 @@ public class EvaluacionBean implements Serializable{
 	public void setMediumSolsProPend(SolicitudDataModel mediumSolsProPend) {
 		this.mediumSolsProPend = mediumSolsProPend;
 	}
-	
+
 	/****************************************************************************************/
-	
+
 	public Solicitud getFija() {
 		return fija;
 	}
@@ -770,123 +765,142 @@ public class EvaluacionBean implements Serializable{
 	public void setFija(Solicitud fija) {
 		this.fija = fija;
 	}
-	
-	
+
 	/****************************************************************************************/
-	
-	
-	
-	/*****************************************************EVALUACION*************************************************/
-	public void grabar(ActionEvent a){
+
+	/***************************************************** EVALUACION *************************************************/
+	public void grabar(ActionEvent a) {
 		System.out.println("EvaluacionBean.grabar()");
-		atenserv=new AtencionServiceImpl();
-		
-		String calif=getCalificacion();
-		System.out.println(calif);
-		System.out.println(getObservacion());
-		Date Fecha = Calendar.getInstance().getTime();
-		Atencion aten=buscarAtencion(fija.getIdSolicitud());
-		Evaluacion eval=new Evaluacion(observacion, Fecha, Fecha, calificacionIdentificar(getCalificacion()));
-		atenserv.addEvaluacion(eval);
-		aten.setIdEvaluacion(eval);
-		atenserv.updateAtencion(aten);
-		fija=null;
-		setIdFija("");
+		atenserv = new AtencionServiceImpl();
+		if (fija != null) {
+			String calif = getCalificacion();
+			System.out.println(calif);
+			System.out.println(getObservacion());
+			Date Fecha = Calendar.getInstance().getTime();
+			Atencion aten = buscarAtencion(fija.getIdSolicitud());
+			if(aten!=null){
+				if(aten.getIdEvaluacion()==null){
+					Evaluacion eval = new Evaluacion(observacion, Fecha, Fecha,
+							calificacionIdentificar(getCalificacion()));
+					atenserv.addEvaluacion(eval);
+					aten.setIdEvaluacion(eval);
+					atenserv.updateAtencion(aten);					
+					fija = null;
+					setIdFija("");
+					mensajes("info", "Evaluacion exitosa");
+				}else{
+					mensajes("error","Solicitud ya evaluada");
+				}
+				
+			}else{
+				mensajes("error", "No existe una Atencion");
+			}
+			
+		} else {
+			mensajes("error", "Seleccionar una solicitud");
+		}
 	}
-	
-	public Calificacion calificacionIdentificar(String cal){
-		Calificacion cali=new Calificacion();
-		 if(cal.equals("Excelente")){cali.setIdCalificacion(5);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Bueno")){cali.setIdCalificacion(4);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Regular")){cali.setIdCalificacion(3);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Pesima")){cali.setIdCalificacion(2);cali.setNombreCalificacion(cal);}
-		 if(cal.equals("Mala")){cali.setIdCalificacion(1);cali.setNombreCalificacion(cal);}
+
+	public Calificacion calificacionIdentificar(String cal) {
+		Calificacion cali = new Calificacion();
+		if (cal.equals("Excelente")) {
+			cali.setIdCalificacion(5);
+			cali.setNombreCalificacion(cal);
+		}
+		if (cal.equals("Bueno")) {
+			cali.setIdCalificacion(4);
+			cali.setNombreCalificacion(cal);
+		}
+		if (cal.equals("Regular")) {
+			cali.setIdCalificacion(3);
+			cali.setNombreCalificacion(cal);
+		}
+		if (cal.equals("Pesima")) {
+			cali.setIdCalificacion(2);
+			cali.setNombreCalificacion(cal);
+		}
+		if (cal.equals("Mala")) {
+			cali.setIdCalificacion(1);
+			cali.setNombreCalificacion(cal);
+		}
 
 		return cali;
 	}
-	
-	public Atencion buscarAtencion(int IdSol){
-		Atencion aten=new Atencion();
-		atenserv=new AtencionServiceImpl();
-		aten=atenserv.getAtencionByIdSol(IdSol);		
+
+	public Atencion buscarAtencion(int IdSol) {
+		//Obtiene la ultimma atencion registrada para la Solicitud
+		Atencion aten = new Atencion();
+		atenserv = new AtencionServiceImpl();
+		aten = atenserv.getAtencionByIdSol(IdSol);
 		return aten;
 	}
-	
-	/*********************************VALIDACION***********************************/
-	public void validaSolAten(ActionEvent ae){
+
+	/********************************* VALIDACION ***********************************/
+	public void validaSolAten(ActionEvent ae) {
 		System.out.println("TableBean.validaSel()");
-		//setIdFija(fija.getIdSolicitud().toString());
+		// setIdFija(fija.getIdSolicitud().toString());
 		System.out.println(getIdFija());
-		if(fija==null){
-			mensajes("error","Seleccionar una Solicitud");
+		if (fija == null) {
+			mensajes("error", "Seleccionar una Solicitud");
 		}
 	}
-	
-	public void validaSolReac(ActionEvent ae){
-		if(fija==null){
-			mensajes("error","Seleccionar una Solicitud");
-		}
-		else{
+
+	public void validaSolReac(ActionEvent ae) {
+		if (fija == null) {
+			mensajes("error", "Seleccionar una Solicitud");
+		} else {
 			System.out.println("Estamos Reactivando");
 		}
 	}
-	
-	public void validaSolCancel(ActionEvent ae){
-		if(fija==null){
-			mensajes("error","Seleccionar una Solicitud");
-		}else{
+
+	public void validaSolCancel(ActionEvent ae) {
+		if (fija == null) {
+			mensajes("error", "Seleccionar una Solicitud");
+		} else {
 			System.out.println("Estamos Cancelando");
-		}	
+		}
 	}
-	
-	
-	public void reactivar(ActionEvent ae){
+
+	public void reactivar(ActionEvent ae) {
 		TipoSolicitud idTipo;
 		Estado idEstado;
-		if(fija==null){
-			mensajes("error","Seleccionar una Solicitud");
-		}else{
-			//System.out.println("Estamos Cancelando");
-			atenserv=new AtencionServiceImpl();
-			idTipo=atenserv.getTipoSolicitud(2);	
-			System.out.println("Esta es:"+idTipo.getNombreTipo());
-			
-			idEstado=atenserv.getEstado(1);	
-			System.out.println("Esta es:"+idEstado.getNombreEstado());
-			
+		if (fija == null) {
+			mensajes("error", "Seleccionar una Solicitud");
+		} else {
+			// System.out.println("Estamos Cancelando");
+			atenserv = new AtencionServiceImpl();
+			idTipo = atenserv.getTipoSolicitud(2);
+			System.out.println("Esta es:" + idTipo.getNombreTipo());
+
+			idEstado = atenserv.getEstado(1);
+			System.out.println("Esta es:" + idEstado.getNombreEstado());
+
 			fija.setIdTipo(idTipo);
 			fija.setIdEstado(idEstado);
 			solserv.updateSolicitud(fija);
-			mensajes("info","Solicitud Reactivada...!!!");
-		}	
+			mensajes("info", "Solicitud Reactivada...!!!");
+		}
 	}
-	
-	public void cancelar (ActionEvent ae){
+
+	public void cancelar(ActionEvent ae) {
 		TipoSolicitud idTipo;
 		Estado idEstado;
-		if(fija==null){
-			mensajes("error","Seleccionar una Solicitud");
-		}else{
-			//System.out.println("Estamos Cancelando");
-			atenserv=new AtencionServiceImpl();
-			idTipo=atenserv.getTipoSolicitud(3);	
-			System.out.println("Esta es:"+idTipo.getNombreTipo());
-			
-			idEstado=atenserv.getEstado(3);	
-			System.out.println("Esta es:"+idEstado.getNombreEstado());
-			
+		if (fija == null) {
+			mensajes("error", "Seleccionar una Solicitud");
+		} else {
+			// System.out.println("Estamos Cancelando");
+			atenserv = new AtencionServiceImpl();
+			idTipo = atenserv.getTipoSolicitud(3);
+			System.out.println("Esta es:" + idTipo.getNombreTipo());
+
+			idEstado = atenserv.getEstado(3);
+			System.out.println("Esta es:" + idEstado.getNombreEstado());
+
 			fija.setIdTipo(idTipo);
 			fija.setIdEstado(idEstado);
 			solserv.updateSolicitud(fija);
-			mensajes("info","Solicitud ha sido cancelada...!!!");
-		}	
+			mensajes("info", "Solicitud ha sido cancelada...!!!");
+		}
 	}
 
-
-
-	
-
-	
-	
-	
 }
