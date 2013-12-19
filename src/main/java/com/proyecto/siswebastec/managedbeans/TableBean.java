@@ -803,8 +803,12 @@ public class TableBean implements Serializable {
 			fija.setIdTipo(idTipo);
 			fija.setIdEstado(idEstado);
 			solserv.updateSolicitud(fija);
+			actualizarSolicitudes();
 			mensajes("info","Solicitud Reactivada...!!!");
-		}	
+		}
+		
+		fija = null;
+		setIdFija("");
 	}
 	
 	public void cancelar (ActionEvent ae){
@@ -824,8 +828,12 @@ public class TableBean implements Serializable {
 			fija.setIdTipo(idTipo);
 			fija.setIdEstado(idEstado);
 			solserv.updateSolicitud(fija);
+			actualizarSolicitudes();
 			mensajes("info","Solicitud ha sido cancelada...!!!");
-		}	
+		}
+		
+		fija = null;
+		setIdFija("");
 	}
 
 }

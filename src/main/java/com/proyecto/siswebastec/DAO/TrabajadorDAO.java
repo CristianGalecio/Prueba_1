@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.proyecto.siswebastec.model.Cliente;
+import com.proyecto.siswebastec.model.Rol;
 import com.proyecto.siswebastec.model.Trabajador;
 import com.proyecto.siswebastec.model.TrabajadorPK;
 import com.proyecto.siswebastec.model.Usuario;

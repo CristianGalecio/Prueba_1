@@ -233,6 +233,14 @@ public class SolicitudManagedBean implements Serializable {
 		return "regSolVisualizarT?faces-redirect=true";
 	}
 	
+	public String cambiarPagGenTS(){
+		return "regSolGenerarTS?faces-redirect=true";
+	}
+	
+	public String cambiarPagVisTS(){
+		return "regSolVisualizarTS?faces-redirect=true";
+	}
+	
 	public void mensajes(String tipo, String msj){
 		FacesContext context = FacesContext.getCurrentInstance();  
 		FacesMessage msg = null;

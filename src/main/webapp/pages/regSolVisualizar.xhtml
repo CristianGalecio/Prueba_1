@@ -1,213 +1,267 @@
 <html xmlns="http://www.w3c.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-       xmlns:p="http://primefaces.org/ui"
-       xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head></h:head>
 
 <h:body>
-<p:layout fullPage="true">  
-  
-    <p:layoutUnit position="north" size="110" resizable="false" closable="false" collapsible="false">    
-        <Center><h2>SISTEMA WEB DE ASISTENCIA TECNICA</h2></Center><!--  <H3>Bienvenido</H3>  -->
-    </p:layoutUnit>    
-  
-    <p:layoutUnit position="west" size="200" header="Solicitudes" collapsible="true"> 
-            <br/> 
-            
-                   <center>
-            <p:panelGrid columns="1" cellpadding="1">  
-                    <p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGen}" />
-                    <p:commandButton Id="Historial" value="Historial" action="#{solicitudBean.cambiarPagVis}" />                                            
-                </p:panelGrid> 
-                </center>  
-    </p:layoutUnit>    
-    <p:layoutUnit position="center">
-              
-      <h:form id="form">
-              <p:growl id="growl" showDetail="true"/>
-              <p:tabView id="tabview" dinamic="true">
-              <p:ajax event="tabChange" listener="#{evaluacionBean.onTabChange}"/>
-				<p:tab title="Atendidos">
-					<p:contextMenu for="dataAtencion">
-						<p:menuitem value="Calificar" update=":form:growl :form:displayc" icon="ui-icon-search" actionListener="#{evaluacionBean.validaSolAten}" oncomplete="calificarDialog.show()"/>        				  
-    					<p:menuitem value="Reactivar" update=":form:growl :form:confReac" icon="ui-icon-search" actionListener="#{evaluacionBean.validaSolReac}" oncomplete="confirDialog.show()"/>        				  
-    		
-    				</p:contextMenu>
-					
-					<p:dataTable id="dataAtencion" var="Solicitudes" value="#{evaluacionBean.mediumSolsModelFin}"									
-								selection="#{evaluacionBean.selectedSol}" selectionMode="single">
-						<p:ajax event="rowSelect" listener="#{evaluacionBean.onRowSelect}"/>       
-				        <p:column headerText="ID" align="center">  
-				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
-				        </p:column>  
-				        <p:column headerText="Descripcion" align="center">  
-				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
-				        </p:column>  
-				  
-				        <p:column headerText="Fecha de Ingreso" align="center">  
-				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
-				            	<f:convertDateTime pattern="d/M/yyyy"/>
-				            </h:outputText>    
-				        </p:column>  
-				  
-				        <p:column headerText="Hora de Ingreso">  
-				            <h:outputText value="#{Solicitudes.horaIngreso}" >
-				            	<f:convertDateTime pattern="hh:mm a"/>
-				            </h:outputText>  
-				        </p:column>
-				        
-				        <p:column headerText="Evaluacion">
-				        	<ui:repeat var="item" varStatus="status" value="#{Solicitudes.atencionList}" from="status.last" to="status.last">  
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="110" resizable="false"
+			closable="false" collapsible="false">
+			<Center>
+				<h2>SISTEMA WEB DE ASISTENCIA TECNICA</h2>
+			</Center>
+			<!--  <H3>Bienvenido</H3>  -->
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Solicitudes"
+			collapsible="true">
+			<br />
+
+			<center>
+				<p:panelGrid columns="1" cellpadding="1">
+					<p:commandButton Id="Generar" value="Generar"
+						action="#{solicitudBean.cambiarPagGen}" />
+					<p:commandButton Id="Solicitudes" value="Solicitudes"
+						action="#{solicitudBean.cambiarPagVis}" />
+				</p:panelGrid>
+			</center>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+
+			<h:form id="form">
+				<p:growl id="growl" showDetail="true" />
+				<p:tabView id="tabview" dinamic="true">
+					<p:ajax event="tabChange" listener="#{evaluacionBean.onTabChange}" />
+					<p:tab title="Atendidos">
+						<p:contextMenu for="dataAtencion">
+							<p:menuitem value="Calificar" update=":form:growl :form:displayc"
+								icon="ui-icon-search"
+								actionListener="#{evaluacionBean.validaSolAten}"
+								oncomplete="calificarDialog.show()" />
+							<p:menuitem value="Reactivar" update=":form:growl :form:confReac"
+								icon="ui-icon-search"
+								actionListener="#{evaluacionBean.validaSolReac}"
+								oncomplete="confirDialog.show()" />
+
+						</p:contextMenu>
+
+						<p:dataTable id="dataAtencion" var="Solicitudes"
+							value="#{evaluacionBean.mediumSolsModelFin}"
+							selection="#{evaluacionBean.selectedSol}" selectionMode="single">
+							<p:ajax event="rowSelect"
+								listener="#{evaluacionBean.onRowSelect}" />
+							<p:column headerText="ID" align="center">
+								<h:outputText value="#{Solicitudes.idSolicitud}" />
+							</p:column>
+							<p:column headerText="Descripcion" align="center">
+								<h:outputText value="#{Solicitudes.descSolicitud}" />
+							</p:column>
+
+							<p:column headerText="Fecha de Ingreso" align="center">
+								<h:outputText value="#{Solicitudes.fechaIngreso}">
+									<f:convertDateTime pattern="d/M/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Hora de Ingreso">
+								<h:outputText value="#{Solicitudes.horaIngreso}">
+									<f:convertDateTime pattern="hh:mm a" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Evaluacion">
+								<ui:repeat var="item" varStatus="status"
+									value="#{Solicitudes.atencionList}" from="status.last"
+									to="status.last">  
 						   		#{item.idEvaluacion.idCalificacion.nombreCalificacion}
-						   	</ui:repeat>				             
-				        </p:column>
-				        
-				        <p:column style="width:4%">
-			                <p:commandButton id="selectButton3" update=":form:display :form:growl" oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
-			                	<f:setPropertyActionListener value="#{Solicitudes}" target="#{evaluacionBean.selectedSol}" />
-			            	</p:commandButton>
-			        	</p:column>  
-				    </p:dataTable>						
-				
-				</p:tab>
-				
-				<p:tab title="No Atendidos">
-					<p:contextMenu for="dataNoAtencion">
-						<p:menuitem value="Cancelar" update=":form:growl :form:confCanc" icon="ui-icon-search" actionListener="#{evaluacionBean.validaSolCancel}" oncomplete="confirCancelDialog.show()"/>        				  
-    					
-    				</p:contextMenu>
-				
-																		  
-					<p:dataTable id="dataNoAtencion" var="Solicitudes" value="#{evaluacionBean.mediumSolsProPend}"									
-								selection="#{evaluacionBean.selectedSol}" selectionMode="single">
-								
-						<p:ajax event="rowSelect" listener="#{evaluacionBean.onRowSelect}"/>  
-				        <p:column headerText="ID" align="center">  
-				            <h:outputText value="#{Solicitudes.idSolicitud}" />  
-				        </p:column>  
-				        <p:column headerText="Descripcion" align="center">  
-				            <h:outputText value="#{Solicitudes.descSolicitud}" />  
-				        </p:column>				  
-				        <p:column headerText="Fecha de Ingreso" align="center">  
-				            <h:outputText value="#{Solicitudes.fechaIngreso}" >
-				            	<f:convertDateTime pattern="d/M/yyyy"/>
-				            </h:outputText>    
-				        </p:column>				  
-				        <p:column headerText="Hora de Ingreso">  
-				            <h:outputText value="#{Solicitudes.horaIngreso}" >
-				            	<f:convertDateTime pattern="hh:mm a"/>
-				            </h:outputText>  
-				        </p:column>
-						<p:column headerText="Estado">  
-				            <h:outputText value="#{Solicitudes.idEstado.nombreEstado}" />
-				        </p:column>
-						<p:column style="width:4%">
-			                <p:commandButton id="selectButton3"  update=":form:display :form:growl" oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
-			                	<f:setPropertyActionListener value="#{Solicitudes}" target="#{evaluacionBean.selectedSol}" />
-			            	</p:commandButton>
-			        	</p:column>
-				    </p:dataTable>		     					
-				</p:tab>
-				
-			</p:tabView>       
-                   
-            <p:dialog id="solDialog" header="Solicitud Detalle" widgetVar="solDialog" modal="false" resizable="false"  
-	                showEffect="fade" hideEffect="explode">  
-	  
-				        <h:panelGrid id="display" columns="2" cellpadding="4">  
-				  
-				            <h:outputText value="Id:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.idSolicitud}" />  
-				  
-				  			<h:outputText value="Cliente:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.cliente.clientePK.idCliente}" />
-				  
-				            				
-				  			<h:outputText value="Categoria:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.idCategoria.nombreCategoria}" />
-				                      
-				            <h:outputText value="Descripcion:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.descSolicitud}" />
-				            
-				            <h:outputText value="Tipo:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.idTipo.nombreTipo}" /> 
-				            
-				            <h:outputText value="Prioridad:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.idPrioridad.nombrePrioridad}" />
-				            
-				            <h:outputText value="Estado:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.idEstado.nombreEstado}" />  
-				  
-				  			<h:outputText value="Ubicacion:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.ubicacion}" />
-				            
-				            <h:outputText value="Fecha Ingreso:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.fechaIngreso}" >
-				            	<f:convertDateTime pattern="d/M/yyyy"/>
-				            </h:outputText>  
-				  
-				            <h:outputText value="Hora Ingreso:" />  
-				            <h:outputText value="#{evaluacionBean.selectedSol.horaIngreso}" >
-				            	<f:convertDateTime pattern="hh:mm a"/>
-				            </h:outputText>  
-				       
-				        </h:panelGrid>  
-			</p:dialog>
-                        
-            <p:dialog id="calificarDialog" header="Calificar Atencion" widgetVar="calificarDialog" showEffect="fade"  modal="false">
-		
-				<h:panelGrid id="displayc" columns="2" border="0" cellpadding="0" cellspacing="3">
-					<h:panelGrid columns="2" cellpadding="1">
-						<h:outputText value="Solicitud:" />  
-				    	<h:outputText value="#{evaluacionBean.idFija}" />
+						   	</ui:repeat>
+							</p:column>
+
+							<p:column style="width:4%">
+								<p:commandButton id="selectButton3"
+									update=":form:display :form:growl"
+									oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+									<f:setPropertyActionListener value="#{Solicitudes}"
+										target="#{evaluacionBean.selectedSol}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</p:tab>
+
+					<p:tab title="No Atendidos">
+						<p:contextMenu for="dataNoAtencion">
+							<p:menuitem value="Cancelar" update=":form:growl :form:confCanc"
+								icon="ui-icon-search"
+								actionListener="#{evaluacionBean.validaSolCancel}"
+								oncomplete="confirCancelDialog.show()" />
+
+						</p:contextMenu>
+
+
+						<p:dataTable id="dataNoAtencion" var="Solicitudes"
+							value="#{evaluacionBean.mediumSolsProPend}"
+							selection="#{evaluacionBean.selectedSol}" selectionMode="single">
+
+							<p:ajax event="rowSelect"
+								listener="#{evaluacionBean.onRowSelect}" />
+							<p:column headerText="ID" align="center">
+								<h:outputText value="#{Solicitudes.idSolicitud}" />
+							</p:column>
+							<p:column headerText="Descripcion" align="center">
+								<h:outputText value="#{Solicitudes.descSolicitud}" />
+							</p:column>
+							<p:column headerText="Fecha de Ingreso" align="center">
+								<h:outputText value="#{Solicitudes.fechaIngreso}">
+									<f:convertDateTime pattern="d/M/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Hora de Ingreso">
+								<h:outputText value="#{Solicitudes.horaIngreso}">
+									<f:convertDateTime pattern="hh:mm a" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Estado">
+								<h:outputText value="#{Solicitudes.idEstado.nombreEstado}" />
+							</p:column>
+							<p:column style="width:4%">
+								<p:commandButton id="selectButton3"
+									update=":form:display :form:growl"
+									oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+									<f:setPropertyActionListener value="#{Solicitudes}"
+										target="#{evaluacionBean.selectedSol}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+
+				</p:tabView>
+
+				<p:dialog id="solDialog" header="Solicitud Detalle"
+					widgetVar="solDialog" modal="false" resizable="false"
+					showEffect="fade" hideEffect="explode">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">
+
+						<h:outputText value="Id:" />
+						<h:outputText value="#{evaluacionBean.selectedSol.idSolicitud}" />
+
+						<h:outputText value="Cliente:" />
+						<h:outputText
+							value="#{evaluacionBean.selectedSol.cliente.clientePK.idCliente}" />
+
+
+						<h:outputText value="Categoria:" />
+						<h:outputText
+							value="#{evaluacionBean.selectedSol.idCategoria.nombreCategoria}" />
+
+						<h:outputText value="Descripcion:" />
+						<h:outputText value="#{evaluacionBean.selectedSol.descSolicitud}" />
+
+						<h:outputText value="Tipo:" />
+						<h:outputText
+							value="#{evaluacionBean.selectedSol.idTipo.nombreTipo}" />
+
+						<h:outputText value="Prioridad:" />
+						<h:outputText
+							value="#{evaluacionBean.selectedSol.idPrioridad.nombrePrioridad}" />
+
+						<h:outputText value="Estado:" />
+						<h:outputText
+							value="#{evaluacionBean.selectedSol.idEstado.nombreEstado}" />
+
+						<h:outputText value="Ubicacion:" />
+						<h:outputText value="#{evaluacionBean.selectedSol.ubicacion}" />
+
+						<h:outputText value="Fecha Ingreso:" />
+						<h:outputText value="#{evaluacionBean.selectedSol.fechaIngreso}">
+							<f:convertDateTime pattern="d/M/yyyy" />
+						</h:outputText>
+
+						<h:outputText value="Hora Ingreso:" />
+						<h:outputText value="#{evaluacionBean.selectedSol.horaIngreso}">
+							<f:convertDateTime pattern="hh:mm a" />
+						</h:outputText>
+
 					</h:panelGrid>
-					<h:outputText value=""/>
-					<p:selectOneRadio id="grid" value="#{evaluacionBean.calificacion}" layout="pageDirection" >  
-			            <f:selectItems value="#{evaluacionBean.calificaciones}"/>  
-			        </p:selectOneRadio>  					
-					<p:panelGrid columns="1" cellpadding="1">
+				</p:dialog>
+
+				<p:dialog id="calificarDialog" header="Calificar Atencion"
+					widgetVar="calificarDialog" showEffect="fade" modal="false">
+
+					<h:panelGrid id="displayc" columns="2" border="0" cellpadding="0"
+						cellspacing="3">
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />
+							<h:outputText value="#{evaluacionBean.idFija}" />
+						</h:panelGrid>
+						<h:outputText value="" />
+						<p:selectOneRadio id="grid" value="#{evaluacionBean.calificacion}"
+							layout="pageDirection">
+							<f:selectItems value="#{evaluacionBean.calificaciones}" />
+						</p:selectOneRadio>
+						<p:panelGrid columns="1" cellpadding="1">
 							<f:facet name="header">  
 								Observacion 
-							</f:facet> 
-  							<p:inputTextarea id="observacion" rows="4" cols="103" value="#{evaluacionBean.observacion}" />
-  							
-  					</p:panelGrid> 	  					
-				</h:panelGrid>	
-				<center><p:commandButton id="Listo2" value="Listo" actionListener="#{evaluacionBean.grabar}" oncomplete="calificarDialog.hide();" update=":form:displayc :form:growl"/></center>
-			</p:dialog>   
-			
-			 <p:dialog id="confirDialog" header="Confirmar" widgetVar="confirDialog" global="true" showEffect="fade" hideEffect="explode">
-		        <h:panelGrid id="confReac" columns="1" cellpadding="1">
-			        <h:outputText value="Desea reactivar la solicitud ?" />
-			        <h:panelGrid columns="2" cellpadding="1">
-						<h:outputText value="Solicitud:" />  
-				    	<h:outputText value="#{evaluacionBean.idFija}" />
-							        
-				        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{evaluacionBean.reactivar}" oncomplete="confirDialog.hide();" update=":form:growl" />
-				        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirDialog.hide();"/> 	
-	    			</h:panelGrid>
-    			</h:panelGrid>
-    		</p:dialog>
-    		
-    		<p:dialog id="confirCancelDialog" header="Confirmar" widgetVar="confirCancelDialog" global="true" showEffect="fade" hideEffect="explode">
-		        <h:panelGrid id="confCanc" columns="1" cellpadding="1">
-			        <h:outputText value="Desea reactivar la solicitud ?" />
-			        <h:panelGrid columns="2" cellpadding="1">
-							<h:outputText value="Solicitud:" />  
-					    	<h:outputText value="#{evaluacionBean.idFija}" />
-					    	<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{evaluacionBean.cancelar}" oncomplete="confirCancelDialog.hide();" update=":form:growl"/>
-		        			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirCancelDialog.hide();"/> 	
-    	
-					</h:panelGrid>
-		        </h:panelGrid>
-		    </p:dialog>
-						
-		      
-              
-     </h:form>  
+							</f:facet>
+							<p:inputTextarea id="observacion" rows="4" cols="103"
+								value="#{evaluacionBean.observacion}" />
 
-  </p:layoutUnit>   
-</p:layout>
-</h:body> 
+						</p:panelGrid>
+					</h:panelGrid>
+					<center>
+						<p:commandButton id="Listo2" value="Listo"
+							actionListener="#{evaluacionBean.grabar}"
+							oncomplete="calificarDialog.hide();"
+							update=":form:displayc :form:growl" />
+					</center>
+				</p:dialog>
+
+				<p:dialog id="confirDialog" header="Confirmar"
+					widgetVar="confirDialog" global="true" showEffect="fade"
+					hideEffect="explode">
+					<h:panelGrid id="confReac" columns="1" cellpadding="1">
+						<h:outputText value="Desea reactivar la solicitud ?" />
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />
+							<h:outputText value="#{evaluacionBean.idFija}" />
+
+							<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
+								icon="ui-icon-check"
+								actionListener="#{evaluacionBean.reactivar}"
+								oncomplete="confirDialog.hide();" update=":form:growl" />
+							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
+								icon="ui-icon-close" oncomplete="confirDialog.hide();" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dialog>
+
+				<p:dialog id="confirCancelDialog" header="Confirmar"
+					widgetVar="confirCancelDialog" global="true" showEffect="fade"
+					hideEffect="explode">
+					<h:panelGrid id="confCanc" columns="1" cellpadding="1">
+						<h:outputText value="Desea reactivar la solicitud ?" />
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />
+							<h:outputText value="#{evaluacionBean.idFija}" />
+							<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
+								icon="ui-icon-check" actionListener="#{evaluacionBean.cancelar}"
+								oncomplete="confirCancelDialog.hide();" update=":form:growl" />
+							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
+								icon="ui-icon-close" oncomplete="confirCancelDialog.hide();" />
+
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:dialog>
+
+
+
+			</h:form>
+
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
 </html>

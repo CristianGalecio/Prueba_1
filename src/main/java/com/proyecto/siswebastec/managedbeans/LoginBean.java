@@ -33,6 +33,7 @@ public class LoginBean implements Serializable {
 	private String usuario;
 	private String clave;
 	private boolean logeado = false;
+	private boolean secre = false;
 
 	public String getUsuario() {
 		return usuario;
@@ -65,13 +66,26 @@ public class LoginBean implements Serializable {
 		String tipo=loginService.DevolverTipoUsuario(usuario, clave);
 
 			if(tipo.equals("trabajador")){
-				if(trabajadorService.verificarTrabajador(usuario, clave)){					
-					logeado = true;
-					msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@ Soportin@", usuario);
+				
+				if(trabajadorService.verificarSecretaria(usuario)){
+					if(trabajadorService.verificarTrabajador(usuario, clave)){					
+						logeado = true;
+						secre = true;
+						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenida", usuario);
+					}else{
+						logeado = false;
+						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
+					}
 				}else{
-					logeado = false;
-					msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
-				}				
+					if(trabajadorService.verificarTrabajador(usuario, clave)){					
+						logeado = true;
+						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@ Soportin@", usuario);
+					}else{
+						logeado = false;
+						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
+					}
+				}
+								
 			}else{
 				if(tipo.equals("cliente")){
 					if(clienteService.verificarCliente(usuario, clave)){
@@ -86,7 +100,7 @@ public class LoginBean implements Serializable {
 					msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error","Credenciales no v�lidas");
 				}				
 			}
-			
+			System.out.println(secre);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			context.addCallbackParam("estaLogeado", logeado);
 			
@@ -94,7 +108,11 @@ public class LoginBean implements Serializable {
 				context.addCallbackParam("view", "/Prueba_1/pages/regSolGenerar.xhtml");
 			}else{
 				if(logeado && tipo.equals("trabajador")){
-					context.addCallbackParam("view", "/Prueba_1/pages/regSolGenerarT.xhtml");
+					if(logeado && secre){
+						context.addCallbackParam("view", "/Prueba_1/pages/regSolGenerarTS.xhtml");
+					}else{
+						context.addCallbackParam("view", "/Prueba_1/pages/regSolVisualizarT.xhtml");
+					}
 				}
 			}		
 	}

@@ -13,5 +13,6 @@ public interface TrabajadorService {
 	public List<Trabajador> getTrabajadores();
 	public List<String> getIdTrabajadores();
 	public Boolean verificarTrabajador(String id, String password);
+	public Boolean verificarSecretaria(String id);
 
 }

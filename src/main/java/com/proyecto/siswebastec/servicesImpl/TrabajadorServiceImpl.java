@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.siswebastec.DAO.JPAUtil;
+import com.proyecto.siswebastec.DAO.RolUsuarioDAO;
 import com.proyecto.siswebastec.DAO.TrabajadorDAO;
 import com.proyecto.siswebastec.DAO.UsuarioDAO;
 import com.proyecto.siswebastec.model.Prioridad;
+import com.proyecto.siswebastec.model.Rol;
+import com.proyecto.siswebastec.model.RolUsuario;
 import com.proyecto.siswebastec.model.Trabajador;
 import com.proyecto.siswebastec.model.Usuario;
 import com.proyecto.siswebastec.services.TrabajadorService;
@@ -16,12 +19,17 @@ public class TrabajadorServiceImpl implements TrabajadorService{
 	TrabajadorDAO trabajadorDAO;
 	JPAUtil objJpaUtil;
 	Trabajador trabajador;
+	RolUsuarioDAO rolUsuarioDAO;
+	RolUsuario rolUsuario;
 	
 	public TrabajadorServiceImpl() {
 		super();
 		objJpaUtil = new JPAUtil();
 		trabajadorDAO =  new TrabajadorDAO(objJpaUtil.getEntityManager());
 		trabajador = new Trabajador();
+		objJpaUtil = new JPAUtil();
+		rolUsuarioDAO = new RolUsuarioDAO(objJpaUtil.getEntityManager());
+		rolUsuario = new RolUsuario();
 	}
 
 	public void setTrabajadorDAO(TrabajadorDAO trabajadorDAO) {
@@ -72,5 +80,28 @@ public class TrabajadorServiceImpl implements TrabajadorService{
 		}else{
 			return false;
 		}			
+	}
+	
+	public Boolean verificarJefe(String id, String password) {
+		if(getTrabajadorById(id).getClaveUsuario().equals(password)){
+			return true;
+		}else{
+			return false;
+		}			
+	}
+	
+	public Boolean verificarSecretaria(String id) {
+		if(getRol(getTrabajadorById(id).getUsuario().getIdUsuario()).getIdRol()==2){
+			return true;
+		}else{
+			return false;
+		}			
+	}
+
+	private Rol getRol(Integer idUsuario) {
+		objJpaUtil =  new JPAUtil();
+		rolUsuarioDAO = new RolUsuarioDAO(objJpaUtil.getEntityManager());
+		rolUsuario = rolUsuarioDAO.getRolUsuariobyIdUsuario(idUsuario);
+		return rolUsuario.getIdRol();
 	}
 }

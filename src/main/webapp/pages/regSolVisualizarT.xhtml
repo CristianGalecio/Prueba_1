@@ -7,40 +7,35 @@
 <h:body>
 	<p:layout fullPage="true">
 
-	<p:layoutUnit position="north" size="110" resizable="false"	closable="false" collapsible="false">
-		
+		<p:layoutUnit position="north" size="110" resizable="false"
+			closable="false" collapsible="false">
+
 			<Center>
 				<h2>SISTEMA WEB DE ASISTENCIA TECNICA</h2>
 			</Center>
 			<!--  <H3>Bienvenid@ Soportin@</H3>  -->
-		
-	</p:layoutUnit>
 
-	<p:layoutUnit position="west" size="200" header="Solicitudes"
-		collapsible="true">
-		<br />
+		</p:layoutUnit>
 
-		<center>
-			<p:panelGrid columns="1" cellpadding="1">
+		<p:layoutUnit position="west" size="200" header="Solicitudes"
+			collapsible="true">
+			<br />
 
-				<p:commandButton Id="Generar" value="Generar" action="#{solicitudBean.cambiarPagGenT}" />
-				<p:commandButton Id="Historial" value="Historial" action="#{solicitudBean.cambiarPagVisT}" />
-			</p:panelGrid>
-		</center>
-	</p:layoutUnit>
-	
+			<center>
+				<p:panelGrid columns="1" cellpadding="1">
+					<p:commandButton Id="Solicitudes" value="Solicitudes"
+						action="#{solicitudBean.cambiarPagVisT}" />
+				</p:panelGrid>
+			</center>
+		</p:layoutUnit>
+
 		<p:layoutUnit position="center">
 			<h:form id="form">
 				<p:growl id="growl" showDetail="true" />
 				<p:tabView id="tabview" dinamic="true">
 					<p:ajax event="tabChange" listener="#{tableBean.onTabChange}" />
 
-					<p:tab title="Pendientes" >
-						<p:contextMenu for="dataPendientes">
-							<p:menuitem value="Atender" update=":form:displaya :form:growl "
-								icon="ui-icon-search" actionListener="#{tableBean.validaSel}"
-								oncomplete="atenDialog.show()" />
-						</p:contextMenu>
+					<p:tab title="Pendientes">
 
 						<p:dataTable id="dataPendientes" var="Solicitud"
 							value="#{tableBean.mediumSolsModel}"
@@ -75,36 +70,40 @@
 
 					<p:tab title="En Proceso">
 						<p:contextMenu for="dataProceso">
-							<p:submenu label="Diagnosticar" icon="ui-icon-close" >
+							<p:submenu label="Diagnosticar" icon="ui-icon-close">
 								<p:menuitem id="DiagCrear" value="Crear"
-									update=":form:displayd :form:growl :form:diagnosticoDialog" icon="ui-icon-close"
-									actionListener="#{tableBean.validaSelPro}"
+									update=":form:displayd :form:growl :form:diagnosticoDialog"
+									icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}"
 									oncomplete="diagnosticoDialog.show()" />
 								<p:menuitem id="DiagModi" value="Modificar"
-									update=":form:displaydm :form:growl :form:diagModiDialog" icon="ui-icon-close"
-									actionListener="#{tableBean.validaSelPro}"
+									update=":form:displaydm :form:growl :form:diagModiDialog"
+									icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}"
 									oncomplete="diagModiDialog.show()" />
 							</p:submenu>
-							<p:menuitem id="Sol" value="Solucionar"	
-								update=":form:displays :form:growl :form:solucionDialog" icon="ui-icon-close"   
-								actionListener="#{tableBean.validaSelPro}"
+							<p:menuitem id="Sol" value="Solucionar"
+								update=":form:displays :form:growl :form:solucionDialog"
+								icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}"
 								oncomplete="solucionDialog.show()" />
-							<p:menuitem id="ReaTec" value="Reasignar Tecnico"	
-								update=":form:displayrt :form:growl :form:reasignacionDialog" icon="ui-icon-close"   
-								actionListener="#{tableBean.validaSelPro}"
-								oncomplete="reasignacionDialog.show()" />	
-							<p:menuitem id="Cancel" value="Cancelar" update=":form:growl :form:confCanc" icon="ui-icon-search" actionListener="#{tableBean.validaSolCancel}" oncomplete="confirCancelDialog.show()"/>        				  
-    												
+							<p:menuitem id="ReaTec" value="Reasignar Tecnico"
+								update=":form:displayrt :form:growl :form:reasignacionDialog"
+								icon="ui-icon-close" actionListener="#{tableBean.validaSelPro}"
+								oncomplete="reasignacionDialog.show()" />
+							<p:menuitem id="Cancel" value="Cancelar"
+								update=":form:growl :form:confCanc" icon="ui-icon-search"
+								actionListener="#{tableBean.validaSolCancel}"
+								oncomplete="confirCancelDialog.show()" />
+
 						</p:contextMenu>
 						<p:dataTable id="dataProceso" var="Solicitudes"
 							value="#{tableBean.mediumSolsModelPro}"
-							selection="#{tableBean.selectedSol}" selectionMode="single" >
+							selection="#{tableBean.selectedSol}" selectionMode="single">
 							<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" />
 							<p:column headerText="ID" align="center">
 								<h:outputText value="#{Solicitudes.idSolicitud}" />
 							</p:column>
-							<p:column headerText="Descripcion" align="center" style="width:4%">
-								<h:outputText value="#{Solicitudes.descSolicitud}"/>
+							<p:column headerText="Descripcion" align="center"
+								style="width:4%">
+								<h:outputText value="#{Solicitudes.descSolicitud}" />
 							</p:column>
 							<p:column headerText="Fecha de Ingreso" align="center">
 								<h:outputText value="#{Solicitudes.fechaIngreso}">
@@ -117,26 +116,24 @@
 								</h:outputText>
 							</p:column>
 							<p:column style="width:4%">
-								<p:commandButton id="selectButton2"	update=":form:display :form:growl"	oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
-									<f:setPropertyActionListener value="#{Solicitudes}" target="#{tableBean.selectedSol}" />
+								<p:commandButton id="selectButton2"
+									update=":form:display :form:growl"
+									oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
+									<f:setPropertyActionListener value="#{Solicitudes}"
+										target="#{tableBean.selectedSol}" />
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>
 					</p:tab>
 					<p:tab title="Finalizado">
-						<p:contextMenu for="datafinalizadas">
-							<p:menuitem value="Reactivar" update=":form:growl :form:confReac" icon="ui-icon-search" actionListener="#{tableBean.validaSolReac}" oncomplete="confirDialog.show()"/>        				  
-	    				</p:contextMenu>
-						<p:dataTable id="datafinalizadas" var="Solicitudes" value="#{tableBean.mediumSolsModelFin}"
+						<p:dataTable id="datafinalizadas" var="Solicitudes"
+							value="#{tableBean.mediumSolsModelFin}"
 							selection="#{tableBean.selectedSol}" selectionMode="single">
 							<p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}" />
-							
-							
-							
 							<p:column headerText="ID" align="center">
 								<h:outputText value="#{Solicitudes.idSolicitud}" />
 							</p:column>
-							<p:column headerText="Descripcion" align="center" >
+							<p:column headerText="Descripcion" align="center">
 								<h:outputText value="#{Solicitudes.descSolicitud}" />
 							</p:column>
 							<p:column headerText="Fecha de Ingreso" align="center">
@@ -151,9 +148,11 @@
 								</h:outputText>
 							</p:column>
 							<p:column style="width:4%">
-								<p:commandButton id="selectButton3" update=":form:display :form:growl"
+								<p:commandButton id="selectButton3"
+									update=":form:display :form:growl"
 									oncomplete="solDialog.show()" icon="ui-icon-search" title="Ver">
-									<f:setPropertyActionListener value="#{Solicitudes}"	target="#{tableBean.selectedSol}" />
+									<f:setPropertyActionListener value="#{Solicitudes}"
+										target="#{tableBean.selectedSol}" />
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>
@@ -161,8 +160,9 @@
 					</p:tab>
 
 				</p:tabView>
-				
-				<p:dialog id="solDialog" header="Solicitud Detalle"	widgetVar="solDialog" modal="false" resizable="false"
+
+				<p:dialog id="solDialog" header="Solicitud Detalle"
+					widgetVar="solDialog" modal="false" resizable="false"
 					showEffect="fade" hideEffect="explode">
 
 					<h:panelGrid id="display" columns="2" cellpadding="4">
@@ -171,13 +171,15 @@
 						<h:outputText value="#{tableBean.selectedSol.idSolicitud}" />
 
 						<h:outputText value="Cliente:" />
-						<h:outputText value="#{tableBean.selectedSol.cliente.clientePK.idCliente}" />
+						<h:outputText
+							value="#{tableBean.selectedSol.cliente.clientePK.idCliente}" />
 
 						<h:outputText value="Trabajador:" />
 						<h:outputText value="#{tableBean.trbAten}" />
 
 						<h:outputText value="Categoria:" />
-						<h:outputText value="#{tableBean.selectedSol.idCategoria.nombreCategoria}" />
+						<h:outputText
+							value="#{tableBean.selectedSol.idCategoria.nombreCategoria}" />
 
 						<h:outputText value="Descripcion:" />
 						<h:outputText value="#{tableBean.selectedSol.descSolicitud}" />
@@ -186,10 +188,12 @@
 						<h:outputText value="#{tableBean.selectedSol.idTipo.nombreTipo}" />
 
 						<h:outputText value="Prioridad:" />
-						<h:outputText value="#{tableBean.selectedSol.idPrioridad.nombrePrioridad}" />
+						<h:outputText
+							value="#{tableBean.selectedSol.idPrioridad.nombrePrioridad}" />
 
 						<h:outputText value="Estado:" />
-						<h:outputText value="#{tableBean.selectedSol.idEstado.nombreEstado}" />
+						<h:outputText
+							value="#{tableBean.selectedSol.idEstado.nombreEstado}" />
 
 						<h:outputText value="Ubicacion:" />
 						<h:outputText value="#{tableBean.selectedSol.ubicacion}" />
@@ -224,34 +228,10 @@
 					</h:panelGrid>
 				</p:dialog>
 
-				<p:dialog id="atenDialog" header="Iniciar Atencion"	widgetVar="atenDialog" showEffect="fade" modal="false">
-					<h:panelGrid id="displaya" columns="2">
-						<h:outputText value="Solicitud:" />
-						<h:outputText value="#{tableBean.idFija}" />
-						<h:outputLabel for="prioridad" value="Prioridad: " />
-						<p:selectOneMenu id="prioridad" value="#{tableBean.prioridad}">
-							<f:selectItem itemLabel="Selecciona" itemValue="" />
-							<f:selectItems value="#{tableBean.prinames}" />
-							<p:ajax listener="#{tableBean.handleChangeP}" />
-						</p:selectOneMenu>
-
-						<h:outputLabel for="trabajador" value="Trabajador: " />
-						<p:selectOneMenu id="trabajador" value="#{tableBean.trabajador}">
-							<f:selectItem itemLabel="Selecciona" itemValue="" />
-							<f:selectItems value="#{tableBean.traid}" />
-							<p:ajax listener="#{tableBean.handleChangeT}" />
-						</p:selectOneMenu>
-						<f:facet name="footer">
-							<p:commandButton id="Init" value="Listo"
-								actionListener="#{tableBean.asignarTecnico}"
-								oncomplete="atenDialog.hide();"
-								update=":form:growl :form:tabview:dataPendientes :form:tabview:dataProceso :form:atenDialog" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
-												
-				<p:dialog id="solucionDialog" header="Registrar Solucion" widgetVar="solucionDialog" showEffect="fade" modal="false">
-					<h:panelGrid id="displays" columns="1" border="0" cellpadding="0" cellspacing="0">
+				<p:dialog id="solucionDialog" header="Registrar Solucion"
+					widgetVar="solucionDialog" showEffect="fade" modal="false">
+					<h:panelGrid id="displays" columns="1" border="0" cellpadding="0"
+						cellspacing="0">
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Solicitud:" />
 							<h:outputText value="#{tableBean.idFija}" />
@@ -262,27 +242,31 @@
 								<f:selectItem itemLabel="Selecciona" itemValue="" />
 								<f:selectItems value="#{tableBean.nomdiags}" />
 							</p:selectOneMenu>
-						</h:panelGrid>	
+						</h:panelGrid>
 						<HR align="center" />
-						<h:panelGrid columns="2" border="0" cellpadding="0" cellspacing="0">
-	
+						<h:panelGrid columns="2" border="0" cellpadding="0"
+							cellspacing="0">
+
 							<h:panelGrid columns="1" cellpadding="1">
-	
+
 								<p:inputTextarea id="Solucion" rows="4" cols="103"
 									value="#{tableBean.solucion}" />
 								<p:commandButton id="Listo2" value="Listo"
 									actionListener="#{tableBean.actualizarSol}"
-									oncomplete="solucionDialog.hide();" update=":form:growl :form:tabview:dataProceso :form:tabview:datafinalizadas :form:solucionDialog" />
+									oncomplete="solucionDialog.hide();"
+									update=":form:growl :form:tabview:dataProceso :form:tabview:datafinalizadas :form:solucionDialog" />
 							</h:panelGrid>
-	
+
 							<h:graphicImage id="Image2" url="/images/comunicaciones.jpg"></h:graphicImage>
-	
+
 						</h:panelGrid>
 					</h:panelGrid>
 				</p:dialog>
-				
-				<p:dialog id="diagnosticoDialog" header="Registrar Diagnostico"	widgetVar="diagnosticoDialog" showEffect="fade">
-					<h:panelGrid id="displayd" columns="2" border="0" cellpadding="0" cellspacing="0">
+
+				<p:dialog id="diagnosticoDialog" header="Registrar Diagnostico"
+					widgetVar="diagnosticoDialog" showEffect="fade">
+					<h:panelGrid id="displayd" columns="2" border="0" cellpadding="0"
+						cellspacing="0">
 						<h:panelGrid columns="1" cellpadding="1">
 							<h:panelGrid columns="2" cellpadding="1">
 								<h:outputText value="Solicitud:" />
@@ -291,60 +275,68 @@
 								<p:selectOneMenu id="categoria" value="#{tableBean.categoria}">
 									<p:ajax listener="#{tableBean.handleChangeC}" />
 									<f:selectItem itemLabel="Selecciona" itemValue="" />
-									<f:selectItems value="#{tableBean.categorias}" />									
+									<f:selectItems value="#{tableBean.categorias}" />
 								</p:selectOneMenu>
 								<h:outputText value="Nombre:" />
 								<h:inputText id="nombreD" value="#{tableBean.nombreD}" />
 							</h:panelGrid>
 							<!--<h:outputText value="Descripcion:" />-->
-							<p:inputTextarea id="Diagnostico" rows="4" cols="103" value="#{tableBean.diagnostico}" />
-							<p:commandButton id="Listo1" value="Listo"	actionListener="#{tableBean.actualizarDiag}"
-								oncomplete="diagnosticoDialog.hide();" update=":form:growl :form:tabview:dataProceso :form:diagnosticoDialog :form:displaydm :form:diagModiDialog" />
+							<p:inputTextarea id="Diagnostico" rows="4" cols="103"
+								value="#{tableBean.diagnostico}" />
+							<p:commandButton id="Listo1" value="Listo"
+								actionListener="#{tableBean.actualizarDiag}"
+								oncomplete="diagnosticoDialog.hide();"
+								update=":form:growl :form:tabview:dataProceso :form:diagnosticoDialog :form:displaydm :form:diagModiDialog" />
 						</h:panelGrid>
 
-						<h:graphicImage id="Image1" url="/images/comunicaciones.jpg"/>
+						<h:graphicImage id="Image1" url="/images/comunicaciones.jpg" />
 					</h:panelGrid>
 				</p:dialog>
-				
-				<p:dialog id="diagModiDialog" header="Modificar Diagnostico" widgetVar="diagModiDialog" showEffect="fade">
-					<h:panelGrid id="displaydm" columns="1" border="0" cellpadding="0" cellspacing="0">
+
+				<p:dialog id="diagModiDialog" header="Modificar Diagnostico"
+					widgetVar="diagModiDialog" showEffect="fade">
+					<h:panelGrid id="displaydm" columns="1" border="0" cellpadding="0"
+						cellspacing="0">
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Solicitud:" />
 							<h:outputText value="#{tableBean.idFija}" />
 						</h:panelGrid>
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Diagnostico:" />
-							<p:selectOneMenu id="diagnostico" value="#{tableBean.nomdiagM}">								
+							<p:selectOneMenu id="diagnostico" value="#{tableBean.nomdiagM}">
 								<f:selectItem itemLabel="Selecciona" itemValue="" />
 								<f:selectItems value="#{tableBean.nomdiagsM}" />
 							</p:selectOneMenu>
-						</h:panelGrid>						
+						</h:panelGrid>
 						<!-- <HR align="center" /> -->
 						<h:panelGrid columns="2" cellpadding="1">
 							<h:outputText value="Categoria:" />
 							<p:selectOneMenu id="categoriaM" value="#{tableBean.categoriaM}">
-									<p:ajax listener="#{tableBean.handleChangeC}" />
-									<f:selectItem itemLabel="Selecciona" itemValue="" />
-									<f:selectItems value="#{tableBean.categoriasM}" />									
+								<p:ajax listener="#{tableBean.handleChangeC}" />
+								<f:selectItem itemLabel="Selecciona" itemValue="" />
+								<f:selectItems value="#{tableBean.categoriasM}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
 						<h:panelGrid columns="2" cellpadding="0">
 							<h:panelGrid columns="1" cellpadding="1">
-								<p:inputTextarea id="DiagnosticoM" rows="4" cols="103" value="#{tableBean.diagnosticoM}" />
-								<p:commandButton id="ListoM" value="Listo" update=":form:growl :form:tabview:dataProceso :form:displaydm :form:diagModiDialog" 
+								<p:inputTextarea id="DiagnosticoM" rows="4" cols="103"
+									value="#{tableBean.diagnosticoM}" />
+								<p:commandButton id="ListoM" value="Listo"
+									update=":form:growl :form:tabview:dataProceso :form:displaydm :form:diagModiDialog"
 									actionListener="#{tableBean.actualizarDiag}"
-									oncomplete="diagModiDialog.hide();"/>
+									oncomplete="diagModiDialog.hide();" />
 							</h:panelGrid>
 							<h:graphicImage id="ImageM" url="/images/comunicaciones.jpg"></h:graphicImage>
 						</h:panelGrid>
 					</h:panelGrid>
 				</p:dialog>
-				
-				<p:dialog id="reasignacionDialog" header="Reasignar tecnico"	widgetVar="reasignacionDialog" showEffect="fade" modal="false">
+
+				<p:dialog id="reasignacionDialog" header="Reasignar tecnico"
+					widgetVar="reasignacionDialog" showEffect="fade" modal="false">
 					<h:panelGrid id="displayrt" columns="2">
 						<h:outputText value="Solicitud:" />
 						<h:outputText value="#{tableBean.idFija}" />
-						
+
 						<h:outputLabel for="trabajadorR" value="Trabajador: " />
 						<p:selectOneMenu id="trabajadorR" value="#{tableBean.trabajadorR}">
 							<f:selectItem itemLabel="Selecciona" itemValue="" />
@@ -358,36 +350,28 @@
 								update=":form:growl :form:tabview:dataProceso :form:reasignacionDialog" />
 						</f:facet>
 					</h:panelGrid>
-				</p:dialog>	
-				
-					<p:dialog id="confirDialog" header="Confirmar" widgetVar="confirDialog" global="true" showEffect="fade" hideEffect="explode">
-			        <h:panelGrid id="confReac" columns="1" cellpadding="1">
-				        <h:outputText value="Desea reactivar la solicitud ?" />
-				        <h:panelGrid columns="2" cellpadding="1">
-							<h:outputText value="Solicitud:" />  
-					    	<h:outputText value="#{tableBean.idFija}" />
-								        
-					        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{tableBean.reactivar}" oncomplete="confirDialog.hide();" update=":form:growl" />
-					        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirDialog.hide();"/> 	
-		    			</h:panelGrid>
-	    			</h:panelGrid>
-	    		</p:dialog>
-	    		
-	    		<p:dialog id="confirCancelDialog" header="Confirmar" widgetVar="confirCancelDialog" global="true" showEffect="fade" hideEffect="explode">
-			        <h:panelGrid id="confCanc" columns="1" cellpadding="1">
-				        <h:outputText value="Desea reactivar la solicitud ?" />
-				        <h:panelGrid columns="2" cellpadding="1">
-								<h:outputText value="Solicitud:" />  
-						    	<h:outputText value="#{tableBean.idFija}" />
-						    	<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{tableBean.cancelar}" oncomplete="confirCancelDialog.hide();" update=":form:growl"/>
-			        			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirCancelDialog.hide();"/> 	
-	    	
+				</p:dialog>
+
+				<p:dialog id="confirCancelDialog" header="Confirmar"
+					widgetVar="confirCancelDialog" global="true" showEffect="fade"
+					hideEffect="explode">
+					<h:panelGrid id="confCanc" columns="1" cellpadding="1">
+						<h:outputText value="Desea reactivar la solicitud ?" />
+						<h:panelGrid columns="2" cellpadding="1">
+							<h:outputText value="Solicitud:" />
+							<h:outputText value="#{tableBean.idFija}" />
+							<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
+								icon="ui-icon-check" actionListener="#{tableBean.cancelar}"
+								oncomplete="confirCancelDialog.hide();" update=":form:growl" />
+							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
+								icon="ui-icon-close" oncomplete="confirCancelDialog.hide();" />
+
 						</h:panelGrid>
-			        </h:panelGrid>
-			    </p:dialog>
-				
-				
-							
+					</h:panelGrid>
+				</p:dialog>
+
+
+
 			</h:form>
 		</p:layoutUnit>
 	</p:layout>
