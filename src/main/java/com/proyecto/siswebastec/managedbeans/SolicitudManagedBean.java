@@ -217,6 +217,12 @@ public class SolicitudManagedBean implements Serializable {
 		setUsuario("");
 	}
 	
+	public String logout(){
+		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+		return "login?faces-redirect=true";
+	}
+	
+	
 	public String cambiarPagGen(){
 		return "regSolGenerar?faces-redirect=true";
 	}
