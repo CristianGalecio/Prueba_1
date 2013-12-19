@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="110" resizable="false"
+			closable="false" collapsible="false">
+			<Center>
+				<h2>SISTEMA WEB DE ASISTENCIA TECNICA</h2>
+			</Center>
+			<!--  <H3>Bienvenid@ Soportin@</H3>  -->
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Solicitudes"
+			collapsible="true">
+			<br />
+
+			<center>
+				<p:panelGrid columns="1" cellpadding="1">
+					<p:commandButton Id="Generar" value="Generar"
+						action="#{solicitudBean.cambiarPagGenTS}" />
+					<p:commandButton Id="Solicitudes" value="Solicitudes"
+						action="#{solicitudBean.cambiarPagVisTS}" />
+				</p:panelGrid>
+			</center>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<p:growl id="mensajes" showDetail="true" />
+			<h:form id="formG">
+
+				<p:panel id="nuevaSol" header="Nueva Solicitud"
+					style="margin-bottom:10px;" visible="true">
+					<br />
+					<h:panelGrid columns="5" cellpadding="5">
+						<h:outputText value="Solicitante:" />
+						<h:outputText value="#{loginBean.usuario}" />
+						<h:outputText value="Usuario:" />
+						<h:inputText id="usuario" value="#{solicitudBean.usuario}" />
+						<h:outputText />
+
+						<h:outputText value="Ubicacion" />
+						<p:selectOneMenu id="ubicacion" value="#{solicitudBean.ubicacion}">
+							<f:selectItem itemLabel="Selecciona" itemValue="" />
+							<f:selectItems value="#{solicitudBean.ubicaciones}" />
+							<p:ajax update="nombres"
+								listener="#{solicitudBean.handleUbicacionChange}" />
+						</p:selectOneMenu>
+						<h:outputText />
+						<p:selectOneMenu id="nombres" value="#{solicitudBean.nombre}">
+							<f:selectItem itemLabel="Selecciona" itemValue="" />
+							<f:selectItems value="#{solicitudBean.nombres}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<br />
+					<h:outputText value="Descripcion:" />
+					<br />
+					<p:inputTextarea rows="5" cols="100"
+						value="#{solicitudBean.descripcion}" />
+					<br />
+					<br />
+					<h:panelGrid columns="5" cellpadding="5">
+						<p:commandButton id="guardar" value="Guardar"
+							actionListener="#{solicitudBean.guardar}" update=":mensajes nuevaSol" 
+							listener="#{tableBean.actualizarSolicitudes}" />
+						<p:commandButton id="cancelar" value="Cancelar"
+							actionListener="#{solicitudBean.cancelar}" update="nuevaSol" />
+					</h:panelGrid>
+				</p:panel>
+
+				<p:panel header="Lista de Solicitudes" style="margin-bottom:1px;"
+					visible="false">
+					<p:toolbar>
+						<p:toolbarGroup align="center" style="margin-bottom:0px;">
+							<p:commandButton type="button" value="Cancelar" />
+							<p:commandButton type="button" value="Reactivar" />
+							<p:commandButton type="button" value="Actualizar" />
+							<p:commandButton type="button" value="Evaluar" />
+						</p:toolbarGroup>
+					</p:toolbar>
+					<p:separator />
+
+					<p:dataTable id="dataSolicitudes" var="car" value=""
+						paginator="true" rows="15"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15">
+						<f:facet name="header">  
+                            Solicitudes  
+                        </f:facet>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Codigo" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Descripcion" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Estado" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Fecha" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
