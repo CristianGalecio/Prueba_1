@@ -74,14 +74,17 @@ public class LoginBean implements Serializable {
 						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenida", usuario);
 					}else{
 						logeado = false;
+						secre = false;
 						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
 					}
 				}else{
 					if(trabajadorService.verificarTrabajador(usuario, clave)){					
 						logeado = true;
+						secre = false;
 						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@ Soportin@", usuario);
 					}else{
 						logeado = false;
+						secre = false;
 						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
 					}
 				}
@@ -90,13 +93,16 @@ public class LoginBean implements Serializable {
 				if(tipo.equals("cliente")){
 					if(clienteService.verificarCliente(usuario, clave)){
 						logeado = true;
+						secre = false;
 						msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", usuario);
 					}else{
 						logeado = false;
+						secre = false;
 						msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Clave incorrecta", usuario);
 					}					
 				}else{					
 					logeado = false;
+					secre = false;
 					msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error","Credenciales no v�lidas");
 				}				
 			}

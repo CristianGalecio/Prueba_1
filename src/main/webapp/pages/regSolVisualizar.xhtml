@@ -27,7 +27,8 @@
 					<p:commandButton Id="Solicitudes" value="Solicitudes"
 						action="#{solicitudBean.cambiarPagVis}" />
 					<p:commandButton Id="Logout" value="Salir"
-						action="#{solicitudBean.logout}" />
+						action="#{solicitudBean.logout}" />					
+					
 				</p:panelGrid>
 			</center>
 		</p:layoutUnit>
@@ -39,11 +40,13 @@
 					<p:ajax event="tabChange" listener="#{evaluacionBean.onTabChange}" />
 					<p:tab title="Atendidos">
 						<p:contextMenu for="dataAtencion">
-							<p:menuitem value="Calificar" update=":form:growl :form:displayc"
+							<p:menuitem value="Calificar"
+								update=":form:growl :form:displayc"
 								icon="ui-icon-search"
 								actionListener="#{evaluacionBean.validaSolAten}"
 								oncomplete="calificarDialog.show()" />
-							<p:menuitem value="Reactivar" update=":form:growl :form:confReac"
+							<p:menuitem value="Reactivar"
+								update=":form:growl :form:confReac"
 								icon="ui-icon-search"
 								actionListener="#{evaluacionBean.validaSolReac}"
 								oncomplete="confirDialog.show()" />
@@ -76,9 +79,9 @@
 
 							<p:column headerText="Evaluacion">
 								<ui:repeat var="item" varStatus="status"
-									value="#{Solicitudes.atencionList}" from="status.last"
-									to="status.last">  
-						   		#{item.idEvaluacion.idCalificacion.nombreCalificacion}
+									value="#{Solicitudes.atencionList}" >
+							<!--		iterationStatusVar="status.size"> #{item[i.index]} -->
+						   	   #{item.idEvaluacion.idCalificacion.nombreCalificacion} 
 						   	</ui:repeat>
 							</p:column>
 
@@ -96,7 +99,8 @@
 
 					<p:tab title="No Atendidos">
 						<p:contextMenu for="dataNoAtencion">
-							<p:menuitem value="Cancelar" update=":form:growl :form:confCanc"
+							<p:menuitem value="Cancelar"
+								update=":form:growl :form:confCanc"
 								icon="ui-icon-search"
 								actionListener="#{evaluacionBean.validaSolCancel}"
 								oncomplete="confirCancelDialog.show()" />
@@ -105,6 +109,7 @@
 
 
 						<p:dataTable id="dataNoAtencion" var="Solicitudes"
+							update=":form:tabview:dataNoAtencion"
 							value="#{evaluacionBean.mediumSolsProPend}"
 							selection="#{evaluacionBean.selectedSol}" selectionMode="single">
 
@@ -218,7 +223,7 @@
 						<p:commandButton id="Listo2" value="Listo"
 							actionListener="#{evaluacionBean.grabar}"
 							oncomplete="calificarDialog.hide();"
-							update=":form:displayc :form:growl" />
+							update=":form:displayc :form:growl :form:tabview:dataAtencion :form:tabview:dataNoAtencion :form:calificarDialog" />
 					</center>
 				</p:dialog>
 
@@ -234,7 +239,8 @@
 							<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
 								icon="ui-icon-check"
 								actionListener="#{evaluacionBean.reactivar}"
-								oncomplete="confirDialog.hide();" update=":form:growl" />
+								oncomplete="confirDialog.hide();"
+								update=":form:confReac :form:growl :form:tabview:dataAtencion :form:tabview:dataNoAtencion :form:confirDialog" />
 							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
 								icon="ui-icon-close" oncomplete="confirDialog.hide();" />
 						</h:panelGrid>
@@ -251,7 +257,8 @@
 							<h:outputText value="#{evaluacionBean.idFija}" />
 							<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes"
 								icon="ui-icon-check" actionListener="#{evaluacionBean.cancelar}"
-								oncomplete="confirCancelDialog.hide();" update=":form:growl" />
+								oncomplete="confirCancelDialog.hide();"
+								update=":form:confCanc :form:growl :form:tabview:dataAtencion :form:tabview:dataNoAtencion :form:confirCancelDialog" />
 							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
 								icon="ui-icon-close" oncomplete="confirCancelDialog.hide();" />
 

@@ -69,7 +69,9 @@ public class TrabajadorServiceImpl implements TrabajadorService{
 		List<Trabajador> pri = getTrabajadores();
 		List<String> ars = new ArrayList<>();
 		for(int i=0; i<pri.size();i++){
-			ars.add(pri.get(i).getTrabajadorPK().getIdTrabajador());
+			if(!verificarSecretaria(pri.get(i).getTrabajadorPK().getIdTrabajador())){
+				ars.add(pri.get(i).getTrabajadorPK().getIdTrabajador());
+			}
 		}
 		return ars;
 		

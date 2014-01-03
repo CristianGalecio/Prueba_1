@@ -216,12 +216,11 @@ public class SolicitudManagedBean implements Serializable {
 		setUbicacion("");
 		setUsuario("");
 	}
-	
+
 	public String logout(){
-		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
-		return "login?faces-redirect=true";
-	}
-	
+                ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+                return "login?faces-redirect=true";
+        }
 	
 	public String cambiarPagGen(){
 		return "regSolGenerar?faces-redirect=true";
@@ -262,4 +261,7 @@ public class SolicitudManagedBean implements Serializable {
 		System.out.println("Context"+context.toString());
 		context.addMessage(null,msg);
 	}	
+	
+	
+	
 }
